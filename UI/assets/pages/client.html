@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Banka</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/client.css">
+</head>
+<body>
+  <header id="header">
+    <div id="container">
+      <div class="navigation">
+        <p class="logo">Banka</p>
+        <nav id="nav">
+          <ul>
+            <li><a class="btn" href="../../index.html">Home</a></li>
+            <li><a class="btn" href="#">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main id="client">
+    <div id="container">
+    <section >
+        <div id="client-container">
+          <div class="client-items user-detail">
+            <p>Welcome, Client</p>
+          </div>
+          <div class="client-items account-actions">
+            <button id="create-account" class=" client-btn create-account">Create Account</button>
+          </div>
+          <div class="client-items account-summary">
+            <p>Accounts Summary:</p>
+            <ul>
+              <li id="no-accounts" class="no-accounts">No Accounts Yet</li>
+              <li id="account-created" class="account-created">Account successfully created</li>
+            </ul>
+          </div>
+          <div id="create-account-form" class="client-items create-account-form">
+            <form action="" class="account-create">
+              <fieldset>
+                <legend>Select Account Type:</legend>
+                <span>
+                  <p>Type of Account:</p>
+                  <select value="account-type">
+                      <option name="savings" id="savings">Savings</option>
+                      <option name="current" id="current">Current</option>
+                    </select>
+                    <button id="create" class="client-btn create">Create Account</button>
+                </span>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+    </section>
+    </div>
+  </main>
+  <footer id="footer">
+      <p>Tobechukwu Obitube &copy; 2019.</p>
+  </footer>
+  <script src="../js/create-account.js"></script>
+</body>
+</html>
