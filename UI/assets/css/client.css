@@ -4,6 +4,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   text-align: left;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -42,6 +43,14 @@ body {
   padding: 0.5em;
   border-radius: 3px;
   background: #fff;
+}
+
+#client-container .create-account-form {
+  display: none;
+}
+
+#client-container .account-created {
+  display: none;
 }
 
 /* Account Actions */

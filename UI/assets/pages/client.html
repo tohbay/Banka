@@ -21,7 +21,7 @@
           </ul>
         </nav>
       </div>
-    </div> 
+    </div>
   </header>
   <main id="client">
     <div id="container">
@@ -31,16 +31,16 @@
             <p>Welcome, Client</p>
           </div>
           <div class="client-items account-actions">
-            <button class=" client-btn create-account">Create Account</button>
+            <button id="create-account" class=" client-btn create-account">Create Account</button>
           </div>
           <div class="client-items account-summary">
             <p>Accounts Summary:</p>
             <ul>
-              <li>No Accounts Yet</li>
-              <li class="account-created">Account successfully created</li>
-            </ul> 
+              <li id="no-accounts" class="no-accounts">No Accounts Yet</li>
+              <li id="account-created" class="account-created">Account successfully created</li>
+            </ul>
           </div>
-          <div class="client-items create-account-form">
+          <div id="create-account-form" class="client-items create-account-form">
             <form action="" class="account-create">
               <fieldset>
                 <legend>Select Account Type:</legend>
@@ -50,7 +50,7 @@
                       <option name="savings" id="savings">Savings</option>
                       <option name="current" id="current">Current</option>
                     </select>
-                    <button class="client-btn create">Create Account</button>
+                    <button id="create" class="client-btn create">Create Account</button>
                 </span>
               </fieldset>
             </form>
@@ -62,5 +62,6 @@
   <footer id="footer">
       <p>Tobechukwu Obitube &copy; 2019.</p>
   </footer>
+  <script src="../js/create-account.js"></script>
 </body>
 </html>
