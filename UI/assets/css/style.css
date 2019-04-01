@@ -12,10 +12,6 @@ body {
   text-align: center;
 }
 
-h1, h2, h3, p {
-  padding: 1em, 0;
-}
-
 .btn {
   display: inline-block;
   border: 1px solid;
@@ -28,6 +24,9 @@ h1, h2, h3, p {
 #header {
   height: 100vh;
   min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   color: #fff;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../images/header-bg3.jpg);
   background-position: center;
@@ -37,11 +36,13 @@ h1, h2, h3, p {
 
 #header .navigation {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  padding: 1em;
+  padding: 1em 0;
 }
 
 #header .logo {
+  margin-left: 0.3em;
   font-weight: 800;
   font-size: 1.7em;
   flex-direction: column;
@@ -93,6 +94,7 @@ font-style: italic
   font-weight: 500;
   border: none;
 }
+
 .header-caption .btn:hover {
   background: none;
   color: #fff;
