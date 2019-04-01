@@ -1,0 +1,153 @@
+body {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../image/header-bg3.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: left;
+  overflow-x: hidden;
+}
+
+/* Header */
+#header {
+  height: 10vh;
+  background: none;
+  color: #ffffff;
+}
+
+#nav .btn:hover {
+  color: #fff;
+  background: none;
+  border: 1px solid #fff;
+}
+
+/* Client Main */
+#client {
+  height: 85vh;
+  color: #000000;
+  background: #f1f1f1;
+}
+
+#client-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100vw;
+  height: 85vh;
+  margin: 0 auto;
+  padding: 0.5em;
+}
+
+#client-container .client-items {
+  margin: 0.2em 0;
+  padding: 0.5em;
+  border-radius: 3px;
+  background: #fff;
+}
+
+#client-container .create-account-form {
+  display: none;
+}
+
+#client-container .account-created {
+  display: none;
+}
+
+/* Account Actions */
+.account-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 1em 0;
+  padding: 0.5em;
+  width: 100%;
+  height: fit-content;
+  background: #fff;
+}
+
+.client-btn {
+  display: block;
+  padding: 0.5em 1em;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  background: #282;
+  margin-left: 1em;
+  text-decoration: none;
+}
+
+.client-items a {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.client-btn a:active {
+  text-decoration: none;
+  color: #fff;
+}
+
+.client-btn:hover {
+  text-decoration: none;
+  background: #fff;
+  color: #282;
+  border: 1px solid #282
+}
+
+/* Account Summary */
+.account-summary p {
+  width: fit-content;
+  border-bottom: 2px solid #000;
+  font-weight: bold;
+}
+.account-summary li {
+  list-style: none;
+  margin-top: 1em;
+  text-align: center;
+  padding: 0.3em;
+  background: #f55;
+  border-radius: 3px;
+  color: #fff;
+}
+
+.account-summary .account-created {
+  background: #282;
+}
+
+.account-create fieldset {
+  margin-bottom: 0.5em;
+}
+
+.account-create span {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5em;
+}
+
+.account-create span p {
+margin-right: 1em;
+padding: 0.2em;
+}
+
+.account-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 2px solid #acacac;
+  font-weight: 700;
+}
+
+/* Footer */
+#footer {
+  height: 5vh;
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  #client-container {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
