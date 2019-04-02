@@ -9,9 +9,26 @@ body {
 
 /* Header */
 #header {
-  height: 10vh;
+  height: 8vh;
   background: none;
   color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#header #nav,
+#header .logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#nav .btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.1em 0.5em;
 }
 
 #nav .btn:hover {
@@ -20,9 +37,38 @@ body {
   border: 1px solid #fff;
 }
 
+/* User Details */
+.user-detail {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #fff;
+  padding: 0.5em;
+}
+
+.user-detail p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+}
+
+#nav .user-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+
 /* Client Main */
 #client {
-  height: 85vh;
+  height: 87vh;
+  overflow-y: hidden;
   color: #000000;
   background: #f1f1f1;
 }
@@ -49,6 +95,10 @@ body {
   display: none;
 }
 
+.account-type {
+  margin-right: 1em;
+}
+
 #client-container .account-created {
   display: none;
 }
@@ -73,7 +123,7 @@ body {
   border-radius: 3px;
   cursor: pointer;
   background: #282;
-  /* margin-left: 1em; */
+  margin-right: 1em;
   text-decoration: none;
 }
 
@@ -178,7 +228,7 @@ padding: 0.2em;
 
 /* Footer */
 #footer {
-  height: 5vh;
+  height: 7vh;
   text-align: center;
 }
 
@@ -187,7 +237,7 @@ padding: 0.2em;
     max-width: 60%;
     margin: 0 auto;
   }
-  
+
   .account-info {
     width: 80%;
     margin: 0 auto;

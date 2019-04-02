@@ -59,11 +59,17 @@ body {
 }
 
 #header nav ul li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   display: inline-block;
   margin-left: 0.5em;
 }
 
 #header nav ul li a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-decoration: none;
   padding: 0.5em 1.5em;
   color: #000;
