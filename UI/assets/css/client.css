@@ -67,7 +67,7 @@ body {
 
 /* Client Main */
 #client {
-  height: 87vh;
+  /* height: 87vh; */
   overflow-y: hidden;
   color: #000000;
   background: #f1f1f1;
@@ -79,7 +79,7 @@ body {
   flex-wrap: wrap;
   justify-content: flex-start;
   width: 100vw;
-  height: 85vh;
+  /* height: 85vh; */
   margin: 0 auto;
   padding: 0.5em;
 }
