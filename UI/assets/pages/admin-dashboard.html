@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Banka</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/client.css">
+  <link rel="stylesheet" href="../css/transaction.css">
+</head>
+<body>
+  <header id="header">
+    <div id="container">
+      <div class="navigation">
+        <p class="logo">Banka</p>
+        <nav id="nav">
+          <ul>
+            <li><a class="btn" href="../../index.html">Home</a></li>
+            <li><a class="btn" href="#">Logout</a></li>
+            <li><img class="user-image" src="../images/myDp.png" alt=""></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main id="client">
+    <div id="container">
+        <section >
+            <div id="client-container">
+              <div class="client-items user-detail">
+                <p>Welcome Admin,</p>
+              </div>
+              <div class="client-items account-actions">
+               <a href="client.html"><button id="view-transactions" class="client-btn">Create User Account</button></a> 
+              </div>
+              <div class="client-items account-summary">
+                  <p>User Profile:</p>
+                  <ul>
+                    <li id="no-accounts" class="no-accounts">No User Account Yet</li>
+                    <li id="account-created" class="account-created">Account successfully created</li>
+                  </ul>
+                </div>
+              <div id="create-user-account" class="client-items create-user-account">
+                  <form action="" class="account-create">
+                    <fieldset>
+                      <legend>Select User Type:</legend>
+                      <span>
+                        <p>Type of User:</p>
+                        <select class="account-type" value="account-type">
+                            <option name="savings" id="savings">Admin</option>
+                            <option name="current" id="current">Staff</option>
+                        </select>
+                        <button id="create" class="client-btn create">Create User</button>
+                      </span>
+                    </fieldset>
+                  </form>
+                </div>
+            </div>
+        </section>
+    </div>
+  </main>
+  <footer id="footer">
+      <p>Tobechukwu Obitube &copy; 2019.</p>
+  </footer>
+</body>
+</html>
