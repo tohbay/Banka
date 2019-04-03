@@ -1,7 +1,19 @@
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
 /* Transaction */
 
-#main {
-  min-height: fit-content;
+#header {
+  min-height: 8vh;
+}
+
+#client {
+  min-height: 85vh;
 }
 
 .card .card-container {
@@ -68,27 +80,31 @@ align-items: center;
   width: 100%;
   display: flex;
   flex-direction: row;
- justify-content: space-between;
+  justify-content: space-between;
+}
+
+.date-transaction p {
+  margin-left: 1em;
 }
 
 /* Footer */
 #footer {
- text-align: center;
+  text-align: center;
 }
 
 @media screen and (min-width: 768px) {
-  
+
   #account-transactions {
     margin: 0 30%;
   }
-  
+
   .card {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between
   }
-  
+
   .card .card-container {
     width: 48%;
   }

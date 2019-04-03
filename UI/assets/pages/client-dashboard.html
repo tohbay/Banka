@@ -29,56 +29,13 @@
     <div id="container">
     <section >
         <div id="client-container">
-          <div class="client-items user-detail">
-            <p>Welcome, Client</p>
-          </div>
           <div class="client-items account-actions">
-            <button id="view-profile" class=" client-btn">My Account Profile</button>
+           <a href="client.html"><button id="view-transactions" class="client-btn">Back to Account Profile</button></a> 
           </div>
-          <div class="client-items account-summary">
-            <p>Account Profile:</p>
-            <ul>
-              <li id="no-accounts" class="no-accounts">No Accounts Yet</li>
-              <li id="account-created" class="account-created">Account successfully created</li>
-            </ul>
+          <div class="client-items user-detail">
+            <p>View Account Transactions</p>
           </div>
-          <div id="create-account-form" class="client-items create-account-form">
-            <form action="" class="account-create">
-              <fieldset>
-                <legend>Select Account Type:</legend>
-                <span>
-                  <p>Type of Account:</p>
-                  <select value="account-type">
-                      <option name="savings" id="savings">Savings</option>
-                      <option name="current" id="current">Current</option>
-                    </select>
-                    <button id="create" class="client-btn create">Create Account</button>
-                </span>
-              </fieldset>
-            </form>
-          </div>
-          <div id="account-profile" class="client-items user-account">
-            <div class="account-profile-details">
-              <div class="account-info">
-                <p>Account Type:</p>
-                <p>Savings</p>
-              </div>
-              <div class="account-info">
-                <p>Balance:</p>
-                <p>#0.00</p>
-              </div>
-              <div class="account-info">
-                <p>Account No:</p>
-                <p>Pending</p>
-              </div>
-              <div class="account-info">
-                <p>Account Status:</p>
-                <p>Draft</p>
-              </div>
-            </div>
-          </div>
-          <div class="client-items transaction">
-              <h1 class="view-transactions">View Transactions:</h1>
+          <div id="transaction-history" class="client-items transaction">
               <div class="card">
                 <div class="card-container">
                   <h3>Savings Account</h3>
@@ -87,7 +44,10 @@
                         <div class="amount">
                           <p class="credit">Credit</p>
                           <p class="actual">#50.00</p>
-                          <p class="view">View details</p>
+                          <p id="view-details" class="view">View details</p>
+                        </div>
+                        <div class="date-transaction">
+                            <p>19th March 2019.</p>
                         </div>
                         <hr>
                     </div>
@@ -95,7 +55,10 @@
                         <div class="amount">
                           <p class="debit">Debit</p>
                           <p class="actual">#50.00</p>
-                          <p class="view">View details</p>
+                          <p id="view-details" class="view">View details</p>
+                        </div>
+                        <div class="date-transaction">
+                          <p>26th March 2019.</p>
                         </div>
                         <hr>
                     </div>
@@ -108,42 +71,6 @@
                     </div>
                 </div>
               </div>
-              <div id="account-transactions">
-                  <h2>Transaction Details:</h2>
-                  <div class="account">
-                    <div>
-                      <p>Account Type:</p>
-                      <p>Current Balance:</p>
-                      <p>Account No:</p>
-                    </div>
-                    <div>
-                      <p>Savings</p>
-                      <p>#200.00</p>
-                      <p>000000000</p>
-                    </div>
-                  </div>
-                  <hr>
-                  <h2>Mini Statement:</h2>
-                  <div class="mini-statement">
-                    <div>
-                        <p>Cashier:</p>
-                        <p>Amount:</p>
-                        <p>Date:</p>
-                        <p>Transaction Type:</p>
-                        <p>Old balance:</p>
-                        <p>New Balance:</p>
-                    </div>
-                    <div>
-                      <p>12</p>
-                      <p>#100.00</p>
-                      <p>12th March 2019</p>
-                      <p>Debit</p>
-                      <p>#100.00</p>
-                      <p>#200.00</p>
-                    </div>
-                  </div>
-                  <hr>
-                  </div>
           </div>
         </div>
     </section>
@@ -153,6 +80,5 @@
       <p>Tobechukwu Obitube &copy; 2019.</p>
   </footer>
   <script src="../js/view-profile.js"></script>
-  <script src="../js/view-transaction.js"></script>
 </body>
 </html>

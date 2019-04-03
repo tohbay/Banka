@@ -229,6 +229,12 @@ padding: 0.2em;
   font-weight: 700;
 }
 
+.view-account-transactions {
+  width: 100%;
+  margin: 0.7em 0;
+  padding: 1em 0;
+}
+
 /* Footer */
 #footer {
   height: 7vh;
