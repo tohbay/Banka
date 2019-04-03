@@ -184,7 +184,7 @@ font-style: italic
 .transactions .amount {
 display: flex;
 justify-content: space-between;
-margin: 0.5em 2em;
+margin: 0.5em 1em;
 border-bottom: 1px solid black;
 }
 
