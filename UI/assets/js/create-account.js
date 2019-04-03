@@ -20,7 +20,6 @@ const createAccountBtn = (e) => {
   createAccountForm.style.display = 'none';
   e.preventDefault();
   noAccount.style.display = 'none';
-  // accountProfile.style.display = 'block';
   viewProfile.style.display = 'block';
 };
 
