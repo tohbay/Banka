@@ -110,11 +110,16 @@ align-items: center;
 
 .cashier-actions {
   display: flex;
+  justify-content: center;
 }
 
-.credit-account {
+.cashier-btn {
   width: 40vw;
   margin-left: 0.5em;
+}
+
+.debit-account {
+  background: #f55;
 }
 
 /* Footer */
