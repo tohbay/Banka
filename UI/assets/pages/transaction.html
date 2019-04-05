@@ -36,7 +36,7 @@
               <div class="client-items account-summary">
                   <p>User Account Profile:</p>
                   <div class="search-one">
-                        <input type="text" placeholder="Enter Account No"><button class="client-btn">Search for Account</button>
+                        <input type="text" class="transaction-inputBox" placeholder="Enter Account No"><button class="client-btn">Search for Account</button>
                       </div>
               <div class="client-items account-actions user-detail">
                 <div class="account-profile-details">
@@ -58,8 +58,12 @@
                     </div>
                   </div>
                 </div>
+                <div class="search-one">
+                </div>
                 <div class="client-item cashier-actions">
-                  <button id="view-transactions" class="client-btn credit-account">Credit Account</button>
+                    <button id="view-transactions" class="client-btn cashier-btn credit-account">Credit Account</button>
+                    <input type="text" class="transaction-inputBox transaction-amount" placeholder="Enter Amount">
+                  <button id="view-transactions" class="client-btn cashier-btn debit-account">Dedit Account</button>
                 </div>
           </div>
         </section>
