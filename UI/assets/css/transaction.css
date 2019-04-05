@@ -99,7 +99,7 @@ align-items: center;
   border-bottom-left-radius: 0;
 }
 
-.search-one input[type=text] {
+.transaction-inputBox {
   padding-left: 0.5em;
 }
 
@@ -113,9 +113,10 @@ align-items: center;
   justify-content: center;
 }
 
-.cashier-btn {
-  width: 40vw;
-  margin-left: 0.5em;
+.cashier-btn,
+.transaction-amount {
+  width: 30%;
+  margin: 0 0.5em;
 }
 
 .debit-account {
