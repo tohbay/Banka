@@ -108,6 +108,10 @@ align-items: center;
   font-size: 1em;
 }
 
+.cashier-actions {
+  display: flex;
+}
+
 /* Footer */
 #footer {
   text-align: center;
