@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Banka</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/client.css">
+  <link rel="stylesheet" href="../css/transaction.css">
+  <link rel="stylesheet" href="../css/admin-dashboard.css">
+</head>
+<body>
+  <header id="header">
+    <div id="container">
+      <div class="navigation">
+        <p class="logo">Banka</p>
+        <nav id="nav">
+          <ul>
+            <li><a class="btn" href="../../index.html">Home</a></li>
+            <li><a class="btn" href="#">Logout</a></li>
+            <li><img class="user-image" src="../images/myDp.png" alt=""></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main id="client">
+    <div id="container">
+        <section >
+            <div id="client-container">
+              <div class="client-items user-detail">
+                <p>Welcome Cashier,</p>
+              </div>
+              <div class="client-items account-summary">
+                  <p>User Account Profile:</p>
+                  <div class="search-one">
+                        <input type="text" class="transaction-inputBox" placeholder="Enter Account No"><button class="client-btn">Search for Account</button>
+                      </div>
+              <div class="client-items account-actions user-detail">
+                <div class="account-profile-details">
+                    <div class="account-info">
+                      <p>Account Type:</p>
+                      <p>Savings</p>
+                    </div>
+                    <div class="account-info">
+                      <p>Balance:</p>
+                      <p>#500.00</p>
+                    </div>
+                    <div class="account-info">
+                      <p>Account No:</p>
+                      <p>123445</p>
+                    </div>
+                    <div class="account-info">
+                      <p>Account Status:</p>
+                      <p>Active</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="search-one">
+                </div>
+                <div class="client-item cashier-actions">
+                    <button id="view-transactions" class="client-btn cashier-btn credit-account">Credit Account</button>
+                    <input type="text" class="transaction-inputBox transaction-amount" placeholder="Enter Amount">
+                  <button id="view-transactions" class="client-btn cashier-btn debit-account">Dedit Account</button>
+                </div>
+          </div>
+        </section>
+    </div>
+  </main>
+  <footer id="footer">
+      <p>Tobechukwu Obitube &copy; 2019.</p>
+  </footer>
+</body>
+</html>

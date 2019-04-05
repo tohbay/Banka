@@ -14,6 +14,7 @@ body {
 
 #client {
   min-height: 85vh;
+  overflow-y: scroll;
 }
 
 .card .card-container {
@@ -87,6 +88,41 @@ align-items: center;
   margin-left: 1em;
 }
 
+.search-one {
+  display: flex;
+  justify-content: center;
+  margin: 0.5em 0;
+}
+
+.search-one >.client-btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.transaction-inputBox {
+  padding-left: 0.5em;
+}
+
+.delete-account {
+  background: #f55;
+  font-size: 1em;
+}
+
+.cashier-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.cashier-btn,
+.transaction-amount {
+  width: 30%;
+  margin: 0 0.5em;
+}
+
+.debit-account {
+  background: #f55;
+}
+
 /* Footer */
 #footer {
   text-align: center;
@@ -94,9 +130,9 @@ align-items: center;
 
 @media screen and (min-width: 768px) {
 
-  #account-transactions {
-    /* margin: 0 30%; */
-  }
+  /* #account-transactions {
+    margin: 0 30%;
+  } */
 
   .card {
     display: flex;
