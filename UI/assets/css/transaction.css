@@ -87,6 +87,21 @@ align-items: center;
   margin-left: 1em;
 }
 
+.search-one {
+  display: flex;
+  justify-content: center;
+  margin: 0.5em 0;
+}
+
+.search-one >.client-btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.search-one input[type=text] {
+  padding-left: 0.5em;
+}
+
 /* Footer */
 #footer {
   text-align: center;
