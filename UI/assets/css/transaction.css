@@ -108,6 +108,15 @@ align-items: center;
   font-size: 1em;
 }
 
+.cashier-actions {
+  display: flex;
+}
+
+.credit-account {
+  width: 40vw;
+  margin-left: 0.5em;
+}
+
 /* Footer */
 #footer {
   text-align: center;
