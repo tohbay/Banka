@@ -1,11 +1,13 @@
-const user = {
-  id: null,
-  email: null,
-  firstName: null,
-  lastName: null,
-  password: null,
-  type: null,
-  isAdmin: null
-};
+class User {
+  constructor() {
+    this.id = null;
+    this.email = null;
+    this.lastName = null;
+    this.firstName = null;
+    this.password = null;
+    this.type = null;
+    this.isAdmin = null;
+  }
+}
 
-export default user;
+export default User;
