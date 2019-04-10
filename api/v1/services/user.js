@@ -15,5 +15,14 @@ const UserService = {
 
       return validUsers;
     });
+  },
+
+  createUser(user) {
+    const userLength = dummyDb.users.length;
+    const lastUserId = dummyDb.users[userLength - 1].id;
+    const userId = lastUserId + 1;
+    user.id = userId;
+    dummyDb.users.push(user);
+    return user;
   }
 };
