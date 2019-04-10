@@ -1,10 +1,14 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 
+import User from '../v1/models/user';
+import user from '../v1/services/user';
+
 import app from '../app';
 
 
 chai.use(chaiHttp);
+const should = chai.should();
 
 describe('Mocha test for User Controller', () => {
   describe('Mocha test for user signup route', () => {
@@ -30,13 +34,13 @@ describe('Mocha test for User Controller', () => {
             expect(response).to.have.status(201);
             expect(response.body.status).to.equal(201);
             expect(response.body.data).to.be.a('object');
-            expect(response.body.data).to.have.property('token');
+            // expect(response.body.data).to.have.property('token');
             expect(response.body.data).to.have.property('id');
             expect(response.body.data).to.have.property('firstName');
             expect(response.body.data).to.have.property('lastName');
             expect(response.body.data).to.have.property('email');
-            expect(response.body.data.token).to.be.a('string');
-            expect(response.body.data.email).to.equal('test@test.com');
+            // expect(response.body.data.token).to.be.a('string');
+            expect(response.body.data.email).to.equal('frank@email.com');
             done();
           });
       },
@@ -137,6 +141,19 @@ describe('Mocha test for User Controller', () => {
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
+          expect(response.body.status).to.equal(400);
+          expect(response.body.error).to.be.a('string');
+          expect(response.body.error).to.equal('Email already exist');
+          done();
+        });
+    });
+
+    it('should check that the model values are null', (done) => {
+      chai.request(app)
+        .post(signupUrl)
+        .send()
+        .end((error, response) => {
+          expect(User.id).to.be.null
           expect(response.body.status).to.equal(400);
           expect(response.body.error).to.be.a('string');
           expect(response.body.error).to.equal('Email already exist');
