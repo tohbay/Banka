@@ -2,7 +2,7 @@ import dummyDb from '../db/dummyDb';
 import User from '../models/user';
 
 const UserService = {
-  getAllUsers() {
+  getAll() {
     const validUsers = dummyDb.users.map((user) => {
       const newUser = new User();
       newUser.id = user.id;
@@ -17,7 +17,7 @@ const UserService = {
     });
   },
 
-  createUser(user) {
+  add(user) {
     const userLength = dummyDb.users.length;
     const lastUserId = dummyDb.users[userLength - 1].id;
     const userId = lastUserId + 1;
@@ -26,12 +26,12 @@ const UserService = {
     return user;
   },
 
-  getOneUser(id) {
+  getOne(id) {
     const user = dummyDb.users.find(user => user.id === id);
     return user || {};
   },
 
-  deleteOneUser(id) {
+  deleteOne(id) {
     const user = dummyDb.users.find(user => user.id === id);
 
     const index = dummyDb.users.indexOf(user);
@@ -40,3 +40,5 @@ const UserService = {
     return user || {};
   }
 };
+
+export default UserService;
