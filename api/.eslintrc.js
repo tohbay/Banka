@@ -15,6 +15,8 @@ module.exports = {
 	},
 	"rules": {
 		"no-console": 0,
-		"comma-dangle": 0
+		"comma-dangle": 0,
+		"no-undef": 0,
+		"no-unused-vars": 0
 	}
 };
