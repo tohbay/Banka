@@ -1,15 +1,7 @@
 import UserService from '../services/user';
-import dummyDb from '../db/dummyDb';
+import users from '../db/dummyDb';
 
 class userController {
-  static getAllUsers(request, response) {
-    const allUsers = UserService.getAll;
-    return response.status(200).send({
-      status: 200,
-      data: allUsers
-    });
-  }
-
   static signup(request, response) {
     if (!request.body.firstName) {
       return response.status(400).json({
@@ -35,7 +27,10 @@ class userController {
         error: 'Password is required',
       });
     }
-    if (request.body.email === dummyDb.users.email) {
+
+    const { email } = request.body;
+    const checkEmail = users.find(aUser => aUser.email === email);
+    if (checkEmail) {
       return response.status(400).json({
         status: 400,
         error: 'Email already exist',
@@ -47,31 +42,6 @@ class userController {
     return response.status(201).send({
       status: 201,
       data: signupUser
-    });
-  }
-
-  static signin(request, response) {
-    const { email, password } = request.body;
-    const loginUser = UserService.add(request.body);
-    response.status(200).send({
-      status: 200,
-      data: loginUser
-    });
-  }
-
-  static getOneUser(resquest, response) {
-    const user = UserService.getOne(Number(request.body.id));
-    response.status(200).send({
-      status: 200,
-      data: user
-    });
-  }
-
-  static deleteUser(resquest, response) {
-    const user = UserService.deleteOne(Number(request.body.id));
-    response.status(200).send({
-      status: 200,
-      data: user
     });
   }
 }
