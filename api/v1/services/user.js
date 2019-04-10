@@ -24,5 +24,19 @@ const UserService = {
     user.id = userId;
     dummyDb.users.push(user);
     return user;
+  },
+
+  getOneUser(id) {
+    const user = dummyDb.users.find(user => user.id === id);
+    return user || {};
+  },
+
+  deleteOneUser(id) {
+    const user = dummyDb.users.find(user => user.id === id);
+
+    const index = dummyDb.users.indexOf(user);
+    dummyDb.users.splice(index, 1);
+
+    return user || {};
   }
 };
