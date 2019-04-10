@@ -26,6 +26,22 @@ class userController {
       data: loginUser
     });
   }
+
+  static getOneUser(resquest, response) {
+    const user = UserService.getOne(Number(request.body.id));
+    response.status(200).send({
+      status: 200,
+      data: user
+    });
+  }
+
+  static deleteUser(resquest, response) {
+    const user = UserService.deleteOne(Number(request.body.id));
+    response.status(200).send({
+      status: 200,
+      data: user
+    });
+  }
 }
 
 export default userController;
