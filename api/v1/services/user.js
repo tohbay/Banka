@@ -1,44 +1,45 @@
-import dummyDb from '../db/dummyDb';
-import User from '../models/user';
+import users from '../db/dummyDb';
+// import User from '../models/user';
 
-const UserService = {
-  getAll() {
-    const validUsers = dummyDb.users.map((user) => {
-      const newUser = new User();
-      newUser.id = user.id;
-      newUser.emial = user.email;
-      newUser.firstName = user.firstName;
-      newUser.lastName = user.lastName;
-      newUser.password = user.password;
-      newUser.type = user.type;
-      newUser.isAdmin = user.isAdmin;
+class UserService {
+  static getAll() {
+    return users;
+    // const validUsers = users.map((user) => {
+    // const newUser = new User();
+    // newUser.id = user.id;
+    // newUser.emial = user.email;
+    // newUser.firstName = user.firstName;
+    // newUser.lastName = user.lastName;
+    // newUser.password = user.password;
+    // newUser.type = user.type;
+    // newUser.isAdmin = user.isAdmin;
 
-      return validUsers;
-    });
-  },
+    //   return validUsers;
+    // });
+  }
 
-  add(user) {
-    const userLength = dummyDb.users.length;
-    const lastUserId = dummyDb.users[userLength - 1].id;
+  static add(user) {
+    const userLength = users.length;
+    const lastUserId = users[userLength - 1].id;
     const userId = lastUserId + 1;
     user.id = userId;
-    dummyDb.users.push(user);
+    users.push(user);
     return user;
-  },
+  }
 
-  getOne(id) {
-    const user = dummyDb.users.find(user => user.id === id);
+  static getOne(id) {
+    const user = users.find(user => user.id === id);
     return user || {};
-  },
+  }
 
-  deleteOne(id) {
-    const user = dummyDb.users.find(user => user.id === id);
+  static deleteOne(id) {
+    const user = users.find(user => user.id === id);
 
-    const index = dummyDb.users.indexOf(user);
-    dummyDb.users.splice(index, 1);
+    const index = users.indexOf(user);
+    users.splice(index, 1);
 
     return user || {};
   }
-};
+}
 
 export default UserService;
