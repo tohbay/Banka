@@ -3,11 +3,12 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
 import userRoutes from './v1/routes/user';
+import accountRoutes from './v1/routes/account';
 
 const app = express();
 
 app.use(morgan('tiny'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/api/v1', (request, response) => {
@@ -18,6 +19,7 @@ app.get('/api/v1', (request, response) => {
 
 
 app.use('/api/v1/auth/', userRoutes);
+app.use('/api/v1/accounts/', accountRoutes);
 
 
 export default app;

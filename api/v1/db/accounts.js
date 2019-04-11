@@ -2,7 +2,7 @@ const accounts = [
   {
     id: 1,
     accountNumber: 1,
-    createdOn: Date.now(),
+    createdOn: new Date().toLocaleString(),
     owner: 1,
     type: 'savings',
     status: 'draft',
@@ -11,7 +11,7 @@ const accounts = [
   {
     id: 2,
     accountNumber: 2,
-    createdOn: Date.now(),
+    createdOn: new Date().toLocaleString(),
     owner: 1,
     type: 'savings',
     status: 'active',
@@ -20,7 +20,7 @@ const accounts = [
   {
     id: 3,
     accountNumber: 3,
-    createdOn: Date.now(),
+    createdOn: new Date().toLocaleString(),
     owner: 1,
     type: 'current',
     status: 'dormant',
