@@ -1,30 +1,24 @@
-import users from '../db/dummyDb';
-// import User from '../models/user';
+import users from '../db/users';
 
 class UserService {
   static getAll() {
     return users;
-    // const validUsers = users.map((user) => {
-    // const newUser = new User();
-    // newUser.id = user.id;
-    // newUser.emial = user.email;
-    // newUser.firstName = user.firstName;
-    // newUser.lastName = user.lastName;
-    // newUser.password = user.password;
-    // newUser.type = user.type;
-    // newUser.isAdmin = user.isAdmin;
-
-    //   return validUsers;
-    // });
   }
 
   static add(user) {
-    const userLength = users.length;
-    const lastUserId = users[userLength - 1].id;
-    const userId = lastUserId + 1;
-    user.id = userId;
-    users.push(user);
-    return user;
+    const id = users[users.length - 1].id + 1;
+    const type = 'client';
+    const isAdmin = false;
+    const {
+      email, firstName, lastName, password
+    } = user;
+
+    const newUser = {
+      id, ...user, type, isAdmin
+    };
+
+    users.push(newUser);
+    return newUser;
   }
 
   static getOne(id) {

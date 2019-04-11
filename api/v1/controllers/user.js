@@ -1,5 +1,5 @@
 import UserService from '../services/user';
-import users from '../db/dummyDb';
+import users from '../db/users';
 
 class userController {
   static signup(request, response) {
@@ -29,8 +29,8 @@ class userController {
     }
 
     const { email } = request.body;
-    const checkEmail = users.find(aUser => aUser.email === email);
-    if (checkEmail) {
+    const emailExist = users.find(user => user.email === email);
+    if (emailExist) {
       return response.status(400).json({
         status: 400,
         error: 'Email already exist',
