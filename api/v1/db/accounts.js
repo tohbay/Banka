@@ -3,7 +3,7 @@ const accounts = [
     id: 1,
     accountNumber: 1,
     createdOn: Date.now(),
-    Owner: 1,
+    owner: 1,
     type: 'savings',
     status: 'draft',
     balance: 0.00
@@ -12,7 +12,7 @@ const accounts = [
     id: 2,
     accountNumber: 2,
     createdOn: Date.now(),
-    Owner: 2,
+    owner: 1,
     type: 'savings',
     status: 'active',
     balance: 550.35
@@ -21,7 +21,7 @@ const accounts = [
     id: 3,
     accountNumber: 3,
     createdOn: Date.now(),
-    Owner: 3,
+    owner: 1,
     type: 'current',
     status: 'dormant',
     balance: 1000000.78

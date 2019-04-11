@@ -38,7 +38,7 @@ class userController {
     }
 
     const userdata = request.body;
-    const signupData = UserService.add(userdata);
+    const signupData = UserService.create(userdata);
     return response.status(201).send({
       status: 201,
       data: signupData
