@@ -29,7 +29,7 @@ describe('Mocha test for User Controller', () => {
           expect(response.body.data).to.have.property('lastName');
           expect(response.body.data).to.have.property('email');
           expect(response.body.data.email).to.equal('frank@email.com');
-          console.log(response.body.data);
+          console.log(response.body);
           done();
         });
     });
@@ -139,7 +139,7 @@ describe('Mocha test for User Controller', () => {
 
   describe('Mocha test for user signin route', () => {
     const signinUrl = '/api/v1/auth/signin';
-    it('should register a new user when all the parameters are given', (done) => {
+    it('should signin an existing user when all the parameters are given', (done) => {
       chai.request(app)
         .post(signinUrl)
         .send({
