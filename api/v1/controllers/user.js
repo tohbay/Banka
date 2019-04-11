@@ -1,5 +1,5 @@
-import UserService from '../services/user';
-import users from '../db/dummyDb';
+import UserService from '../models/user';
+import users from '../db/users';
 
 class userController {
   static signup(request, response) {
@@ -29,8 +29,8 @@ class userController {
     }
 
     const { email } = request.body;
-    const checkEmail = users.find(aUser => aUser.email === email);
-    if (checkEmail) {
+    const emailExist = users.find(user => user.email === email);
+    if (emailExist) {
       return response.status(400).json({
         status: 400,
         error: 'Email already exist',
@@ -38,10 +38,42 @@ class userController {
     }
 
     const userdata = request.body;
-    const signupUser = UserService.add(userdata);
+    const signupData = UserService.add(userdata);
     return response.status(201).send({
       status: 201,
-      data: signupUser
+      data: signupData
+    });
+  }
+
+  static signin(request, response) {
+    if (!request.body.email) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Email is required',
+      });
+    }
+    if (!request.body.password) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Password is required',
+      });
+    }
+
+    const { email, password } = request.body;
+    const emailExist = users.find(user => user.email === email);
+    const passwordExist = users.find(user => user.password === password);
+    if (!emailExist || !passwordExist) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Login failed, Email or Password is incorrect',
+      });
+    }
+
+    const loginData = users.find(user => user.email === email);
+    return response.status(201).send({
+      status: 201,
+      message: 'Login successful',
+      data: loginData
     });
   }
 }
