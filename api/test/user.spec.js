@@ -136,4 +136,56 @@ describe('Mocha test for User Controller', () => {
         });
     });
   });
+
+  describe('Mocha test for user signin route', () => {
+    const signinUrl = '/api/v1/auth/signin';
+    it('should register a new user when all the parameters are given', (done) => {
+      chai.request(app)
+        .post(signinUrl)
+        .send({
+          email: 'frank@email.com',
+          password: '12345',
+        })
+        .end((error, response) => {
+          expect(response.body).to.be.an('object');
+          expect(response.status).to.equal(201);
+          expect(response.body.status).to.equal(201);
+          expect(response.data).to.be.an('object');
+          expect(response.body.data).to.have.property('email');
+          expect(response.body.data.email).to.equal('frank@email.com');
+          console.log(response.body);
+          done();
+        });
+    });
+
+    it('should not register a user when the email is missing', (done) => {
+      chai.request(app)
+        .post(signinUrl)
+        .send({
+          password: '12345',
+        })
+        .end((error, response) => {
+          expect(response.body).to.be.an('object');
+          expect(response.body.status).to.equal(400);
+          expect(response.body.error).to.be.a('string');
+          expect(response.body.error).to.equal('Email is required');
+          done();
+        });
+    });
+
+    it('should not register a user when the password is missing', (done) => {
+      chai.request(app)
+        .post(signinUrl)
+        .send({
+          email: 'frank@email.com',
+        })
+        .end((error, response) => {
+          expect(response.body).to.be.an('object');
+          expect(response.body.status).to.equal(400);
+          expect(response.body.error).to.be.a('string');
+          expect(response.body.error).to.equal('Password is required');
+          done();
+        });
+    });
+  });
 });
