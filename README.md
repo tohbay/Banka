@@ -1,2 +1,31 @@
 # Banka
 Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals.
+
+
+## Link to github pages
+https://tobechukwuobitube.github.io/Banka/
+
+
+## Current Features and gitHub-pages link:
+
+| User            | FEATURE                | LINK TO PAGES/VIEWS                                                             |
+| ---------       | -----------------------| --------------------------------------------------------------------------------|
+| Client          | User can sign up       | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/signup.html           |
+| Client          | User can sign in       | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/login.html            |
+| Client          | Create bank account    | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/client.html           |
+| Admin/Staff     | Activate an account    | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/admin-dashboard.html  |
+| Admin/Staff     | Deactivate an account  | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/admin-dashboard.html  |
+| Admin/Staff     | Delete an account      | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/accounts.html         |
+| Staff (cashier) | Credit an account      | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/transaction.html      |
+| Staff (cashier) | Credit an account      | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/transaction.html      |
+
+
+## Technologies Used
+* HTML5 for page structure and contents
+* CSS3 for page styles
+* JavaScript ES6 for DOM Manipulations
+
+
+### Footnote
+This project is still ongoing.
+Your kind reviews are highly appreciated.
