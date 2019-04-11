@@ -5,7 +5,7 @@ class UserService {
     return users;
   }
 
-  static add(user) {
+  static create(user) {
     const id = users[users.length - 1].id + 1;
     const type = 'client';
     const isAdmin = false;
