@@ -6,20 +6,18 @@ class AccountService {
     return accounts;
   }
 
-  static create(account) {
-    const id = accounts[accounts.length - 1].id + 1;
-    const accountNumber = users[users.length].id;
-    const { createdOn } = accounts;
-    const owner = users[users.length].id;
-    const type = 'client';
-    const { status } = accounts;
-    const openingBalance = accounts[accounts.length].balance;
-    const {
-      email, firstName, lastName, password
-    } = users;
-
+  static create(data) {
     const newAccount = {
-      id, accountNumber, createOn, owner, type, status, openingBalance
+      id: accounts[accounts.length - 1].id + 1,
+      accountNumber: users[users.length - 1].id,
+      firstName: users[users.length - 1].firstName,
+      lastName: users[users.length - 1].lastName,
+      email: users[users.length - 1].email,
+      createdOn: new Date().toString(),
+      owner: users[users.length - 1].id,
+      type: data.type,
+      status: 'draft',
+      openingBalance: 0.00
     };
 
     accounts.push(newAccount);
