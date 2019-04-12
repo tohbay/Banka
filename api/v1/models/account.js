@@ -13,7 +13,7 @@ class AccountService {
       firstName: users[users.length - 1].firstName,
       lastName: users[users.length - 1].lastName,
       email: users[users.length - 1].email,
-      createdOn: new Date().toString(),
+      createdOn: new Date().toLocaleString(),
       owner: users[users.length - 1].id,
       type: data.type,
       status: 'draft',
@@ -26,7 +26,7 @@ class AccountService {
 
   static getOne(id) {
     const account = accounts.find(account => account.id === id);
-    return account || {};
+    return account;
   }
 
   static deleteOne(id) {
@@ -35,7 +35,7 @@ class AccountService {
     const index = accounts.indexOf(account);
     accounts.splice(index, 1);
 
-    return account || {};
+    return account;
   }
 }
 
