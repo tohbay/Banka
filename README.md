@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/tobechukwuobitube/Banka.svg?branch=develop)](https://travis-ci.org/tobechukwuobitube/Banka)
-
 [![Coverage Status](https://coveralls.io/repos/github/tobechukwuobitube/Banka/badge.svg)](https://coveralls.io/github/tobechukwuobitube/Banka)
 
 # Banka
