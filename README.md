@@ -24,10 +24,24 @@ https://tobechukwuobitube.github.io/Banka/
 | Staff (cashier) | Credit an account      | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/transaction.html      |
 
 
+## API endpoints
+
+| HTTP VERB | ENDPOINT                                | FUNCTIONALITY                           |
+| --------- | ------------------------------          | ----------------------------------------|
+| POST      | api/v1/auth/signup                      | Create a user account                   |
+| POST      | api/v1/auth/signup                      | Login a user                            |
+| POST      | api/v1/accounts                         | Create a bank account                   |
+| PATCH     | api/v1/accounts/:accountNumber          | Activate or Deactivate a bank account   |
+| GET       | api/v1/accounts                         | Fetch all bank accounts                 |
+| GET       | api/v1/accounts/:id                     | Fetch all specific bank accounts        |
+
 ## Technologies Used
 * HTML5 for page structure and contents
 * CSS3 for page styles
 * JavaScript ES6 for DOM Manipulations
+* Nodejs: an open source server framework that allows you to run JavaScript on the server.
+* Express: open source server-side framework for starting out Javascript server quickly on the fly.
+* Pivotal Tracker: an open source projement management tool for managing different stages of teh development process.
 
 
 ### Footnote
