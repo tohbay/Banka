@@ -2,6 +2,9 @@ const accounts = [
   {
     id: 1,
     accountNumber: 1,
+    email: 'frank@email.com',
+    firstName: 'Frank',
+    lastName: 'Obi',
     createdOn: new Date().toLocaleString(),
     owner: 1,
     type: 'savings',
@@ -11,6 +14,9 @@ const accounts = [
   {
     id: 2,
     accountNumber: 2,
+    email: 'Emeka@email.com',
+    firstName: 'Emeka',
+    lastName: 'John',
     createdOn: new Date().toLocaleString(),
     owner: 1,
     type: 'savings',
@@ -20,6 +26,9 @@ const accounts = [
   {
     id: 3,
     accountNumber: 3,
+    email: 'mark@email.com',
+    firstName: 'Mark',
+    lastName: 'James',
     createdOn: new Date().toLocaleString(),
     owner: 1,
     type: 'current',

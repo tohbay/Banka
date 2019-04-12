@@ -20,6 +20,19 @@ class accountController {
       data: newAccount
     });
   }
+
+  static getOne(request, response) {
+    const { id, status } = request.params;
+    const retrieved = accounts.find(account => account.id === Number(id));
+    if (!retrieved) return response.status(404).send({ message: ' Account number not found!' });
+
+    retrieved.status = status;
+
+    return response.status(200).send({
+      message: 'Account number sucessfully activated',
+      data: retrieved
+    });
+  }
 }
 
 export default accountController;
