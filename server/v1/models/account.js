@@ -1,5 +1,5 @@
-import accounts from '../db/accounts';
-import users from '../db/users';
+import accounts from '../../db/accounts';
+import users from '../../db/users';
 
 class AccountService {
   static getAll() {

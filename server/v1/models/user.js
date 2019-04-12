@@ -1,4 +1,4 @@
-import users from '../db/users';
+import users from '../../db/users';
 
 class UserService {
   static getAll() {

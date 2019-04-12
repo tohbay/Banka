@@ -1,5 +1,5 @@
 import UserService from '../models/user';
-import users from '../db/users';
+import users from '../../db/users';
 
 class userController {
   static signup(request, response) {
