@@ -5,5 +5,8 @@ import accountController from '../controllers/account';
 const router = Router();
 
 router.post('/', accountController.create);
+router.patch('/:accountNumber', accountController.patchOne);
+router.get('/', accountController.getallAccounts);
+router.get('/:id', accountController.getOne);
 
 export default router;

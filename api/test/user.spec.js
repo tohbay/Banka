@@ -10,25 +10,23 @@ const should = chai.should();
 describe('Mocha test for User Controller', () => {
   describe('Mocha test for user signup route', () => {
     const signupUrl = '/api/v1/auth/signup';
-    it('should register a new user when all the parameters are given', (done) => {
+    it('should create a new user when all the parameters are given', (done) => {
       chai.request(app)
         .post(signupUrl)
         .send({
-          email: 'frank@email.com',
-          firstName: 'Frank',
-          lastName: 'Obi',
-          password: '12345',
+          email: 'John@email.com',
+          firstName: 'John',
+          lastName: 'Doe',
+          password: 'freedom',
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
           expect(response.status).to.equal(201);
           expect(response.body.status).to.equal(201);
-          expect(response.data).to.be.an('object');
-          expect(response.body.data).to.have.property('id');
+          expect(response.body.data).to.have.property('email');
           expect(response.body.data).to.have.property('firstName');
           expect(response.body.data).to.have.property('lastName');
-          expect(response.body.data).to.have.property('email');
-          expect(response.body.data.email).to.equal('frank@email.com');
+          expect(response.body.data).to.have.property('password');
           console.log(response.body);
           done();
         });
@@ -150,7 +148,7 @@ describe('Mocha test for User Controller', () => {
           expect(response.body).to.be.an('object');
           expect(response.status).to.equal(201);
           expect(response.body.status).to.equal(201);
-          expect(response.data).to.be.an('object');
+          expect(response.body.data).to.be.an('object');
           expect(response.body.data).to.have.property('email');
           expect(response.body.data.email).to.equal('frank@email.com');
           console.log(response.body);

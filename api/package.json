@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha ./test --require @babel/register --exit || true",
+    "test-watch": "nyc mocha ./test --require @babel/register -w --exit || true",
     "dev-start": "set DEBUG=app & nodemon --exec babel-node index.js"
   },
   "repository": {
