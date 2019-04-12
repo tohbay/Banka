@@ -6,7 +6,9 @@
   "scripts": {
     "test": "nyc mocha ./test --require @babel/register --exit || true",
     "test-watch": "nyc mocha ./test --require @babel/register -w --exit || true",
-    "dev-start": "set DEBUG=app & nodemon --exec babel-node index.js"
+    "dev-start": "set DEBUG=app & nodemon --exec babel-node index.js",
+    "build": "babel api --out-dir",
+    "coverage": "nyc --reporter=lcov --reporter=html --reporter=text mocha --require @babel/register api/test/*.js --exit"
   },
   "repository": {
     "type": "git",
@@ -25,8 +27,11 @@
     "@babel/register": "^7.4.0",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.2",
+    "coveralls": "^3.0.3",
+    "cross-env": "^5.2.0",
     "debug": "^4.1.1",
     "express": "^4.16.4",
+    "mocha-lcov-reporter": "^1.3.0",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
@@ -36,6 +41,7 @@
     "@babel/preset-env": "^7.4.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
+    "dotenv": "^7.0.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
@@ -45,7 +51,9 @@
   },
   "nodemonConfig": {
     "restartable": "rs",
-    "ignore": ["node_modules/**/node_modules"],
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
     "delay": "1000",
     "env": {
       "NODE_ENV": "development"
