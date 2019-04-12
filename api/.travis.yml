@@ -1,17 +1,9 @@
 language: node_js
-node_js: 
-  - "stable"
-
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+node_js:
+  - "10.15.3"
 
 script:
   - npm install
-
-after_script:
-- ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
   - npm run coverage

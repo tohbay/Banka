@@ -7,8 +7,9 @@
     "test": "nyc mocha ./test --require @babel/register --exit || true",
     "test-watch": "nyc mocha ./test --require @babel/register -w --exit || true",
     "dev-start": "set DEBUG=app & nodemon --exec babel-node index.js",
-    "build": "babel api --out-dir",
-    "coverage": "nyc --reporter=lcov --reporter=html --reporter=text mocha --require @babel/register api/test/*.js --exit"
+    "build": "babel banka --out-dir build",
+    "coverage": "nyc --reporter=lcov --reporter=html --reporter=text mocha --require @babel/register ./test --exit",
+    "coveralls": "nyc mocha --require @babel/register ./test/*.js --exit"
   },
   "repository": {
     "type": "git",
