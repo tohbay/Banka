@@ -8,5 +8,4 @@ const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
   debug(`API server started on port ${chalk.yellowBright(port)}`);
-  console.log(`API server started on port ${chalk.yellowBright(port)}`);
 });
