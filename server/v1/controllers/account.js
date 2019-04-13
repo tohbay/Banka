@@ -68,6 +68,19 @@ class accountController {
       data: retrieved
     });
   }
+
+  static delete(request, response) {
+    const { id } = request.params;
+    const retrieved = AccountModel.getOne(Number(id));
+    if (!retrieved) return response.status(404).send({ message: 'Account not found!' });
+    console.log(retrieved);
+    const deleteRetrieved = AccountModel.deleteOne(retrieved);
+    console.log(deleteRetrieved);
+    return response.status(200).send({
+      message: 'Account sucessfully deleted',
+      data: deleteRetrieved
+    });
+  }
 }
 
 export default accountController;
