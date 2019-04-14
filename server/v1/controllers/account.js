@@ -22,28 +22,30 @@ class accountController {
       });
     }
 
-
     const type = request.body;
 
     const newAccount = AccountModel.create(type);
     console.log(newAccount);
-    return response.status(201).send({
+    return response.status(201).json({
       status: 201,
       data: newAccount
     });
   }
 
   static getallAccounts(request, response) {
-    return response.status(200).send(accounts);
+    const accountRecords = AccountModel.getAll(accounts);
+    if (accountRecords.length === 0) return response.status(200).json({ status: 404, message: 'There are no account records' });
+    return response.status(200).json({ status: 200, accountRecords });
   }
 
   static getOne(request, response) {
     const { id } = request.params;
     const retrieved = AccountModel.getOne(Number(id));
-    if (!retrieved) return response.status(404).send({ message: ' Account number not found!' });
-
-    return response.status(200).send({
-      message: 'Account number sucessfully activated',
+    if (!retrieved) return response.status(404).json({ message: ' Account number not found!' });
+    console.log(retrieved.openingBalance);
+    return response.status(200).json({
+      status: 200,
+      message: 'Account number sucessfully retrieved',
       data: retrieved
     });
   }
@@ -51,32 +53,41 @@ class accountController {
   static patchOne(request, response) {
     const { accountNumber } = request.params;
     const retrieved = AccountModel.getOne(Number(accountNumber));
-    if (!retrieved) return response.status(404).send({ error: 'Account number not found!' });
-    if (!request.body.status) return response.status(400).send({ error: 'Status is required' });
+    if (!retrieved) return response.status(404).json({ status: 404, error: 'Account number not found!' });
+    if (!request.body.status) return response.status(400).json({ status: 400, error: 'Status is required' });
 
     retrieved.status = request.body.status;
 
     if (retrieved.status === 'active') {
-      return response.status(200).send({
+      return response.status(200).json({
+        status: 200,
         message: 'Account number sucessfully activated',
-        data: retrieved
+        data: {
+          accountNumber: retrieved.accountNumber,
+          status: retrieved.status
+        }
       });
     }
 
-    return response.status(200).send({
+    return response.status(200).json({
+      status: 200,
       message: 'Account number sucessfully deactivated',
-      data: retrieved
+      data: {
+        accountNumber: retrieved.accountNumber,
+        status: retrieved.status
+      }
     });
   }
 
-  static delete(request, response) {
-    const { id } = request.params;
-    const retrieved = AccountModel.getOne(Number(id));
-    if (!retrieved) return response.status(404).send({ message: 'Account not found!' });
-    console.log(retrieved);
-    const deleteRetrieved = AccountModel.deleteOne(retrieved);
-    console.log(deleteRetrieved);
-    return response.status(200).send({
+  static deleteAccount(request, response) {
+    const { accountNumber } = request.params;
+    const retrieved = AccountModel.getOne(Number(accountNumber));
+    if (!retrieved) return response.status(404).json({ message: 'Account not found!' });
+
+    const deleteRetrieved = AccountModel.deleteOne(Number(accountNumber));
+
+    return response.status(200).json({
+      status: 200,
       message: 'Account sucessfully deleted',
       data: deleteRetrieved
     });

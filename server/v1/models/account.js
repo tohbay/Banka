@@ -24,6 +24,13 @@ class AccountService {
     return newAccount;
   }
 
+  // AccountService.currencyFormat(0.00)
+  static currencyFormat(amount) {
+    const formatNGN = { style: 'currency', currency: 'NGN' };
+    const standard = new Intl.NumberFormat('en-US', formatNGN).format(amount);
+    return standard;
+  }
+
   static getOne(id) {
     const account = accounts.find(account => account.id === id);
     return account;

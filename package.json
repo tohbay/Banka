@@ -7,7 +7,7 @@
     "start": "node ./build/index.js",
     "test": "nyc mocha --require @babel/register --require @babel/polyfill server/test --exit || true",
     "test-watch": "nyc mocha ./server/test --require @babel/register -w --exit || true",
-    "dev-start": "DEBUG=app nodemon --exec babel-node server/index.js",
+    "dev-start": "set DEBUG=app & nodemon --exec babel-node server/index.js",
     "build": "babel server -d build",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov ./node_modules/.bin/codecov",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"

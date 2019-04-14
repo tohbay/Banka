@@ -129,7 +129,7 @@ describe('Mocha test for User Controller', () => {
           expect(response.body).to.be.an('object');
           expect(response.body.status).to.equal(400);
           expect(response.body.error).to.be.a('string');
-          expect(response.body.error).to.equal('Email already exist');
+          expect(response.body.error).to.equal('User already exist');
           done();
         });
     });
