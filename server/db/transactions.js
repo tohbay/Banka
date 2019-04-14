@@ -2,7 +2,7 @@ const transactions = [
   {
     id: 1,
     createdOn: new Date().toLocaleString(),
-    type: credit,
+    type: 'credit',
     accountNumber: 1,
     cashier: 1,
     amount: 500.00,
@@ -12,7 +12,7 @@ const transactions = [
   {
     id: 2,
     createdOn: new Date().toLocaleString(),
-    type: credit,
+    type: 'credit',
     accountNumber: 3,
     cashier: 1,
     amount: 30.67,
@@ -22,7 +22,7 @@ const transactions = [
   {
     id: 3,
     createdOn: new Date().toLocaleString(),
-    type: debit,
+    type: 'debit',
     accountNumber: 2,
     cashier: 1,
     amount: 500.00,
