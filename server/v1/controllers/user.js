@@ -33,7 +33,7 @@ class userController {
     if (emailExist) {
       return response.status(400).json({
         status: 400,
-        error: 'Email already exist',
+        error: 'User already exist',
       });
     }
 
