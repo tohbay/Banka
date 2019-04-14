@@ -116,22 +116,12 @@ describe('Mocha test for Account Controller', () => {
   });
 
   describe('Delete a specific account', () => {
-    const deleteUrl = '/api/v1/accounts/:id';
+    const deleteUrl = '/api/v1/accounts/:accountNumber';
     it('it should DELETE an account with the given id', (done) => {
       chai.request(app)
         .delete(deleteUrl)
         .send({
-          id: 1
-          // id: 2,
-          // accountNumber: 2,
-          // email: 'Emeka@email.com',
-          // firstName: 'Emeka',
-          // lastName: 'John',
-          // createdOn: new Date().toLocaleString(),
-          // owner: 2,
-          // type: 'savings',
-          // status: 'active',
-          // openingBalance: 550.35
+          accountNumber: 1
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
