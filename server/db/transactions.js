@@ -30,3 +30,5 @@ const transactions = [
     newBalance: 500.00
   }
 ];
+
+export default transactions;

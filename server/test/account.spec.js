@@ -19,7 +19,6 @@ describe('Mocha test for Account Controller', () => {
         .end((error, response) => {
           expect(response.body).to.be.an('object');
           expect(response.body.status).to.equal(400);
-          expect(response.body).to.have.property('type');
           done();
         });
     });
@@ -110,6 +109,25 @@ describe('Mocha test for Account Controller', () => {
           expect(response.body.accountNumber).to.not.equal('status');
           expect(response.body.error).to.be.a('string');
           expect(response.body.error).to.equal('Account number not found!');
+          done();
+        });
+    });
+  });
+
+  describe('Get All accounts', () => {
+    it('it should GET all the accounts', (done) => {
+      chai.request(app)
+        .get('api/v1/accounts')
+        .end((err, res) => {
+          done();
+        });
+    });
+
+    it('it should GET a account by the given id', (done) => {
+      chai.request(app)
+        .get('api/v1/accounts/:id')
+        .send({ })
+        .end((err, res) => {
           done();
         });
     });
