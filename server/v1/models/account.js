@@ -8,7 +8,7 @@ class AccountService {
 
   static create(data) {
     const newAccount = {
-      id: accounts[accounts.length - 1].id + 1,
+      id: accounts.length + 1,
       accountNumber: users[users.length - 1].id,
       firstName: users[users.length - 1].firstName,
       lastName: users[users.length - 1].lastName,
@@ -17,7 +17,7 @@ class AccountService {
       owner: users[users.length - 1].id,
       type: data.type,
       status: 'draft',
-      openingBalance: 0.00
+      balance: 0.00
     };
 
     accounts.push(newAccount);

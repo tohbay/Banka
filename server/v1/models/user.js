@@ -27,10 +27,10 @@ class UserService {
   }
 
   static deleteOne(id) {
-    const user = users.find(user => user.id === id);
+    const user = UserService.getOne(id);
 
-    const index = users.indexOf(user);
-    users.splice(index, 1);
+    const userIndex = users.indexOf(user);
+    users.splice(userIndex, 1);
 
     return user || {};
   }

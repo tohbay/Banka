@@ -60,7 +60,7 @@ class userController {
     }
 
     const { email, password } = request.body;
-    const emailExist = users.find(user => user.email === email);
+    const emailExist = UserService.getOne(email);
     const passwordExist = users.find(user => user.password === password);
     if (!emailExist || !passwordExist) {
       return response.status(400).json({

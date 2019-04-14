@@ -9,7 +9,7 @@ const accounts = [
     owner: 1,
     type: 'savings',
     status: 'draft',
-    openingBalance: parseFloat(0.00).toFixed(2)
+    balance: parseFloat(0.00).toFixed(2)
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const accounts = [
     owner: 2,
     type: 'savings',
     status: 'active',
-    openingBalance: 550.35
+    balance: 550.35
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ const accounts = [
     owner: 3,
     type: 'current',
     status: 'dormant',
-    openingBalance: 1000000.78
+    balance: 1000000.78
   }
 ];
 

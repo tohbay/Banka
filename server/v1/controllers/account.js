@@ -1,5 +1,4 @@
-import debug from 'debug';
-import AccountModel from '../models/account';
+import AccountService from '../models/account';
 import UserModel from '../models/user';
 import accounts from '../../db/accounts';
 import users from '../../db/users';
@@ -24,7 +23,7 @@ class accountController {
 
     const type = request.body;
 
-    const newAccount = AccountModel.create(type);
+    const newAccount = AccountService.create(type);
     console.log(newAccount);
     return response.status(201).json({
       status: 201,
@@ -33,14 +32,14 @@ class accountController {
   }
 
   static getallAccounts(request, response) {
-    const accountRecords = AccountModel.getAll(accounts);
+    const accountRecords = AccountService.getAll(accounts);
     if (accountRecords.length === 0) return response.status(200).json({ status: 404, message: 'There are no account records' });
     return response.status(200).json({ status: 200, accountRecords });
   }
 
   static getOne(request, response) {
     const { id } = request.params;
-    const retrieved = AccountModel.getOne(Number(id));
+    const retrieved = AccountService.getOne(Number(id));
     if (!retrieved) return response.status(404).json({ message: ' Account number not found!' });
     console.log(retrieved.openingBalance);
     return response.status(200).json({
@@ -52,7 +51,7 @@ class accountController {
 
   static patchOne(request, response) {
     const { accountNumber } = request.params;
-    const retrieved = AccountModel.getOne(Number(accountNumber));
+    const retrieved = AccountService.getOne(Number(accountNumber));
     if (!retrieved) return response.status(404).json({ status: 404, error: 'Account number not found!' });
     if (!request.body.status) return response.status(400).json({ status: 400, error: 'Status is required' });
 
@@ -81,10 +80,10 @@ class accountController {
 
   static deleteAccount(request, response) {
     const { accountNumber } = request.params;
-    const retrieved = AccountModel.getOne(Number(accountNumber));
+    const retrieved = AccountService.getOne(Number(accountNumber));
     if (!retrieved) return response.status(404).json({ message: 'Account not found!' });
 
-    const deleteRetrieved = AccountModel.deleteOne(Number(accountNumber));
+    const deleteRetrieved = AccountService.deleteOne(Number(accountNumber));
 
     return response.status(200).json({
       status: 200,
