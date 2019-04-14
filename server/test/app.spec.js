@@ -12,10 +12,10 @@ describe('Testing home endpoint', () => {
     const appUrl = '/api/v1/';
     chai.request(app)
       .get(appUrl)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.a('object');
-        console.log(res.body);
+      .end((error, response) => {
+        expect(response.status).to.equal(200);
+        expect(response.body).to.be.a('object');
+        console.log(response.body);
         done();
       });
   });

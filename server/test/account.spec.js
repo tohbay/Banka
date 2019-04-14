@@ -115,6 +115,25 @@ describe('Mocha test for Account Controller', () => {
     });
   });
 
+  describe('Get All accounts', () => {
+    it('it should GET all the accounts', (done) => {
+      chai.request(app)
+        .get('api/v1/accounts')
+        .end((err, res) => {
+          done();
+        });
+    });
+
+    it('it should GET a account by the given id', (done) => {
+      chai.request(app)
+        .get('api/v1/accounts/:id')
+        .send({ newaccount })
+        .end((err, res) => {
+          done();
+        });
+    });
+  });
+
   describe('Delete a specific account', () => {
     const deleteUrl = '/api/v1/accounts/:accountNumber';
     it('it should DELETE an account with the given id', (done) => {
