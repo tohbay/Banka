@@ -19,7 +19,6 @@ describe('Mocha test for Account Controller', () => {
         .end((error, response) => {
           expect(response.body).to.be.an('object');
           expect(response.body.status).to.equal(400);
-          expect(response.body).to.have.property('type');
           done();
         });
     });
@@ -127,7 +126,7 @@ describe('Mocha test for Account Controller', () => {
     it('it should GET a account by the given id', (done) => {
       chai.request(app)
         .get('api/v1/accounts/:id')
-        .send({ newaccount })
+        .send({ })
         .end((err, res) => {
           done();
         });

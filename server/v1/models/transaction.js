@@ -1,22 +1,22 @@
-import transaction from '../../db/transactions';
+import transactions from '../../db/transactions';
 
 class TransactionService {
   static getAll() {
-    return transaction;
+    return transactions;
   }
 
   static getOne(id) {
-    const account = transaction.find(account => account.id === id);
-    return account;
+    const transaction = transactions.find(transaction => transaction.id === id);
+    return transaction;
   }
 
   static deleteOne(id) {
-    const account = transaction.find(account => account.id === id);
+    const transaction = transactions.find(transaction => transaction.id === id);
 
-    const index = transaction.indexOf(account);
+    const index = transactions.indexOf(transaction);
     transaction.splice(index, 1);
 
-    return account;
+    return transaction;
   }
 }
 

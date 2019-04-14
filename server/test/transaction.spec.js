@@ -21,12 +21,12 @@ describe('Testing transactions endpoints', () => {
           cashier: 1,
           amount: 500.00,
           oldBalance: 0.00,
-          newBalance: 500.00
+          newBalance: 500.05
         })
         .end((error, response) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.an('object');
-          console.log(res.body);
+          expect(response.status).to.equal(200);
+          expect(response.body).to.be.an('object');
+          console.log(response.body);
           done();
         });
     });
@@ -46,9 +46,9 @@ describe('Testing transactions endpoints', () => {
           newBalance: 500.00
         })
         .end((error, response) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.an('object');
-          console.log(res.body);
+          expect(response.status).to.equal(200);
+          expect(response.body).to.be.an('object');
+          console.log(response.body);
           done();
         });
     });

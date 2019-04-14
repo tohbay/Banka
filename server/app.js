@@ -4,6 +4,7 @@ import morgan from 'morgan';
 
 import userRoutes from './v1/routes/user';
 import accountRoutes from './v1/routes/account';
+import transactionRoutes from './v1/routes/transaction';
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.get('/api/v1', (request, response) => {
 
 app.use('/api/v1/auth/', userRoutes);
 app.use('/api/v1/accounts/', accountRoutes);
+app.use('/api/v1/transactions/', transactionRoutes);
 
 
 export default app;
