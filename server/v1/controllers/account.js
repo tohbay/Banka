@@ -1,4 +1,3 @@
-import debug from 'debug';
 import AccountModel from '../models/account';
 import UserModel from '../models/user';
 import accounts from '../../db/accounts';
