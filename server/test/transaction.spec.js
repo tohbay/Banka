@@ -54,7 +54,7 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should post a credit transaction to a specified account number', (done) => {
-      const creditUrl = '/api/v1/transactions/:accountNumber/credit';
+      const creditUrl = '/api/v1/transactions/:accountNumber/:credit';
       chai.request(app)
         .post(creditUrl)
         .send({
