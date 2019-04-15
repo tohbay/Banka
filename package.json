@@ -11,7 +11,6 @@
     "build": "babel server -d build",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov ./node_modules/.bin/codecov",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
