@@ -32,7 +32,7 @@ const accounts = [
     createdOn: new Date().toLocaleString(),
     owner: 3,
     type: 'current',
-    status: 'draft',
+    status: 'dormant',
     balance: 1000000.78
   }
 ];
