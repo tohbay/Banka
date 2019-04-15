@@ -75,16 +75,16 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should post a debit transaction to a specified account number', (done) => {
-      const creditUrl = '/api/v1/transactions/:accountNumber/:debit';
+      const debitUrl = '/api/v1/transactions/:accountNumber/:debit';
       chai.request(app)
-        .post(creditUrl)
+        .post(debitUrl)
         .send({
           transactionId: 1,
           accountNumber: 1,
           createdOn: new Date().toLocaleString(),
           amount: 500.00,
           cashier: 1,
-          transactionType: 'credit',
+          transactionType: 'debit',
           accountBalance: 500.00
         })
         .end((error, response) => {

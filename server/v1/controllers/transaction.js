@@ -61,6 +61,43 @@ class TransactionController {
       data: creditDetails
     });
   }
+
+  static debitAccount(request, response) {
+    const { accountNumber } = request.params;
+    const { amount } = request.body;
+
+    const retrievedAccountRecord = AccountService.getOne(Number(accountNumber));
+
+    if (!retrievedAccountRecord) response.status(200).json({ status: 404, message: 'Account number with given Id does not exist' });
+    if (retrievedAccountRecord.status === 'dormant') response.status(400).json({ status: 400, message: 'Sorry,  Account is dormant; cannot proceed with this transaction' });
+    if (retrievedAccountRecord.status === 'draft') response.status(400).json({ status: 400, message: 'Sorry,  Account is not active; cannot proceed with this transaction' });
+
+    const oldBalance = retrievedAccountRecord.balance;
+
+    const transactionId = transactions.length + 1;
+    const cashier = 1;
+    const transactionType = 'debit';
+    const newBalance = oldBalance - amount;
+    retrievedAccountRecord.balance = newBalance;
+
+    const debitDetails = {
+      transactionId,
+      accountNumber,
+      amount,
+      cashier,
+      transactionType,
+      oldBalance,
+      newBalance
+    };
+
+    transactions.push(debitDetails);
+
+    return response.status(200).json({
+      status: 200,
+      message: 'Transaction complete, account debited successfully',
+      data: debitDetails
+    });
+  }
 }
 
 export default TransactionController;
