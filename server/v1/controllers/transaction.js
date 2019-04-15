@@ -32,7 +32,8 @@ class TransactionController {
     const retrievedAccountRecord = AccountService.getOne(Number(accountNumber));
 
     if (!retrievedAccountRecord) response.status(200).json({ status: 404, message: 'Account number with given Id does not exist' });
-    if (retrievedAccountRecord.status === 'dormant') response.status(200).json({ status: 404, message: 'Sorry,  Account is dormant; cannot proceed with this transaction' });
+    if (retrievedAccountRecord.status === 'dormant') response.status(400).json({ status: 400, message: 'Sorry,  Account is dormant; cannot proceed with this transaction' });
+    if (retrievedAccountRecord.status === 'draft') response.status(400).json({ status: 400, message: 'Sorry,  Account is not active; cannot proceed with this transaction' });
 
     const oldBalance = retrievedAccountRecord.balance;
 
