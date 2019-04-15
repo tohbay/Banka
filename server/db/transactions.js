@@ -1,6 +1,6 @@
 const transactions = [
   {
-    id: 1,
+    transactionId: 1,
     createdOn: new Date().toLocaleString(),
     type: 'credit',
     accountNumber: 1,
@@ -10,7 +10,7 @@ const transactions = [
     newBalance: 500.00
   },
   {
-    id: 2,
+    transactionId: 2,
     createdOn: new Date().toLocaleString(),
     type: 'credit',
     accountNumber: 3,
@@ -20,7 +20,7 @@ const transactions = [
     newBalance: 480.67
   },
   {
-    id: 3,
+    transactionId: 3,
     createdOn: new Date().toLocaleString(),
     type: 'debit',
     accountNumber: 2,

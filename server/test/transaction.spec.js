@@ -52,5 +52,26 @@ describe('Testing transactions endpoints', () => {
           done();
         });
     });
+
+    it('It should post a credit transaction to a specified account number', (done) => {
+      const creditUrl = '/api/v1/transactions/:accountNumber/:credit';
+      chai.request(app)
+        .post(creditUrl)
+        .send({
+          transactionId: 1,
+          accountNumber: 1,
+          createdOn: new Date().toLocaleString(),
+          amount: 500.00,
+          cashier: 1,
+          transactionType: 'credit',
+          accountBalance: 500.00
+        })
+        .end((error, response) => {
+          expect(response.status).to.equal(200);
+          expect(response.body).to.be.an('object');
+          console.log(response.body);
+          done();
+        });
+    });
   });
 });

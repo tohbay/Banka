@@ -9,7 +9,7 @@ const accounts = [
     owner: 1,
     type: 'savings',
     status: 'draft',
-    balance: parseFloat(0.00).toFixed(2)
+    balance: 0.00
   },
   {
     id: 2,
