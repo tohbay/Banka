@@ -1,5 +1,6 @@
 import transactions from '../../db/transactions';
 import AccountService from './account';
+import accounts from '../../db/accounts';
 
 class TransactionService {
   static getAll() {
@@ -13,7 +14,34 @@ class TransactionService {
     return transaction;
   }
 
-  static creditOne(accountNumber) {
+  static creditOne(data) {
+    const creditDetails = {
+      transactionId: transactions.length + 1,
+      createdOn: new Date().toLocaleString(),
+      type: data.type,
+      accountNumber: data.accountNumber,
+      amount: data.amount,
+      cashier: data.cashier,
+      oldBalance: data.oldBalance,
+      newBalance: data.newBalance
+    };
+
+    return transactions.push(creditDetails);
+  }
+
+  static debitOne(data) {
+    const debitDetails = {
+      transactionId: transactions.length + 1,
+      createdOn: new Date().toLocaleString(),
+      type: data.type,
+      accountNumber: data.accountNumber,
+      amount: data.amount,
+      cashier: data.cashier,
+      oldBalance: data.oldBalance,
+      newBalance: data.newBalance
+    };
+
+    return transactions.push(debitDetails);
   }
 
   static deleteOne(id) {

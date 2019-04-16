@@ -1,7 +1,5 @@
 import AccountService from '../models/account';
-import UserModel from '../models/user';
 import accounts from '../../db/accounts';
-import users from '../../db/users';
 
 class accountController {
   static create(request, response) {
@@ -12,19 +10,9 @@ class accountController {
       });
     }
 
-    const account = accounts[accounts.length - 1].id;
-    console.log(accounts[accounts.length - 1].id, accounts.length, users.length);
-    if (account === users.length) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Account already exist'
-      });
-    }
-
     const type = request.body;
 
     const newAccount = AccountService.create(type);
-    console.log(newAccount);
     return response.status(201).json({
       status: 201,
       data: newAccount
@@ -41,7 +29,6 @@ class accountController {
     const { id } = request.params;
     const retrieved = AccountService.getOne(Number(id));
     if (!retrieved) return response.status(404).json({ message: ' Account number not found!' });
-    console.log(retrieved.openingBalance);
     return response.status(200).json({
       status: 200,
       message: 'Account number sucessfully retrieved',

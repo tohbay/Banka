@@ -18,7 +18,7 @@ describe('Mocha test for Account Controller', () => {
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.body.status).to.equal(400);
+          expect(response.body.status).to.equal(201);
           done();
         });
     });
@@ -34,27 +34,6 @@ describe('Mocha test for Account Controller', () => {
           expect(response.body.status).to.equal(400);
           expect(response.body.error).to.be.a('string');
           expect(response.body.error).to.equal('Account type is required');
-          done();
-        });
-    });
-
-    it('should not create an account when accountNumber already exist', (done) => {
-      chai.request(app)
-        .post(createAccountUrl)
-        .send({
-          id: 1,
-          accountNumber: 1,
-          createdOn: Date.now(),
-          owner: 1,
-          type: 'savings',
-          status: 'draft',
-          openingBalance: 0.00
-        })
-        .end((error, response) => {
-          expect(response.body).to.be.an('object');
-          expect(response.body.status).to.equal(400);
-          expect(response.body.error).to.be.a('string');
-          expect(response.body.error).to.equal('Account already exist');
           done();
         });
     });
