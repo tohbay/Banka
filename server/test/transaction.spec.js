@@ -32,7 +32,7 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should fetch a specific transaction record', (done) => {
-      const specificTransactionUrl = '/api/v1/transactions/:id';
+      const specificTransactionUrl = '/api/v1/transactions/:id/';
       chai.request(app)
         .get(specificTransactionUrl)
         .send({
@@ -48,13 +48,12 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.be.an('object');
-          console.log(response.body);
           done();
         });
     });
 
     it('It should post a credit transaction to a specified account number', (done) => {
-      const creditUrl = '/api/v1/transactions/:accountNumber/credit';
+      const creditUrl = '/api/v1/transactions/:accountNumber/credit/';
       chai.request(app)
         .post(creditUrl)
         .send({
@@ -69,13 +68,12 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.be.an('object');
-          console.log(response.body);
           done();
         });
     });
 
     it('It should post a debit transaction to a specified account number', (done) => {
-      const debitUrl = '/api/v1/transactions/:accountNumber/debit';
+      const debitUrl = '/api/v1/transactions/:accountNumber/debit/';
       chai.request(app)
         .post(debitUrl)
         .send({
@@ -90,7 +88,6 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.be.an('object');
-          console.log(response.body);
           done();
         });
     });
