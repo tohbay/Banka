@@ -26,7 +26,6 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.be.an('object');
-          console.log(response.body);
           done();
         });
     });
@@ -58,12 +57,13 @@ describe('Testing transactions endpoints', () => {
         .post(creditUrl)
         .send({
           transactionId: 1,
-          accountNumber: 1,
           createdOn: new Date().toLocaleString(),
+          type: 'credit',
+          accountNumber: 1,
           amount: 500.00,
           cashier: 1,
-          transactionType: 'credit',
-          accountBalance: 500.00
+          oldBalance: 500.00,
+          newBalance: 1000.00
         })
         .end((error, response) => {
           expect(response.status).to.equal(200);
@@ -78,12 +78,13 @@ describe('Testing transactions endpoints', () => {
         .post(debitUrl)
         .send({
           transactionId: 1,
-          accountNumber: 1,
           createdOn: new Date().toLocaleString(),
+          type: 'credit',
+          accountNumber: 1,
           amount: 500.00,
           cashier: 1,
-          transactionType: 'debit',
-          accountBalance: 500.00
+          oldBalance: 500.00,
+          newBalance: 0.00
         })
         .end((error, response) => {
           expect(response.status).to.equal(200);

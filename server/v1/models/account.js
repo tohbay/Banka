@@ -9,7 +9,7 @@ class AccountService {
   static create(data) {
     const newAccount = {
       id: accounts.length + 1,
-      accountNumber: users[users.length - 1].id,
+      accountNumber: accounts.length + 1,
       firstName: users[users.length - 1].firstName,
       lastName: users[users.length - 1].lastName,
       email: users[users.length - 1].email,
