@@ -9,7 +9,7 @@ const should = chai.should();
 
 describe('Mocha test for User Controller', () => {
   describe('Mocha test for user signup route', () => {
-    const signupUrl = '/api/v1/auth/signup';
+    const signupUrl = '/api/v1/auth/signup/';
     it('should create a new user when all the parameters are given', (done) => {
       chai.request(app)
         .post(signupUrl)
@@ -27,7 +27,6 @@ describe('Mocha test for User Controller', () => {
           expect(response.body.data).to.have.property('firstName');
           expect(response.body.data).to.have.property('lastName');
           expect(response.body.data).to.have.property('password');
-          console.log(response.body);
           done();
         });
     });
@@ -136,7 +135,7 @@ describe('Mocha test for User Controller', () => {
   });
 
   describe('Mocha test for user signin route', () => {
-    const signinUrl = '/api/v1/auth/signin';
+    const signinUrl = '/api/v1/auth/signin/';
     it('should signin an existing user when all the parameters are given', (done) => {
       chai.request(app)
         .post(signinUrl)
@@ -151,7 +150,6 @@ describe('Mocha test for User Controller', () => {
           expect(response.body.data).to.be.an('object');
           expect(response.body.data).to.have.property('email');
           expect(response.body.data.email).to.equal('frank@email.com');
-          console.log(response.body);
           done();
         });
     });

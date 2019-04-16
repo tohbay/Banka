@@ -9,13 +9,12 @@ const should = chai.should();
 
 describe('Testing home endpoint', () => {
   it('It should return status of 200 on sucessful page load', (done) => {
-    const appUrl = '/api/v1/';
+    const appUrl = '/';
     chai.request(app)
       .get(appUrl)
       .end((error, response) => {
         expect(response.status).to.equal(200);
         expect(response.body).to.be.a('object');
-        console.log(response.body);
         done();
       });
   });

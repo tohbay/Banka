@@ -9,7 +9,7 @@ const should = chai.should();
 
 describe('Mocha test for Account Controller', () => {
   describe('Mocha test for creating a bank account', () => {
-    const createAccountUrl = '/api/v1/accounts';
+    const createAccountUrl = '/api/v1/accounts/';
     it('should create a bank account when all the parameters are given', (done) => {
       chai.request(app)
         .post(createAccountUrl)
@@ -61,7 +61,7 @@ describe('Mocha test for Account Controller', () => {
   });
 
   describe('Mocha test for PATCH request on a bank account', () => {
-    const patchUrl = '/api/v1/accounts/:accountNumber';
+    const patchUrl = '/api/v1/accounts/:accountNumber/';
     it('should patch a selected account number when all the parameters are given', (done) => {
       chai.request(app)
         .patch(patchUrl)
@@ -71,17 +71,7 @@ describe('Mocha test for Account Controller', () => {
         .end((error, response) => {
           expect(response.body).to.be.an('object');
           expect(response.status).to.equal(404);
-          // expect(response.data).to.be.an('object');
-          // expect(response.body.data).to.have.property('id');
-          // expect(response.body.data).to.have.property('accountNumber');
-          // expect(response.body.data).to.have.property('firstName');
-          // expect(response.body.data).to.have.property('lastName');
-          // expect(response.body.data).to.have.property('createdOn');
-          // expect(response.body.data).to.have.property('openingBalance');
-          // expect(response.body.data).to.have.property('email');
-          // expect(response.body.data).to.have.property('type');
           expect(response.body).to.have.property('status');
-          // expect(response.body.data.email).to.equal('frank@email.com');
           done();
         });
     });
@@ -117,7 +107,7 @@ describe('Mocha test for Account Controller', () => {
   describe('Get All accounts', () => {
     it('it should GET all the accounts', (done) => {
       chai.request(app)
-        .get('api/v1/accounts')
+        .get('/api/v1/accounts/')
         .end((err, res) => {
           done();
         });
@@ -125,7 +115,7 @@ describe('Mocha test for Account Controller', () => {
 
     it('it should GET a account by the given id', (done) => {
       chai.request(app)
-        .get('api/v1/accounts/:id')
+        .get('/api/v1/accounts/:id/')
         .send({ })
         .end((err, res) => {
           done();
@@ -134,7 +124,7 @@ describe('Mocha test for Account Controller', () => {
   });
 
   describe('Delete a specific account', () => {
-    const deleteUrl = '/api/v1/accounts/:accountNumber';
+    const deleteUrl = '/api/v1/accounts/:accountNumber/';
     it('it should DELETE an account with the given id', (done) => {
       chai.request(app)
         .delete(deleteUrl)
