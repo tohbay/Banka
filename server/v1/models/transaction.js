@@ -18,7 +18,8 @@ class TransactionService {
     const creditDetails = {
       transactionId: transactions.length + 1,
       createdOn: new Date().toLocaleString(),
-      type: data.type,
+      // type: data.type,
+      type: 'credit',
       accountNumber: data.accountNumber,
       amount: data.amount,
       cashier: data.cashier,
@@ -31,8 +32,8 @@ class TransactionService {
 
   static debitOne(data) {
     const debitDetails = {
-      transactionId: transactions.length + 1,
-      createdOn: new Date().toLocaleString(),
+      transactionId: data.transactionId,
+      createdOn: data.createdOn,
       type: data.type,
       accountNumber: data.accountNumber,
       amount: data.amount,
