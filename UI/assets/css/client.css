@@ -94,9 +94,9 @@ body {
   background: #fff;
 }
 
-#client-container .create-account-form {
+/* #client-container .create-account-form {
   display: none;
-}
+} */
 
 .account-type {
   margin-right: 1em;
@@ -152,7 +152,6 @@ body {
 /* Account Summary */
 .account-summary p {
   width: fit-content;
-  border-bottom: 2px solid #000;
   font-weight: bold;
 }
 
@@ -167,7 +166,13 @@ body {
 }
 
 .account-summary .account-created {
+  list-style: none;
+  margin-top: 1em;
+  text-align: center;
+  padding: 0.3em;
   background: #282;
+  border-radius: 3px;
+  color: #fff;
 }
 
 .account-create fieldset {
@@ -201,15 +206,12 @@ padding: 0.2em;
   border-radius: 3px;
 }
 
-#account-profile {
-  display: none;
-}
-
 .account-profile-details {
   width: 100%;
   background: #ececec;
   border-top: 2px solid #282;
   border-bottom: 2px solid #282;
+  margin: 0.8em 0;
 
 }
 
@@ -231,7 +233,7 @@ padding: 0.2em;
 }
 
 .view-account-transactions {
-  width: 100%;
+  width: fit-content;
   margin: 0.7em 0;
   padding: 1em 0;
 }

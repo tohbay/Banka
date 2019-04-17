@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Banka</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/client.css">
+  <link rel="stylesheet" href="../css/transaction.css">
+  <link rel="stylesheet" href="../css/admin-dashboard.css">
+</head>
+<body>
+  <header id="header">
+    <div id="container">
+      <div class="navigation">
+        <p class="logo">Banka</p>
+        <nav id="nav">
+          <ul>
+            <li><a class="btn" href="../../index.html">Home</a></li>
+            <li><a class="btn" href="../../index.html">Logout</a></li>
+            <li><img class="user-image" src="../images/myDp.png" alt=""></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main id="client">
+    <div id="container">
+        <section >
+            <div id="client-container">
+              <div class="client-items user-detail">
+                <p>Welcome Admin,</p>
+              </div>
+              <div class="client-items account-actions">
+                  <button id="transact-account" class=" client-btn">Credit/Debit Account</button>
+                  <button id="show-accounts" class="client-btn">View Accounts</button>
+                  <button id="view-transactions" class="client-btn">Transactions History</button>
+              </div>
+              <div id="transact-form"  class="client-items account-summary">
+                  <p>Account Profile:</p>
+                  <div class="search-one">
+                    <input type="text" class="transaction-inputBox" placeholder="Enter Account No"><button class="client-btn">Search for Account</button>
+                  </div>
+                  <div class="account-profile-details">
+                      <div class="account-info">
+                        <p>Account Type:</p>
+                        <p>Savings</p>
+                      </div>
+                      <div class="account-info">
+                        <p>Balance:</p>
+                        <p>#500.00</p>
+                      </div>
+                      <div class="account-info">
+                        <p>Account No:</p>
+                        <p>123445</p>
+                      </div>
+                      <div class="account-info">
+                        <p>Account Status:</p>
+                        <p>Active</p>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="cashier-actions">
+                    <button id="view-transactions" class="client-btn cashier-btn credit-account">Credit Account</button>
+                    <input type="text" class="transaction-inputBox transaction-amount" placeholder="Enter Amount">
+                    <button id="view-transactions" class="client-btn cashier-btn debit-account">Dedit Account</button>
+                  </div>
+              </div>
+
+              <div id="view-accounts" class="client-items accounts">
+                  <p>Existing Accounts:</p>
+                  <div class="existing-accounts">
+                    <div class="account-profile-details">
+                        <div class="account-info">
+                          <p>Account Type:</p>
+                          <p>Savings</p>
+                        </div>
+                        <div class="account-info">
+                          <p>Balance:</p>
+                          <p>#500.00</p>
+                        </div>
+                        <div class="account-info">
+                          <p>Account No:</p>
+                          <p>123445</p>
+                        </div>
+                        <div class="account-info">
+                          <p>Account Status:</p>
+                          <p>draft</p>
+                        </div>
+                    </div>
+                    <div class="cashier-actions">
+                      <button id="view-transactions" class="client-btn cashier-btn credit-account">Activate</button>
+                      <button id="view-transactions" class="client-btn cashier-btn debit-account">Deactivate</button>
+                    </div>
+                  </div>
+                    <div class="account-profile-details">
+                        <div class="account-info">
+                          <p>Account Type:</p>
+                          <p>Savings</p>
+                        </div>
+                        <div class="account-info">
+                          <p>Balance:</p>
+                          <p>#500.00</p>
+                        </div>
+                        <div class="account-info">
+                          <p>Account No:</p>
+                          <p>123445</p>
+                        </div>
+                        <div class="account-info">
+                          <p>Account Status:</p>
+                          <p>Active</p>
+                        </div>
+                    </div>
+                    <div class="cashier-actions">
+                      <button id="view-transactions" class="client-btn cashier-btn credit-account">Activate</button>
+                      <button id="view-transactions" class="client-btn cashier-btn debit-account">Deactivate</button>
+                    </div>
+                  </div>
+                  
+              </div>
+              <div id="transaction-history" class="client-items account-actions transaction">
+                  <div class="client-items">
+                      <p>Transactions History</p>
+                  </div>
+                   <div class="card">
+                     <div class="card-container">
+                       <h3>Savings Account</h3>
+                       <div class="account-details">
+                         <div class="transactions">
+                             <div class="amount">
+                               <p class="credit">Credit</p>
+                               <p class="actual">#50.00</p>
+                               <p id="view-details" class="view">View details</p>
+                             </div>
+                             <div class="date-transaction">
+                                 <p>19th March 2019.</p>
+                             </div>
+        
+                         </div>
+                         <div class="transactions">
+                             <div class="amount">
+                               <p class="debit">Debit</p>
+                               <p class="actual">#50.00</p>
+                               <p id="view-details" class="view">View details</p>
+                             </div>
+                             <div class="date-transaction">
+                               <p>26th March 2019.</p>
+                             </div>
+        
+                         </div>
+                       </div>
+                     </div>
+                     <div class="card-container">
+                         <h3>Current Account</h3>
+                         <div class="account-details">
+                           <p class="history">No transactions here</p>
+                         </div>
+                     </div>
+                   </div>
+              </div>
+            </div>
+        </div>
+
+        </section>
+    </div>
+  </main>
+  <footer id="footer">
+      <p>Tobechukwu Obitube &copy; 2019.</p>
+  </footer>
+  <script src="../js/cashier.js"></script>
+  <script src="../js/user.js"></script>
+</body>
+</html>
