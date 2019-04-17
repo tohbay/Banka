@@ -14,7 +14,16 @@ describe('Mocha test for Account Controller', () => {
       chai.request(app)
         .post(createAccountUrl)
         .send({
-          type: 'savings'
+          id: 3,
+          accountNumber: 3,
+          email: 'mark@email.com',
+          firstName: 'Mark',
+          lastName: 'James',
+          createdOn: new Date().toLocaleString(),
+          owner: 3,
+          type: 'current',
+          status: 'dormant',
+          balance: 1000000.78
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
@@ -27,7 +36,15 @@ describe('Mocha test for Account Controller', () => {
       chai.request(app)
         .post(createAccountUrl)
         .send({
-
+          id: 3,
+          accountNumber: 3,
+          email: 'mark@email.com',
+          firstName: 'Mark',
+          lastName: 'James',
+          createdOn: new Date().toLocaleString(),
+          owner: 3,
+          status: 'dormant',
+          balance: 1000000.78
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
@@ -71,7 +88,17 @@ describe('Mocha test for Account Controller', () => {
     it('should not patch the account number when the status is missing', (done) => {
       chai.request(app)
         .patch(patchUrl)
-        .send({ })
+        .send({
+          id: 3,
+          accountNumber: 3,
+          email: 'mark@email.com',
+          firstName: 'Mark',
+          lastName: 'James',
+          createdOn: new Date().toLocaleString(),
+          owner: 3,
+          type: 'current',
+          balance: 1000000.78
+        })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
           expect(response.status).to.equal(404);
@@ -87,7 +114,7 @@ describe('Mocha test for Account Controller', () => {
     it('it should GET all the accounts', (done) => {
       chai.request(app)
         .get('/api/v1/accounts/')
-        .end((err, res) => {
+        .end((error, response) => {
           done();
         });
     });
@@ -95,8 +122,7 @@ describe('Mocha test for Account Controller', () => {
     it('it should GET a account by the given id', (done) => {
       chai.request(app)
         .get('/api/v1/accounts/:id/')
-        .send({ })
-        .end((err, res) => {
+        .end((error, response) => {
           done();
         });
     });

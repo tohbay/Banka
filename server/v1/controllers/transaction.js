@@ -2,25 +2,22 @@ import transactions from '../../db/transactions';
 import TransactionService from '../models/transaction';
 import AccountService from '../models/account';
 
-
 class TransactionController {
   static fetchAll(request, response) {
-    const transactionRecords = TransactionService.getAll(transactions);
-    if (transactionRecords.length === 0) return response.status(200).json({ status: 404, message: 'There are no transaction records' });
+    const allTransactions = TransactionService.getAll(transactions);
+    if (allTransactions.length === 0) return response.status(404).json({ status: 404, error: 'There are no transaction records' });
     return response.status(200).json({
       status: 200,
-      message: 'All Transactions retrieved successfully',
-      data: transactionRecords
+      data: allTransactions
     });
   }
 
   static fetchSpecificTransaction(request, response) {
     const { id } = request.params;
     const specificTransactionRecord = TransactionService.getOne(Number(id));
-    if (!specificTransactionRecord) return response.status(200).json({ status: 404, message: 'Transaction with given Id does not exist' });
+    if (!specificTransactionRecord) return response.status(404).json({ status: 404, error: 'Transaction record not found' });
     return response.status(200).json({
       status: 200,
-      message: 'All Transactions retrieved successfully',
       data: specificTransactionRecord
     });
   }
@@ -30,9 +27,8 @@ class TransactionController {
     const { amount, cashier } = request.body;
     const retrievedAccountRecord = AccountService.getOne(Number(accountNumber));
 
-    if (!retrievedAccountRecord) return response.status(200).json({ status: 404, message: 'Unable to retrieve account' });
-    if (retrievedAccountRecord.status === 'dormant') return response.status(400).json({ status: 400, message: 'Sorry,  Account is dormant; cannot proceed with this transaction' });
-    if (retrievedAccountRecord.status === 'draft') return response.status(400).json({ status: 400, message: 'Sorry,  Account is not active; cannot proceed with this transaction' });
+    if (!retrievedAccountRecord) return response.status(404).json({ status: 404, error: 'Account not found' });
+    if (retrievedAccountRecord.status !== 'active') return response.status(400).json({ status: 400, error: 'Sorry, Account is not active' });
 
     const oldBalance = retrievedAccountRecord.balance;
     const transactionId = transactions.length + 1;
@@ -53,7 +49,6 @@ class TransactionController {
     TransactionService.creditOne(creditDetails);
     return response.status(200).json({
       status: 200,
-      message: 'Transaction complete, account credited successfully',
       data: creditDetails
     });
   }
@@ -63,10 +58,9 @@ class TransactionController {
     const { amount, cashier } = request.body;
     const retrievedAccountRecord = AccountService.getOne(Number(accountNumber));
 
-    if (!retrievedAccountRecord) response.status(200).json({ status: 404, message: 'Unable to retrieve account' });
-    if (retrievedAccountRecord.status === 'dormant') return response.status(400).json({ status: 400, message: 'Sorry,  Account is dormant; cannot proceed with this transaction' });
-    if (retrievedAccountRecord.status === 'draft') return response.status(400).json({ status: 400, message: 'Sorry,  Account is not active; cannot proceed with this transaction' });
-    if (retrievedAccountRecord.balance < amount) return response.status(400).json({ status: 400, message: 'Sorry,  insufficient fund' });
+    if (!retrievedAccountRecord) return response.status(404).json({ status: 404, error: 'Account not found' });
+    if (retrievedAccountRecord.status !== 'active') return response.status(400).json({ status: 400, error: 'Sorry, Account is not active' });
+    if (retrievedAccountRecord.balance < amount) return response.status(400).json({ status: 400, error: 'Sorry,  insufficient fund' });
 
     const oldBalance = retrievedAccountRecord.balance;
     const transactionId = transactions.length + 1;
@@ -86,9 +80,8 @@ class TransactionController {
     };
 
     TransactionService.debitOne(debitDetails);
-    return response.status(200).json({
-      status: 200,
-      message: 'Transaction complete, account debited successfully',
+    return response.status(201).json({
+      status: 201,
       data: debitDetails
     });
   }
