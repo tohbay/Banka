@@ -62,3 +62,9 @@ typings/
 
 # editorconfig
 .editorconfig
+
+# ES5 build folder
+build/
+
+# coverage lcov output
+coverage.lcov
