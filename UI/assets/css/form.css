@@ -46,6 +46,18 @@ body {
   text-align: left;
 }
 
+.staff-login {
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #dad6d659;
+}
+.staff-login form {
+  margin-bottom: 2em;
+}
+
 /* Input fields */
   input[type=text], input[type=password] {
   width: 100%;
@@ -82,6 +94,10 @@ input[type=text]:focus, input[type=password]:focus {
   background: #4CAF50;
 }
 
+#form-container .admin-login {
+  background: #f55;
+}
+
 .have-account p {
   width: 100%;
   text-align: center;
@@ -103,6 +119,7 @@ input[type=text]:focus, input[type=password]:focus {
   background: none;
 }
 
+
 /* Footer */
 #footer {
   height: 10vh;
@@ -111,7 +128,14 @@ input[type=text]:focus, input[type=password]:focus {
 
 @media screen and (min-width: 768px) {
   #form-container {
-    max-width: 40%;
+    max-width: 70%;
     margin: 0 auto;
+  }
+  
+  .staff-login {
+    /* width: 70%; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }

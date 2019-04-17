@@ -3,8 +3,8 @@ const createAccount = document.getElementById('create-account');
 const createAccountForm = document.getElementById('create-account-form');
 const noAccount = document.getElementById('no-accounts');
 const create = document.getElementById('create');
-const accountProfile  = document.getElementById('account-profile');
-const viewProfile  = document.getElementById('view-profile');
+const accountProfile = document.getElementById('account-profile');
+const viewProfile = document.getElementById('view-profile');
 
 viewProfile.style.display = 'none';
 
@@ -27,7 +27,7 @@ const showAccountProfile = () => {
   accountProfile.style.display = 'block';
   noAccount.style.display = 'none';
   accountCreated.style.display = 'none';
-}
+};
 
 viewProfile.disabled = false;
 

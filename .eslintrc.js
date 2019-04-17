@@ -19,6 +19,7 @@ module.exports = {
 		"no-undef": 0,
 		"no-unused-vars": 0,
 		"no-param-reassign": 0,
-		"no-shadow": 0
+		"no-shadow": 0,
+		"no-plusplus": 0,
 	}
 };
