@@ -17,7 +17,6 @@
           <nav id="nav">
             <ul>
               <li><a class="btn" href="../../index.html">Home</a></li>
-              <li><a class="btn" href="cashier-form.html">Staff Login</a></li>
             </ul>
           </nav>
         </div>
@@ -26,20 +25,20 @@
   </header>
   <main id="login">
       <section >
+        <!-- The lines of code for the form is credited to https://www.w3schools.com/css/css_form.asp -->
           <div id="form-container" class="user-form">
-            <!-- The lines of code for the form is credited to https://www.w3schools.com/css/css_form.asp -->
-            <form  action="client.html">
+            <form id="admin-form" class="staff-forms" action="admin.html">
                 <div class="bg-img">
                     <form action="" class="container">
-                      <h1>Login Here</h1>
+                      <h1>Admin Login</h1>
                       <label for="email"><b>Email</b></label>
                       <input type="text" placeholder="Enter Email" name="email" required>
                       <label for="password"><b>Password</b></label>
                       <input type="password" placeholder="Enter Password" name="password" required>
-                      <button type="submit" class="btn">Login</button>
+                      <button type="submit" class="btn admin-login">Admin Login</button>
                     </form>
-                    <div class="have-account">
-                      <p>Don't have account? <span><b><a class="btn" href="signup.html">Sign up</a></b></span></p>
+                    <div id="adminLink">
+                        <p><b><a href="cashier-form.html">Login as Cashier</a></b></p>
                     </div>
                   </div>
             </form>
@@ -48,6 +47,6 @@
   </main>
   <footer id="footer">
       <p>Tobechukwu Obitube &copy; 2019.</p>
-    </footer>
+  </footer>
 </body>
 </html>

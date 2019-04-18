@@ -111,6 +111,7 @@ align-items: center;
 .cashier-actions {
   display: flex;
   justify-content: center;
+  margin: 0.8em 0;
 }
 
 .cashier-btn,

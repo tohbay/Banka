@@ -18,7 +18,7 @@
         <nav id="nav">
           <ul>
             <li><a class="btn" href="../../index.html">Home</a></li>
-            <li><a class="btn" href="#">Logout</a></li>
+            <li><a class="btn" href="../../index.html">Logout</a></li>
             <li><img class="user-image" src="../images/myDp.png" alt=""></li>
           </ul>
         </nav>
@@ -28,64 +28,145 @@
   <main id="client">
     <div id="container">
     <section >
-        <div id="client-container">
+      <div id="client-container">
+        <div class="client-actions">
           <div class="client-items user-detail">
             <p>Welcome, Client</p>
           </div>
           <div class="client-items account-actions">
-            <button id="create-account" class=" client-btn create-account">Create Account</button>
-            <button id="view-profile" class="client-btn view-profile">My Account Profile</button>
-          </div>
-          <div class="client-items account-summary">
-            <p>Account Profile:</p>
-            <ul>
-              <li id="no-accounts" class="no-accounts">No Accounts Yet</li>
-              <li id="account-created" class="account-created">Account successfully created</li>
-            </ul>
-          </div>
-          <div id="create-account-form" class="client-items create-account-form">
-            <form action="" class="account-create">
-              <fieldset>
-                <legend>Select Account Type:</legend>
-                <span>
-                  <p>Type of Account:</p>
-                  <select class="account-type" value="account-type">
-                      <option name="savings" id="savings">Savings</option>
-                      <option name="current" id="current">Current</option>
-                  </select>
-                  <button id="create" class="client-btn create">Create Account</button>
-                </span>
-              </fieldset>
-            </form>
-          </div>
-          <div id="account-profile" class="client-items user-account">
-            <div class="account-profile-details">
-              <div class="account-info">
-                <p>Account Type:</p>
-                <p>Savings</p>
-              </div>
-              <div class="account-info">
-                <p>Balance:</p>
-                <p>#0.00</p>
-              </div>
-              <div class="account-info">
-                <p>Account No:</p>
-                <p>Pending</p>
-              </div>
-              <div class="account-info">
-                <p>Account Status:</p>
-                <p>Draft</p>
-              </div>
-            </div>
-              <a href="client-dashboard.html"><button class="client-btn view-account-transactions">View Account Transactions</button></a>
+              <button id="create-account" class=" client-btn">Create Account</button>
+              <button id="view-profile" class="client-btn">Account Profile</button>
+              <button id="view-transactions" class="client-btn">Transaction History</button>
           </div>
         </div>
+        <div class="client-details account-summary">
+          <li id="account-created" class="account-created ">Account successfully created</li>
+        <div id="create-account-form" class="client-items create-account-form">
+          <div class="client-item account-summary">
+            <p>Create Account:</p>
+          </div>
+          <form action="" class="account-create">
+            <fieldset>
+              <legend>Select Account Type:</legend>
+              <span>
+                <p>Type of Account:</p>
+                <select class="account-type" value="account-type">
+                    <option name="savings" id="savings">Savings</option>
+                    <option name="current" id="current">Current</option>
+                </select>
+                <button id="create" class="client-btn create">Create Account</button>
+              </span>
+            </fieldset>
+          </form>
+        </div>
+        <div id="account-profile" class="client-items user-account">
+            <div class="client-item account-summary">
+              <p>Account Profile:</p>
+            </div>
+          <div class="account-profile-details">
+            <div class="account-info">
+              <p>Account Type:</p>
+              <p>Savings</p>
+            </div>
+            <div class="account-info">
+              <p>Balance:</p>
+              <p>#0.00</p>
+            </div>
+            <div class="account-info">
+              <p>Account No:</p>
+              <p>Pending</p>
+            </div>
+            <div class="account-info">
+              <p>Status:</p>
+              <p>Draft</p>
+            </div>
+          </div>
+        </div>
+
+         <div id="transaction-history" class="client-items transaction">
+            <div class="client-items account-summary user-detail">
+                <p>Transactions History</p>
+            </div>
+             <div class="card">
+               <div class="card-container">
+                 <h3>Savings Account</h3>
+                 <div class="account-details">
+                   <div class="transactions">
+                       <div class="amount">
+                         <p class="credit">Credit</p>
+                         <p class="actual">#50.00</p>
+                         <p id="view-details" class="view">View details</p>
+                       </div>
+                       <div class="date-transaction">
+                           <p>19th March 2019.</p>
+                       </div>
+                       <hr>
+                   </div>
+                   <div class="transactions">
+                       <div class="amount">
+                         <p class="debit">Debit</p>
+                         <p class="actual">#50.00</p>
+                         <p id="view-details" class="view">View details</p>
+                       </div>
+                       <div class="date-transaction">
+                         <p>26th March 2019.</p>
+                       </div>
+                       <hr>
+                   </div>
+                 </div>
+               </div>
+               <div class="card-container">
+                   <h3>Current Account</h3>
+                   <div class="account-details">
+                     <p class="history">No transactions here</p>
+                   </div>
+               </div>
+             </div>
+             <div id="account-transactions">
+                 <h2>Transaction Details:</h2>
+                 <div class="account">
+                   <div>
+                     <p>Account Type:</p>
+                     <p>Current Balance:</p>
+                     <p>Account No:</p>
+                   </div>
+                   <div>
+                     <p>Savings</p>
+                     <p>#200.00</p>
+                     <p>000000000</p>
+                   </div>
+                 </div>
+                 <hr>
+                 <h2>Mini Statement:</h2>
+                 <div class="mini-statement">
+                   <div>
+                       <p>Cashier:</p>
+                       <p>Amount:</p>
+                       <p>Date:</p>
+                       <p>Transaction Type:</p>
+                       <p>Old balance:</p>
+                       <p>New Balance:</p>
+                   </div>
+                   <div>
+                     <p>12</p>
+                     <p>#100.00</p>
+                     <p>12th March 2019</p>
+                     <p>Debit</p>
+                     <p>#100.00</p>
+                     <p>#200.00</p>
+                   </div>
+                 </div>
+                 <hr>
+             </div>
+         </div>
+        </div>
+      </div>
       </div>
     </section>
   </main>
   <footer id="footer">
       <p>Tobechukwu Obitube &copy; 2019.</p>
   </footer>
-  <script src="../js/create-account.js"></script>
+  <script src="../js/user.js"></script>
 </body>
 </html>
