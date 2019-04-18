@@ -17,7 +17,7 @@
         <nav id="nav">
           <ul>
               <li><a class="btn" href="../../index.html">Home</a></li>
-              <li><a class="btn" href="#">Admin</a></li>
+              <li><a class="btn" href="../../assets/pages/login.html">Login</a></li>
           </ul>
         </nav>
       </div>
@@ -25,9 +25,10 @@
   </header>
   <main id="signup">
       <section>
-          <div id="form-container">
+          <div id="form-container" class="user-form">
             <form action="client.html">
                 <div class="bg-img">
+                  <!-- The lines of code for the form is credited to https://www.w3schools.com/css/css_form.asp -->
                     <form class="container">
                       <h1>Sign up Here</h1>
                       <label for="email"><b>Email</b></label>
@@ -38,6 +39,8 @@
                       <input type="text" placeholder="Enter Last name" name="lastName" required>
                       <label for="password"><b>Password</b></label>
                       <input type="password" placeholder="Enter Password" name="password" required>
+                      <label for="confirmPassword"><b>Confirm Password</b></label>
+                      <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
                       <button type="submit" class="btn">Sign up</button>
                     </form>
                     <div class="have-account">

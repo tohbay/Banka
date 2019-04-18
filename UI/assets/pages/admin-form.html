@@ -25,20 +25,9 @@
   </header>
   <main id="login">
       <section >
-          <div id="form-container" class="staff-login">
-            <form action="cashier.html">
-                <div class="bg-img">
-                    <form action="" class="container">
-                      <h1>Cashier Login</h1>
-                      <label for="email"><b>Email</b></label>
-                      <input type="text" placeholder="Enter Email" name="email" required>
-                      <label for="password"><b>Password</b></label>
-                      <input type="password" placeholder="Enter Password" name="password" required>
-                      <button type="submit" class="btn">Cashier Login</button>
-                    </form>
-                  </div>
-            </form>
-            <form action="admin.html">
+        <!-- The lines of code for the form is credited to https://www.w3schools.com/css/css_form.asp -->
+          <div id="form-container" class="user-form">
+            <form id="admin-form" class="staff-forms" action="admin.html">
                 <div class="bg-img">
                     <form action="" class="container">
                       <h1>Admin Login</h1>
@@ -48,6 +37,9 @@
                       <input type="password" placeholder="Enter Password" name="password" required>
                       <button type="submit" class="btn admin-login">Admin Login</button>
                     </form>
+                    <div id="adminLink">
+                        <p><b><a href="cashier-form.html">Login as Cashier</a></b></p>
+                    </div>
                   </div>
             </form>
           </div>
@@ -55,6 +47,6 @@
   </main>
   <footer id="footer">
       <p>Tobechukwu Obitube &copy; 2019.</p>
-    </footer>
+  </footer>
 </body>
 </html>
