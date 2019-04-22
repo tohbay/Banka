@@ -7,7 +7,7 @@ import indexRoutes from './v1/routes/index';
 const app = express();
 
 app.use(morgan('tiny'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
