@@ -14,43 +14,11 @@ describe('Mocha test for Account Controller', () => {
       chai.request(app)
         .post(createAccountUrl)
         .send({
-          id: 3,
-          accountNumber: 3,
-          email: 'mark@email.com',
-          firstName: 'Mark',
-          lastName: 'James',
-          createdOn: new Date().toLocaleString(),
-          owner: 3,
-          type: 'current',
-          status: 'dormant',
-          balance: 1000000.78
+          type: 'current'
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.body.status).to.equal(201);
-          done();
-        });
-    });
-
-    it('should not create a bank account when the type is missing', (done) => {
-      chai.request(app)
-        .post(createAccountUrl)
-        .send({
-          id: 3,
-          accountNumber: 3,
-          email: 'mark@email.com',
-          firstName: 'Mark',
-          lastName: 'James',
-          createdOn: new Date().toLocaleString(),
-          owner: 3,
-          status: 'dormant',
-          balance: 1000000.78
-        })
-        .end((error, response) => {
-          expect(response.body).to.be.an('object');
-          expect(response.body.status).to.equal(400);
-          expect(response.body.error).to.be.a('string');
-          expect(response.body.error).to.equal('Account type is required');
+          expect(response.status).to.equal(403);
           done();
         });
     });
@@ -66,7 +34,7 @@ describe('Mocha test for Account Controller', () => {
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body).to.have.property('status');
           done();
         });
@@ -78,9 +46,9 @@ describe('Mocha test for Account Controller', () => {
         .send()
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body.error).to.be.a('string');
-          expect(response.body.error).to.equal('Account number not found!');
+          expect(response.body.error).to.equal('Access denied, Provide authorization');
           done();
         });
     });
@@ -101,10 +69,10 @@ describe('Mocha test for Account Controller', () => {
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body.accountNumber).to.not.equal('status');
           expect(response.body.error).to.be.a('string');
-          expect(response.body.error).to.equal('Account number not found!');
+          expect(response.body.error).to.equal('Access denied, Provide authorization');
           done();
         });
     });
@@ -138,7 +106,7 @@ describe('Mocha test for Account Controller', () => {
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           done();
         });
     });

@@ -1,44 +1,45 @@
+// import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import UserService from '../models/user';
 import users from '../../db/users';
+import validate from '../../middleware/validate';
+import helpers from '../../middleware/helpers';
 
 class userController {
   static signup(request, response) {
-    if (!request.body.firstName) {
+    const { value, error } = validate.signup(request.body);
+    if (error) {
       return response.status(400).json({
         status: 400,
-        error: 'First name is required',
-      });
-    }
-    if (!request.body.lastName) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Last name is required',
-      });
-    }
-    if (!request.body.email) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Email is required',
-      });
-    }
-    if (!request.body.password) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Password is required',
+        error: error.details[0].message
       });
     }
 
-    const { email } = request.body;
-    const emailExist = users.find(user => user.email === email);
-    if (emailExist) {
+    if (value.password !== value.confirmPassword) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Passwords do not match'
+      });
+    }
+
+    const user = users.find(user => user.email === value.email);
+    if (user) {
       return response.status(409).json({
         status: 409,
         error: 'User already exist',
       });
     }
 
-    const userdata = request.body;
-    const signupData = UserService.create(userdata);
+    const hashedPassword = helpers.encryptPassword(value.password);
+
+    value.password = hashedPassword;
+    const newUser = {
+      email: value.email,
+      firstName: value.firstName,
+      lastName: value.lastName,
+      password: hashedPassword
+    };
+    const signupData = UserService.create(newUser);
     return response.status(201).send({
       status: 201,
       data: signupData
@@ -46,34 +47,39 @@ class userController {
   }
 
   static signin(request, response) {
-    if (!request.body.email) {
+    const { value, error } = validate.signin(request.body);
+    if (error) {
       return response.status(400).json({
         status: 400,
-        error: 'Email is required',
+        error: error.details[0].message
       });
     }
-    if (!request.body.password) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Password is required',
+    const userData = {
+      email: request.body.email,
+      password: request.body.password
+    };
+    const user = users.find(user => user.email === value.email);
+
+    if (!user) {
+      return response.status(401).json({
+        status: 401,
+        error: 'Login failed',
+      });
+    }
+    const authenticated = helpers.comparePassword(value.password, user.password);
+    console.log(value.password, user.password);
+    if (!authenticated) {
+      return response.status(401).json({
+        status: 401,
+        error: 'Login failed'
       });
     }
 
-    const { email, password } = request.body;
-    const emailExist = UserService.getOne(email);
-    const passwordExist = users.find(user => user.password === password);
-    if (!emailExist || !passwordExist) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Login failed, Email or Password is incorrect',
-      });
-    }
-
-    const loginData = users.find(user => user.email === email);
-    return response.status(201).send({
-      status: 201,
-      message: 'Login successful',
-      data: loginData
+    const token = helpers.issueToken(userData);
+    return response.status(200).json({
+      status: 200,
+      data: userData,
+      token
     });
   }
 }

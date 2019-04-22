@@ -1,11 +1,17 @@
 import transactions from '../../db/transactions';
 import TransactionService from '../models/transaction';
 import AccountService from '../models/account';
+import validate from '../../middleware/validate';
 
 class TransactionController {
   static fetchAll(request, response) {
     const allTransactions = TransactionService.getAll(transactions);
-    if (allTransactions.length === 0) return response.status(404).json({ status: 404, error: 'There are no transaction records' });
+    if (allTransactions.length === 0) {
+      return response.status(404).json({
+        status: 404,
+        error: 'There are no transaction records'
+      });
+    }
     return response.status(200).json({
       status: 200,
       data: allTransactions
@@ -15,7 +21,12 @@ class TransactionController {
   static fetchSpecificTransaction(request, response) {
     const { id } = request.params;
     const specificTransactionRecord = TransactionService.getOne(Number(id));
-    if (!specificTransactionRecord) return response.status(404).json({ status: 404, error: 'Transaction record not found' });
+    if (!specificTransactionRecord) {
+      return response.status(404).json({
+        status: 404,
+        error: 'Transaction record not found'
+      });
+    }
     return response.status(200).json({
       status: 200,
       data: specificTransactionRecord
@@ -24,11 +35,22 @@ class TransactionController {
 
   static creditAccount(request, response) {
     const { accountNumber } = request.params;
+
     const { amount, cashier } = request.body;
     const retrievedAccountRecord = AccountService.getOne(Number(accountNumber));
 
-    if (!retrievedAccountRecord) return response.status(404).json({ status: 404, error: 'Account not found' });
-    if (retrievedAccountRecord.status !== 'active') return response.status(400).json({ status: 400, error: 'Sorry, Account is not active' });
+    if (!retrievedAccountRecord) {
+      return response.status(404).json({
+        status: 404,
+        error: 'Account not found'
+      });
+    }
+    if (retrievedAccountRecord.status !== 'active') {
+      return response.status(400).json({
+        status: 400,
+        error: 'Sorry, Account is not active'
+      });
+    }
 
     const oldBalance = retrievedAccountRecord.balance;
     const transactionId = transactions.length + 1;
@@ -46,6 +68,12 @@ class TransactionController {
       oldBalance,
       newBalance
     };
+
+    const { value, error } = validate.creditAccount(request.body);
+    if (error) {
+      return response.status(400).json(error);
+    }
+
     TransactionService.creditOne(creditDetails);
     return response.status(200).json({
       status: 200,
@@ -55,12 +83,35 @@ class TransactionController {
 
   static debitAccount(request, response) {
     const { accountNumber } = request.params;
+
+    const { value, error } = validate.debitAccount(request.body);
+    if (error) {
+      return response.status(400).json(error);
+    }
+
     const { amount, cashier } = request.body;
     const retrievedAccountRecord = AccountService.getOne(Number(accountNumber));
 
-    if (!retrievedAccountRecord) return response.status(404).json({ status: 404, error: 'Account not found' });
-    if (retrievedAccountRecord.status !== 'active') return response.status(400).json({ status: 400, error: 'Sorry, Account is not active' });
-    if (retrievedAccountRecord.balance < amount) return response.status(400).json({ status: 400, error: 'Sorry,  insufficient fund' });
+    if (!retrievedAccountRecord) {
+      return response.status(404).json({
+        status: 404,
+        error: 'Account not found'
+      });
+    }
+
+    if (retrievedAccountRecord.status !== 'active') {
+      return response.status(400).json({
+        status: 400,
+        error: 'Sorry, Account is not active'
+      });
+    }
+
+    if (retrievedAccountRecord.balance < amount) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Sorry,  insufficient fund'
+      });
+    }
 
     const oldBalance = retrievedAccountRecord.balance;
     const transactionId = transactions.length + 1;

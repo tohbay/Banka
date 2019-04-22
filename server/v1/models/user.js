@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import users from '../../db/users';
 
 class UserService {
@@ -6,24 +7,23 @@ class UserService {
   }
 
   static create(user) {
-    const id = users[users.length - 1].id + 1;
-    const type = 'client';
-    const isAdmin = false;
-    const {
-      email, firstName, lastName, password
-    } = user;
-
     const newUser = {
-      id, ...user, type, isAdmin
+      id: users.length + 1,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      password: user.password,
+      confirmPassword: user.confirmPassword,
+      type: 'client',
+      isAdmin: false,
     };
-
     users.push(newUser);
     return newUser;
   }
 
   static getOne(id) {
     const user = users.find(user => user.id === id);
-    return user || {};
+    return user;
   }
 
   static deleteOne(id) {
@@ -32,7 +32,7 @@ class UserService {
     const userIndex = users.indexOf(user);
     users.splice(userIndex, 1);
 
-    return user || {};
+    return user;
   }
 }
 
