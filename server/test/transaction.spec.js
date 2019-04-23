@@ -8,6 +8,16 @@ const should = chai.should();
 
 
 describe('Testing transactions endpoints', () => {
+  const transaction = {
+    transactionId: 2,
+    createdOn: new Date().toLocaleString(),
+    type: 'credit',
+    accountNumber: 3,
+    amount: 30.67,
+    cashier: 1,
+    oldBalance: 450.00,
+    newBalance: 480.67
+  };
   describe('It should test the GET transactions endpoint', () => {
     it('It should fetch all transaction records', (done) => {
       const transactionUrl = '/api/v1/transactions/';
@@ -16,6 +26,15 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.be.an('object');
+          expect(transaction).to.be.an('object');
+          expect(transaction).to.have.property('transactionId');
+          expect(transaction).to.have.property('createdOn');
+          expect(transaction).to.have.property('type');
+          expect(transaction).to.have.property('accountNumber');
+          expect(transaction).to.have.property('cashier');
+          expect(transaction).to.have.property('amount');
+          expect(transaction).to.have.property('oldBalance');
+          expect(transaction).to.have.property('newBalance');
           done();
         });
     });
@@ -31,6 +50,14 @@ describe('Testing transactions endpoints', () => {
           expect(response.status).to.equal(404);
           expect(response.body.status).to.equal(404);
           expect(response.body).to.be.an('object');
+          expect(transaction).to.have.property('transactionId');
+          expect(transaction).to.have.property('createdOn');
+          expect(transaction).to.have.property('type');
+          expect(transaction).to.have.property('accountNumber');
+          expect(transaction).to.have.property('cashier');
+          expect(transaction).to.have.property('amount');
+          expect(transaction).to.have.property('oldBalance');
+          expect(transaction).to.have.property('newBalance');
           done();
         });
     });
@@ -53,6 +80,14 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(404);
           expect(response.body).to.be.an('object');
+          expect(transaction).to.have.property('transactionId');
+          expect(transaction).to.have.property('createdOn');
+          expect(transaction).to.have.property('type');
+          expect(transaction).to.have.property('accountNumber');
+          expect(transaction).to.have.property('cashier');
+          expect(transaction).to.have.property('amount');
+          expect(transaction).to.have.property('oldBalance');
+          expect(transaction).to.have.property('newBalance');
           done();
         });
     });
@@ -75,6 +110,14 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(404);
           expect(response.body).to.be.an('object');
+          expect(transaction).to.have.property('transactionId');
+          expect(transaction).to.have.property('createdOn');
+          expect(transaction).to.have.property('type');
+          expect(transaction).to.have.property('accountNumber');
+          expect(transaction).to.have.property('cashier');
+          expect(transaction).to.have.property('amount');
+          expect(transaction).to.have.property('oldBalance');
+          expect(transaction).to.have.property('newBalance');
           done();
         });
     });
@@ -97,6 +140,14 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(404);
           expect(response.body).to.be.an('object');
+          expect(transaction).to.have.property('transactionId');
+          expect(transaction).to.have.property('createdOn');
+          expect(transaction).to.have.property('type');
+          expect(transaction).to.have.property('accountNumber');
+          expect(transaction).to.have.property('cashier');
+          expect(transaction).to.have.property('amount');
+          expect(transaction).to.have.property('oldBalance');
+          expect(transaction).to.have.property('newBalance');
           done();
         });
     });
@@ -118,6 +169,14 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(404);
           expect(response.body).to.be.an('object');
+          expect(transaction).to.have.property('transactionId');
+          expect(transaction).to.have.property('createdOn');
+          expect(transaction).to.have.property('type');
+          expect(transaction).to.have.property('accountNumber');
+          expect(transaction).to.have.property('cashier');
+          expect(transaction).to.have.property('amount');
+          expect(transaction).to.have.property('oldBalance');
+          expect(transaction).to.have.property('newBalance');
           done();
         });
     });
@@ -140,6 +199,14 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(404);
           expect(response.body).to.be.an('object');
+          expect(transaction).to.have.property('transactionId');
+          expect(transaction).to.have.property('createdOn');
+          expect(transaction).to.have.property('type');
+          expect(transaction).to.have.property('accountNumber');
+          expect(transaction).to.have.property('cashier');
+          expect(transaction).to.have.property('amount');
+          expect(transaction).to.have.property('oldBalance');
+          expect(transaction).to.have.property('newBalance');
           done();
         });
     });
@@ -162,6 +229,14 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(404);
           expect(response.body).to.be.an('object');
+          expect(transaction).to.have.property('transactionId');
+          expect(transaction).to.have.property('createdOn');
+          expect(transaction).to.have.property('type');
+          expect(transaction).to.have.property('accountNumber');
+          expect(transaction).to.have.property('cashier');
+          expect(transaction).to.have.property('amount');
+          expect(transaction).to.have.property('oldBalance');
+          expect(transaction).to.have.property('newBalance');
           done();
         });
     });
@@ -184,6 +259,14 @@ describe('Testing transactions endpoints', () => {
         .end((error, response) => {
           expect(response.status).to.equal(404);
           expect(response.body).to.be.an('object');
+          expect(transaction).to.have.property('transactionId');
+          expect(transaction).to.have.property('createdOn');
+          expect(transaction).to.have.property('type');
+          expect(transaction).to.have.property('accountNumber');
+          expect(transaction).to.have.property('cashier');
+          expect(transaction).to.have.property('amount');
+          expect(transaction).to.have.property('oldBalance');
+          expect(transaction).to.have.property('newBalance');
           done();
         });
     });

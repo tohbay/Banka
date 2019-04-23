@@ -1,21 +1,22 @@
 import AccountService from '../models/account';
 import accounts from '../../db/accounts';
+import validate from '../../middleware/validate';
 
 class accountController {
   static create(request, response) {
-    if (!request.body.type) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Account type is required'
-      });
+    const { value, error } = validate.createAccount(request.body);
+    if (error) {
+      return response.status(400).json(error.details[0].message);
     }
 
-    const type = request.body;
+    const newAccount = {
+      type: value.type
+    };
 
-    const newAccount = AccountService.create(type);
+    const create = AccountService.create(newAccount);
     return response.status(201).json({
       status: 201,
-      data: newAccount
+      data: create
     });
   }
 
@@ -27,7 +28,10 @@ class accountController {
         error: 'There are no account records'
       });
     }
-    return response.status(200).json({ status: 200, data: { accountRecords } });
+    return response.status(200).json({
+      status: 200,
+      data: accountRecords
+    });
   }
 
   static getOne(request, response) {
@@ -46,6 +50,10 @@ class accountController {
   }
 
   static patchOne(request, response) {
+    const { value, error } = validate.patchAccount(request.body);
+    if (error) {
+      return response.status(400).json(error.details[0].message);
+    }
     const { accountNumber } = request.params;
     const retrieved = AccountService.getOne(Number(accountNumber));
     if (!retrieved) {
@@ -55,11 +63,6 @@ class accountController {
       });
     }
 
-    if (!request.body.status) {
-      return response.status(400).json({
-        status: 400, error: 'Status is required'
-      });
-    }
 
     retrieved.status = request.body.status;
 
@@ -87,7 +90,8 @@ class accountController {
     const retrieved = AccountService.getOne(Number(accountNumber));
     if (!retrieved) {
       return response.status(404).json({
-        status: 404, error: 'Account not found!'
+        status: 404,
+        error: 'Account not found!'
       });
     }
 

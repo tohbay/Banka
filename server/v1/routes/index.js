@@ -1,22 +1,12 @@
-import { Router } from 'express';
-import userController from '../controllers/user';
-import accountController from '../controllers/account';
-import transctionController from '../controllers/transaction';
+import express from 'express';
+import UsersRoute from './users';
+import AccountsRoute from './accounts';
+import TransactionRoutes from './transactions';
 
-const router = Router();
+const app = express();
 
-router.post('/auth/signup', userController.signup);
-router.post('/auth/signin', userController.signin);
+app.use('/api/v1/', UsersRoute);
+app.use('/api/v1/', AccountsRoute);
+app.use('/api/v1/', TransactionRoutes);
 
-router.get('/accounts/', accountController.getallAccounts);
-router.get('/accounts/:id', accountController.getOne);
-router.post('/accounts/', accountController.create);
-router.patch('/accounts/:accountNumber', accountController.patchOne);
-router.delete('/accounts/:accountNumber', accountController.deleteAccount);
-
-router.get('/transactions/', transctionController.fetchAll);
-router.get('/transactions/:id', transctionController.fetchSpecificTransaction);
-router.post('/transactions/:accountNumber/credit', transctionController.creditAccount);
-router.post('/transactions/:accountNumber/debit', transctionController.debitAccount);
-
-export default router;
+export default app;

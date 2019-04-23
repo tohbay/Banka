@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
 import indexRoutes from './v1/routes/index';
+import indexRoutes2 from './v2/routes/index';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get('/', (request, response) => {
   });
 });
 
-app.use('/api/v1/', indexRoutes);
+app.use(indexRoutes);
+app.use(indexRoutes2);
 
 export default app;
