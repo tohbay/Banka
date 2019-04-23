@@ -41,7 +41,7 @@ const validate = {
 
   patchAccount(body) {
     const schema = Joi.object().keys({
-      type: Joi.string().valid('active', 'dormant').required(),
+      status: Joi.string().valid('active', 'dormant').required(),
     });
     const { value, error } = Joi.validate(body, schema);
     if (error && error.details) {

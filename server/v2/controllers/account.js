@@ -50,6 +50,10 @@ class accountController {
   }
 
   static patchOne(request, response) {
+    const { value, error } = validate.patchAccount(request.body);
+    if (error) {
+      return response.status(400).json(error.details[0].message);
+    }
     const { accountNumber } = request.params;
     const retrieved = AccountService.getOne(Number(accountNumber));
     if (!retrieved) {
@@ -59,16 +63,6 @@ class accountController {
       });
     }
 
-    if (!request.body.status) {
-      return response.status(400).json({
-        status: 400, error: 'Status is required'
-       });
-    }
-
-    const { value, error } = validate.patchAccount(request.body);
-    if (error) {
-      return response.status(400).json(error.details[0].message);
-    }   
 
     retrieved.status = request.body.status;
 
