@@ -1,4 +1,4 @@
-// import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import UserService from '../models/user';
 import users from '../../db/users';
@@ -7,6 +7,31 @@ import helpers from '../../middleware/helpers';
 
 class userController {
   static signup(request, response) {
+    if (!request.body.firstName) {
+      return response.status(400).json({
+        status: 400,
+        error: 'First name is required',
+      });
+    }
+    if (!request.body.lastName) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Last name is required',
+      });
+    }
+    if (!request.body.email) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Email is required',
+      });
+    }
+    if (!request.body.password) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Password is required',
+      });
+    }
+
     const { value, error } = validate.signup(request.body);
     if (error) {
       return response.status(400).json({
@@ -42,11 +67,25 @@ class userController {
     const signupData = UserService.create(newUser);
     return response.status(201).send({
       status: 201,
+      message: 'You have successfully signed up',
       data: signupData
     });
   }
 
   static signin(request, response) {
+    if (!request.body.email) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Email is required',
+      });
+    }
+    if (!request.body.password) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Password is required',
+      });
+    }
+
     const { value, error } = validate.signin(request.body);
     if (error) {
       return response.status(400).json({
@@ -78,6 +117,7 @@ class userController {
     const token = helpers.issueToken(userData);
     return response.status(200).json({
       status: 200,
+      message: 'You have successfully logged in',
       data: userData,
       token
     });
