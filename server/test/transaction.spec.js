@@ -24,7 +24,7 @@ describe('Testing transactions endpoints', () => {
       chai.request(app)
         .get(transactionUrl)
         .end((error, response) => {
-          expect(response.status).to.equal(200);
+          expect(response.status).to.equal(403);
           expect(response.body).to.be.an('object');
           expect(transaction).to.be.an('object');
           expect(transaction).to.have.property('transactionId');
@@ -47,8 +47,8 @@ describe('Testing transactions endpoints', () => {
           transactionId: 1
         })
         .end((error, response) => {
-          expect(response.status).to.equal(404);
-          expect(response.body.status).to.equal(404);
+          expect(response.status).to.equal(403);
+          expect(response.body.status).to.equal(403);
           expect(response.body).to.be.an('object');
           expect(transaction).to.have.property('transactionId');
           expect(transaction).to.have.property('createdOn');
@@ -71,14 +71,13 @@ describe('Testing transactions endpoints', () => {
           transactionId: 20,
           createdOn: new Date().toLocaleString(),
           type: 'credit',
-          accountNumber: 1,
           amount: 500.00,
           cashier: 1,
           oldBalance: 500.00,
           newBalance: 1000.00
         })
         .end((error, response) => {
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body).to.be.an('object');
           expect(transaction).to.have.property('transactionId');
           expect(transaction).to.have.property('createdOn');
@@ -108,7 +107,7 @@ describe('Testing transactions endpoints', () => {
           newBalance: 1000.00
         })
         .end((error, response) => {
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body).to.be.an('object');
           expect(transaction).to.have.property('transactionId');
           expect(transaction).to.have.property('createdOn');
@@ -127,18 +126,11 @@ describe('Testing transactions endpoints', () => {
       chai.request(app)
         .post(creditUrl)
         .send({
-          status: 'draft',
-          transactionId: 2,
-          createdOn: new Date().toLocaleString(),
-          type: 'credit',
-          accountNumber: 1,
           amount: 500.00,
           cashier: 1,
-          oldBalance: 500.00,
-          newBalance: 1000.00
         })
         .end((error, response) => {
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body).to.be.an('object');
           expect(transaction).to.have.property('transactionId');
           expect(transaction).to.have.property('createdOn');
@@ -152,22 +144,16 @@ describe('Testing transactions endpoints', () => {
         });
     });
 
-    it('It should not post a debit transaction when account is not found', (done) => {
+    it('It should not post a debit transaction when account number is not found', (done) => {
       const debitUrl = '/api/v1/transactions/accountNumber/debit/';
       chai.request(app)
         .post(debitUrl)
         .send({
-          transactionId: 20,
-          createdOn: new Date().toLocaleString(),
-          type: 'debit',
-          accountNumber: 1,
           amount: 500.00,
-          cashier: 1,
-          oldBalance: 500.00,
-          newBalance: 0.00
+          cashier: 1
         })
         .end((error, response) => {
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body).to.be.an('object');
           expect(transaction).to.have.property('transactionId');
           expect(transaction).to.have.property('createdOn');
@@ -197,7 +183,7 @@ describe('Testing transactions endpoints', () => {
           newBalance: 0.00
         })
         .end((error, response) => {
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body).to.be.an('object');
           expect(transaction).to.have.property('transactionId');
           expect(transaction).to.have.property('createdOn');
@@ -227,7 +213,7 @@ describe('Testing transactions endpoints', () => {
           newBalance: 0.00
         })
         .end((error, response) => {
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body).to.be.an('object');
           expect(transaction).to.have.property('transactionId');
           expect(transaction).to.have.property('createdOn');
@@ -250,14 +236,14 @@ describe('Testing transactions endpoints', () => {
           transactionId: 2,
           createdOn: new Date().toLocaleString(),
           type: 'debit',
-          accountNumber: 1,
+          accountNumber: 2,
           amount: 500.00,
           cashier: 1,
           oldBalance: 500.00,
           newBalance: 0.00
         })
         .end((error, response) => {
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body).to.be.an('object');
           expect(transaction).to.have.property('transactionId');
           expect(transaction).to.have.property('createdOn');

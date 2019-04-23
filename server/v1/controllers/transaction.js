@@ -1,6 +1,7 @@
 import transactions from '../../db/transactions';
 import TransactionService from '../models/transaction';
 import AccountService from '../models/account';
+import validate from '../../middleware/validate';
 
 class TransactionController {
   static fetchAll(request, response) {
@@ -34,6 +35,7 @@ class TransactionController {
 
   static creditAccount(request, response) {
     const { accountNumber } = request.params;
+
     const { amount, cashier } = request.body;
     const retrievedAccountRecord = AccountService.getOne(Number(accountNumber));
 
@@ -66,6 +68,12 @@ class TransactionController {
       oldBalance,
       newBalance
     };
+
+    const { value, error } = validate.creditAccount(request.body);
+    if (error) {
+      return response.status(400).json(error);
+    }
+
     TransactionService.creditOne(creditDetails);
     return response.status(200).json({
       status: 200,
@@ -75,22 +83,33 @@ class TransactionController {
 
   static debitAccount(request, response) {
     const { accountNumber } = request.params;
+
+    const { value, error } = validate.debitAccount(request.body);
+    if (error) {
+      return response.status(400).json(error);
+    }
+
     const { amount, cashier } = request.body;
     const retrievedAccountRecord = AccountService.getOne(Number(accountNumber));
 
     if (!retrievedAccountRecord) {
       return response.status(404).json({
-        status: 404, error: 'Account not found'
+        status: 404,
+        error: 'Account not found'
       });
     }
+
     if (retrievedAccountRecord.status !== 'active') {
       return response.status(400).json({
-        status: 400, error: 'Sorry, Account is not active'
+        status: 400,
+        error: 'Sorry, Account is not active'
       });
     }
+
     if (retrievedAccountRecord.balance < amount) {
       return response.status(400).json({
-        status: 400, error: 'Sorry,  insufficient fund'
+        status: 400,
+        error: 'Sorry,  insufficient fund'
       });
     }
 

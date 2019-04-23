@@ -92,7 +92,12 @@ describe('Mocha test for Account Controller', () => {
           status: 'dormant',
           balance: 1000000.78
         })
+        .send({
+          type: 'current'
+        })
         .end((error, response) => {
+          expect(response.body).to.be.an('object');
+          expect(response.status).to.equal(403);
           expect(response.body).to.be.an('object');
           expect(response.body.status).to.equal(400);
           expect(response.body.error).to.be.a('string');
@@ -119,7 +124,7 @@ describe('Mocha test for Account Controller', () => {
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body).to.have.property('status');
           expect(newAccount).to.have.property('id');
           expect(newAccount).to.have.property('email');
@@ -140,7 +145,7 @@ describe('Mocha test for Account Controller', () => {
         .send()
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body.error).to.be.a('string');
           expect(response.body.error).to.equal('Account number not found!');
           expect(newAccount).to.have.property('id');
@@ -151,6 +156,7 @@ describe('Mocha test for Account Controller', () => {
           expect(newAccount).to.have.property('balance');
           expect(newAccount).to.have.property('status').to.equal('active');
           expect(newAccount.status).to.equal('active');
+          expect(response.body.error).to.equal('Access denied, Provide authorization');
           done();
         });
     });
@@ -171,7 +177,7 @@ describe('Mocha test for Account Controller', () => {
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(response.body.accountNumber).to.not.equal('status');
           expect(response.body.error).to.be.a('string');
           expect(response.body.error).to.equal('Account number not found!');
@@ -183,6 +189,7 @@ describe('Mocha test for Account Controller', () => {
           expect(newAccount).to.have.property('balance');
           expect(newAccount).to.have.property('status').to.equal('active');
           expect(newAccount.status).to.equal('active');
+          expect(response.body.error).to.equal('Access denied, Provide authorization');
           done();
         });
     });
@@ -241,6 +248,7 @@ describe('Mocha test for Account Controller', () => {
           expect(newAccount).to.have.property('status').to.equal('active');
           expect(newAccount.status).to.equal('active');
           expect(newAccount.accountNumber).to.equal(4);
+          expect(response.status).to.equal(403);
           done();
         });
     });
