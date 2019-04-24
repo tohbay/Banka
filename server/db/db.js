@@ -7,20 +7,20 @@ const createTables = () => {
   DROP TABLE IF EXISTS transactions CASCADE;
 
   CREATE TABLE users(
-    id serial NOT NULL PRIMARY KEY,
-    email VARCHAR NOT NULL UNIQUE,
-    firstName VARCHAR NOT NULL,
-    lastName VARCHAR NOT NULL,
-    password VARCHAR NOT NULL,
-    type VARCHAR NOT NULL,
-    isAdmin BOOLEAN
+    "id" serial NOT NULL PRIMARY KEY,
+    "email" VARCHAR NOT NULL UNIQUE,
+    "firstName" VARCHAR NOT NULL,
+    "lastName" VARCHAR NOT NULL,
+    "password" VARCHAR NOT NULL,
+    "type" VARCHAR NOT NULL,
+    "isAdmin" BOOLEAN
   );
 
   CREATE TABLE accounts(
     id serial NOT NULL PRIMARY KEY,
     accountNumber BIGINT NOT NULL UNIQUE,
     createdOn TIMESTAMP NOT NULL,
-    owneremail VARCHAR NOT NULL,
+    ownerEmail VARCHAR NOT NULL,
     type TEXT NOT NULL,
     status TEXT NOT NULL,
     balance FLOAT NOT NULL
