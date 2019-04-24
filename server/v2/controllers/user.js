@@ -115,34 +115,25 @@ class userController {
         error: error.details[0].message
       });
     }
-    const userData = {
+
+    const user = {
       email: request.body.email,
       password: request.body.password
     };
-    const user = users.find(user => user.email === value.email);
 
-    if (!user) {
-      return response.status(401).json({
-        status: 401,
-        error: 'Login failed',
-      });
-    }
-    const authenticated = helpers.comparePassword(value.password, user.password);
-    console.log(value.password, user.password);
-    if (!authenticated) {
-      return response.status(401).json({
-        status: 401,
-        error: 'Login failed'
-      });
-    }
+    const token = helpers.issueToken(user);
 
-    const token = helpers.issueToken(userData);
-    return response.status(200).json({
-      status: 200,
-      message: 'You have successfully logged in',
-      data: userData,
-      token
-    });
+    const query = `SELECT * FROM users WHERE email='${user.email}' AND password= crypt('${user.password}', password)`;
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({ status: 400, error: 'Account does not exist' });
+        }
+        return response.status(200).send({ message: 'You are successfully logged in', token, data: result.rows[0] });
+      })
+      .catch((error) => {
+        response.status(500).send({ status: 500, error: 'Error logging in' });
+      });
   }
 }
 
