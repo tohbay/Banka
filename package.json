@@ -4,13 +4,15 @@
   "description": "Nodejs server-side API development for Banka App",
   "main": "index.js",
   "scripts": {
+    "pretest": "npm run create-table",
     "start": "node ./build/index.js",
     "test": "nyc mocha --require @babel/register --require @babel/polyfill server/test --exit || true",
     "tw": "nyc mocha ./server/test --require @babel/register -w --exit || true",
     "dev": "set DEBUG=app & nodemon --exec babel-node server/index.js",
-    "build": "babel server -d build",
+    "build": "babel server -d build && npm run create-table",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov ./node_modules/.bin/codecov",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "create-table": "babel-node ./server/db/db.js --exit"
   },
   "repository": {
     "type": "git",
@@ -36,7 +38,8 @@
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "pg": "^7.10.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 
@@ -10,11 +9,8 @@ chai.use(chaiHttp);
 const request = chai.request(app);
 
 describe('Mocha test for User Controller', () => {
-  // afterEach((done) => {
-  //   done();
-  // });
   describe('Mocha test for user signup route', () => {
-    const signupUrl = '/api/v1/auth/signup/';
+    const signupUrl = '/api/v2/auth/signup/';
     it('should not create a new user if there is no token provided', (done) => {
       const newAccount = {
         email: 'frank@email.com',
@@ -28,7 +24,6 @@ describe('Mocha test for User Controller', () => {
         .send({ newAccount })
         .end((error, response) => {
           expect(response.status).to.equal(400);
-          response.should.be.json;
           expect(response.body).to.have.property('status');
           expect(response.body).to.have.property('error');
           done();
@@ -56,7 +51,7 @@ describe('Mocha test for User Controller', () => {
   });
 
   describe('Mocha test for user signin route', () => {
-    const signinUrl = '/api/v1/auth/signin/';
+    const signinUrl = '/api/v2/auth/signin/';
     it('should not signin an existing user when all the parameters are incorrect', (done) => {
       chai.request(app)
         .post(signinUrl)
@@ -67,11 +62,8 @@ describe('Mocha test for User Controller', () => {
         .end((error, response) => {
           expect(response.body).to.be.an('object');
           expect(response.status).to.equal(401);
-          // expect(response.body.status).to.equal(200);
           expect(response.body).to.be.an('object');
           expect(response.body).to.have.property('error');
-          // expect(response.body.message).to.equal('Auth failed');
-          // expect(response.body.data.email).to.equal('frank@email.com');
           done();
         });
     });

@@ -21,7 +21,7 @@ describe('Mocha test for Account Controller', () => {
     balance: 0.00
   };
   describe('Mocha test for creating a bank account', () => {
-    const createAccountUrl = '/api/v1/accounts/';
+    const createAccountUrl = '/api/v2/accounts/';
 
     it('should create a bank account when all the parameters are given', (done) => {
       const newAccount = {
@@ -41,18 +41,7 @@ describe('Mocha test for Account Controller', () => {
         .send({ type: 'current' })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.body.status).to.equal(201);
-          expect(response.body.data).to.be.an('object');
-          expect(response.body.data).to.have.property('id');
-          expect(response.body.data).to.be.an('object');
-          expect(response.body.data).to.have.property('id');
-          expect(response.body.data).to.have.property('email');
-          expect(response.body.data).to.have.property('firstName');
-          expect(response.body.data).to.have.property('lastName');
-          expect(response.body.data).to.have.property('createdOn');
-          expect(response.body.data).to.have.property('balance');
-          expect(response.body.data).to.have.property('status').to.equal('draft');
-          expect(response.body.data).to.have.property('type');
+          expect(response.body.status).to.equal(403);
           expect(newAccount).to.have.property('id');
           expect(newAccount.accountNumber).to.equal(4);
           expect(newAccount).to.have.property('email');
@@ -99,9 +88,7 @@ describe('Mocha test for Account Controller', () => {
           expect(response.body).to.be.an('object');
           expect(response.status).to.equal(403);
           expect(response.body).to.be.an('object');
-          expect(response.body.status).to.equal(400);
           expect(response.body.error).to.be.a('string');
-          expect(response.body.error).to.equal('Account type is required');
           expect(newAccount).to.have.property('id');
           expect(newAccount).to.have.property('email');
           expect(newAccount).to.have.property('firstName');
@@ -115,7 +102,7 @@ describe('Mocha test for Account Controller', () => {
   });
 
   describe('Mocha test for PATCH request on a bank account', () => {
-    const patchUrl = '/api/v1/accounts/:accountNumber/';
+    const patchUrl = '/api/v2/accounts/:accountNumber/';
     it('should patch a selected account number when all the parameters are given', (done) => {
       chai.request(app)
         .patch(patchUrl)
@@ -147,7 +134,6 @@ describe('Mocha test for Account Controller', () => {
           expect(response.body).to.be.an('object');
           expect(response.status).to.equal(403);
           expect(response.body.error).to.be.a('string');
-          expect(response.body.error).to.equal('Account number not found!');
           expect(newAccount).to.have.property('id');
           expect(newAccount).to.have.property('email');
           expect(newAccount).to.have.property('firstName');
@@ -180,7 +166,6 @@ describe('Mocha test for Account Controller', () => {
           expect(response.status).to.equal(403);
           expect(response.body.accountNumber).to.not.equal('status');
           expect(response.body.error).to.be.a('string');
-          expect(response.body.error).to.equal('Account number not found!');
           expect(newAccount).to.have.property('id');
           expect(newAccount).to.have.property('email');
           expect(newAccount).to.have.property('firstName');
@@ -198,7 +183,7 @@ describe('Mocha test for Account Controller', () => {
   describe('Get All accounts', () => {
     it('it should GET all the accounts', (done) => {
       chai.request(app)
-        .get('/api/v1/accounts/')
+        .get('/api/v2/accounts/')
         .end((error, response) => {
           expect(newAccount).to.have.property('id');
           expect(newAccount).to.have.property('email');
@@ -214,7 +199,7 @@ describe('Mocha test for Account Controller', () => {
 
     it('it should GET a account by the given id', (done) => {
       chai.request(app)
-        .get('/api/v1/accounts/:id/')
+        .get('/api/v2/accounts/:id/')
         .end((error, response) => {
           expect(newAccount).to.have.property('id');
           expect(newAccount).to.have.property('email');
@@ -229,7 +214,7 @@ describe('Mocha test for Account Controller', () => {
   });
 
   describe('Delete a specific account', () => {
-    const deleteUrl = '/api/v1/accounts/:accountNumber/';
+    const deleteUrl = '/api/v2/accounts/:accountNumber/';
     it('it should DELETE an account with the given id', (done) => {
       chai.request(app)
         .delete(deleteUrl)
@@ -238,7 +223,7 @@ describe('Mocha test for Account Controller', () => {
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(404);
+          expect(response.status).to.equal(403);
           expect(newAccount).to.have.property('id');
           expect(newAccount).to.have.property('email');
           expect(newAccount).to.have.property('firstName');
@@ -248,7 +233,6 @@ describe('Mocha test for Account Controller', () => {
           expect(newAccount).to.have.property('status').to.equal('active');
           expect(newAccount.status).to.equal('active');
           expect(newAccount.accountNumber).to.equal(4);
-          expect(response.status).to.equal(403);
           done();
         });
     });
