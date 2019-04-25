@@ -1,23 +1,52 @@
-import AccountService from '../models/account';
-import accounts from '../../db/accounts';
+import jwt from 'jsonwebtoken';
 import validate from '../../middleware/validate';
+import connectDB from '../../connectDB';
 
 class accountController {
   static create(request, response) {
+    const data = jwt.verify(request.token, process.env.jwt_secret);
+    const {
+      id, firstName, lastName, email
+    } = data;
+
     const { value, error } = validate.createAccount(request.body);
     if (error) {
-      return response.status(400).json(error.details[0].message);
+      return response.status(400).json({ status: 400, error: error.details[0].message });
     }
 
+    const generateNumber = parseFloat(Date.now());
+    const numberPrefix = parseFloat('045');
+    const generatedAccountNumber = numberPrefix + generateNumber;
+
     const newAccount = {
-      type: value.type
+      accountNumber: generatedAccountNumber,
+      firstName,
+      lastName,
+      email,
+      createdOn: new Date().toLocaleString(),
+      owner: data.email,
+      type: value.type,
+      status: 'draft',
+      openingBalance: 0.00
     };
 
-    const create = AccountService.create(newAccount);
-    return response.status(201).json({
-      status: 201,
-      data: create
-    });
+    const query = `INSERT INTO accounts ("accountNumber", "createdOn", "email", "type", "status", "balance")
+    VALUES('${newAccount.accountNumber}','${newAccount.createdOn}', '${newAccount.email}', '${newAccount.type}', 'draft', '0.00') returning * `;
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount >= 1) {
+          return response.status(200).send({ status: 200, message: 'Acccount successfully created', data: result.rows[0] });
+        }
+
+        return response.status(500).send({ staus: 500, message: 'Account could not be created' });
+      })
+      .catch((error) => {
+        if (error.detail === `Key (email)=(${newAccount.email}) already exists.`) {
+          return response.status(400).send({ status: 'error', message: 'Account already exist' });
+        }
+        console.log(error);
+        return response.status(500).send({ status: 500, message: 'Error creating account' });
+      });
   }
 
   static getallAccounts(request, response) {
