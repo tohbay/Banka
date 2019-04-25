@@ -2,6 +2,8 @@ import transactions from '../../db/transactions';
 import TransactionService from '../models/transaction';
 import AccountService from '../models/account';
 import validate from '../../middleware/validate';
+import connectDB from '../../connectDB';
+import helpers from '../../middleware/helpers';
 
 class TransactionController {
   static fetchAll(request, response) {
@@ -90,58 +92,63 @@ class TransactionController {
 
   static debitAccount(request, response) {
     const { accountNumber } = request.params;
+    const { amount, cashier } = request.body;
+
+    const data = jwt.verify(request.token, process.env.jwt_secret);
+    const { id } = data;
 
     const { value, error } = validate.debitAccount(request.body);
     if (error) {
-      return response.status(400).json(error);
+      return response.status(400).json({ status: 400, error: error.details[0].message });
     }
 
-    const { amount, cashier } = request.body;
-    const retrievedAccountRecord = AccountService.getOne(Number(accountNumber));
+    const findSpecificAccount = `SELECT * FROM accounts WHERE "accountNumber"='${(accountNumber)}'`;
+    return connectDB.query(findSpecificAccount)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          return response.status(400).send({ status: 400, error: 'Account does not exist' });
+        }
+        const { accountNumber, balance, status } = result.rows[0];
+        const newBalance = parseFloat(balance) - parseFloat(amount);
 
-    if (!retrievedAccountRecord) {
-      return response.status(404).json({
-        status: 404,
-        error: 'Account not found'
+        if (status === 'draft' || status === 'dormant') {
+          return response.status(400).send({ status: 400, error: 'Account account is not active' });
+        }
+
+        if (balance < amount) {
+          return response.status(400).send({ status: 400, error: 'Insufficient fund' });
+        }
+
+        const debitDetails = {
+          createdOn: new Date().toLocaleString(),
+          type: 'debit',
+          accountNumber,
+          cashier,
+          amount,
+          oldBalance: balance,
+          balance: newBalance
+        };
+
+        const debitQuery = `INSERT INTO transactions ("createdOn", "type", "accountNumber", "cashier",  "amount", "oldBalance", "newBalance")
+      VALUES('${debitDetails.createdOn}', '${debitDetails.type}', '${debitDetails.accountNumber}', '${debitDetails.cashier}', '${debitDetails.amount}', '${balance}', '${newBalance}') returning *`;
+        const updateDebitedAccount = `UPDATE accounts SET "balance"='${newBalance}' WHERE "accountNumber"='${accountNumber}' returning *`;
+        return connectDB.query(updateDebitedAccount)
+          .then((result) => {
+            console.log(result);
+            return connectDB.query(debitQuery)
+              .then((result) => {
+                if (result.rowCount >= 1) {
+                  console.log(result);
+                  return response.status(200).send({ status: 200, message: 'Acccount successfully debited', data: result.rows[0] });
+                }
+                return response.status(500).send({ staus: 500, message: 'Error debiting the specific account' });
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+            response.status(500).send({ status: 500, error: 'Error debiting the account, Please ensure valid input' });
+          });
       });
-    }
-
-    if (retrievedAccountRecord.status !== 'active') {
-      return response.status(400).json({
-        status: 400,
-        error: 'Sorry, Account is not active'
-      });
-    }
-
-    if (retrievedAccountRecord.balance < amount) {
-      return response.status(400).json({
-        status: 400,
-        error: 'Sorry,  insufficient fund'
-      });
-    }
-
-    const oldBalance = retrievedAccountRecord.balance;
-    const transactionId = transactions.length + 1;
-    const type = 'debit';
-    const newBalance = oldBalance - amount;
-    retrievedAccountRecord.balance = newBalance;
-
-    const debitDetails = {
-      transactionId,
-      createdOn: new Date().toLocaleString(),
-      type,
-      accountNumber,
-      cashier,
-      amount,
-      oldBalance,
-      newBalance
-    };
-
-    TransactionService.debitOne(debitDetails);
-    return response.status(201).json({
-      status: 201,
-      data: debitDetails
-    });
   }
 }
 
