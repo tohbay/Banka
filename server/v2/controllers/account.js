@@ -21,17 +21,17 @@ class accountController {
   }
 
   static getallAccounts(request, response) {
-    const accountRecords = AccountService.getAll(accounts);
-    if (accountRecords.length === 0) {
-      return response.status(404).json({
-        status: 404,
-        error: 'There are no account records'
+    const query = 'SELECT * FROM accounts';
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({ status: 400, error: 'There are no account records' });
+        }
+        return response.status(200).send({ status: 200, message: 'Accounts successfully retrieved', data: result.rows });
+      })
+      .catch((error) => {
+        response.status(500).send({ status: 500, error: 'Error fetching all bank accounts' });
       });
-    }
-    return response.status(200).json({
-      status: 200,
-      data: accountRecords
-    });
   }
 
   static getOne(request, response) {
