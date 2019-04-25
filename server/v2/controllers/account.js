@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import validate from '../../middleware/validate';
 import connectDB from '../../connectDB';
 
