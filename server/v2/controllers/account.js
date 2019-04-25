@@ -108,20 +108,24 @@ class accountController {
 
   static deleteAccount(request, response) {
     const { accountNumber } = request.params;
-    const retrieved = AccountService.getOne(Number(accountNumber));
-    if (!retrieved) {
-      return response.status(404).json({
-        status: 404,
-        error: 'Account not found!'
+    const query = `SELECT * FROM accounts WHERE "accountNumber"=${accountNumber}`;
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({ status: 400, error: 'Account does not exist' });
+        }
+        const deleteQuery = `DELETE FROM accounts WHERE "accountNumber"=${result.rows[0].accountNumber}`;
+        return connectDB.query(deleteQuery)
+          .then(() => response.status(204).send({ status: 204, message: 'Account successfully deleted', data: result.rows[0] }))
+          .catch((error) => {
+            console.log(error);
+            response.status(500).send({ status: 500, error: 'Error deleting the specific account' });
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        response.status(500).send({ status: 500, error: 'Error deleting the specific account' });
       });
-    }
-
-    const deleteRetrieved = AccountService.deleteOne(Number(accountNumber));
-
-    return response.status(200).json({
-      status: 200,
-      data: deleteRetrieved
-    });
   }
 }
 
