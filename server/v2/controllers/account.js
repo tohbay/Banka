@@ -64,18 +64,19 @@ class accountController {
   }
 
   static getOne(request, response) {
-    const { id } = request.params;
-    const retrieved = AccountService.getOne(Number(id));
-    if (!retrieved) {
-      return response.status(404).json({
-        status: 404,
-        error: 'Account number not found!'
+    const { accountNumber } = request.params;
+    const query = `SELECT * FROM accounts WHERE "accountNumber"=${accountNumber}`;
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({ status: 400, error: 'Account does not exist' });
+        }
+        return response.status(200).send({ status: 200, message: 'Account successfully retrieved', data: result.rows[0] });
+      })
+      .catch((error) => {
+        console.log(error);
+        response.status(500).send({ status: 500, error: 'Error fetching the specific accountNumber' });
       });
-    }
-    return response.status(200).json({
-      status: 200,
-      data: retrieved
-    });
   }
 
   static patchOne(request, response) {
