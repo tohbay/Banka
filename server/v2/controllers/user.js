@@ -68,15 +68,8 @@ class userController {
       password: hashedPassword
     };
 
-    // const signupData = UserService.create(newUser);
-    // return response.status(201).send({
-    //   status: 201,
-    //   message: 'You have successfully signed up',
-    //   data: signupData
-    // });
-
     const query = `INSERT INTO users ("email", "firstName", "lastName", "password", "type", "isAdmin")
-    VALUES('${newUser.email}','${newUser.firstName}','${newUser.lastName}','${newUser.password}', 'draft', 'false') returning * `;
+    VALUES('${newUser.email}','${newUser.firstName}','${newUser.lastName}','${newUser.password}', 'client', 'false') returning * `;
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount >= 1) {
