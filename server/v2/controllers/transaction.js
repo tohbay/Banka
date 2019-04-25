@@ -2,6 +2,8 @@ import transactions from '../../db/transactions';
 import TransactionService from '../models/transaction';
 import AccountService from '../models/account';
 import validate from '../../middleware/validate';
+import connectDB from '../../connectDB';
+import helpers from '../../middleware/helpers';
 
 class TransactionController {
   static fetchAll(request, response) {
@@ -42,50 +44,59 @@ class TransactionController {
 
   static creditAccount(request, response) {
     const { accountNumber } = request.params;
-
     const { amount, cashier } = request.body;
-    const retrievedAccountRecord = AccountService.getOne(Number(accountNumber));
 
-    if (!retrievedAccountRecord) {
-      return response.status(404).json({
-        status: 404,
-        error: 'Account not found'
-      });
-    }
-    if (retrievedAccountRecord.status !== 'active') {
-      return response.status(400).json({
-        status: 400,
-        error: 'Sorry, Account is not active'
-      });
-    }
-
-    const oldBalance = retrievedAccountRecord.balance;
-    const transactionId = transactions.length + 1;
-    const type = 'credit';
-    const newBalance = oldBalance + amount;
-    retrievedAccountRecord.balance = newBalance;
-
-    const creditDetails = {
-      transactionId,
-      createdOn: new Date().toLocaleString(),
-      type,
-      accountNumber,
-      cashier,
-      amount,
-      oldBalance,
-      newBalance
-    };
+    const data = jwt.verify(request.token, process.env.jwt_secret);
+    const { id } = data;
 
     const { value, error } = validate.creditAccount(request.body);
     if (error) {
-      return response.status(400).json(error);
+      return response.status(400).json({ status: 400, error: error.details[0].message });
     }
 
-    TransactionService.creditOne(creditDetails);
-    return response.status(200).json({
-      status: 200,
-      data: creditDetails
-    });
+    const findSpecificAccount = `SELECT * FROM accounts WHERE "accountNumber"='${(accountNumber)}'`;
+    return connectDB.query(findSpecificAccount)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          return response.status(400).send({ status: 400, error: 'Account does not exist' });
+        }
+        const { accountNumber, balance, status } = result.rows[0];
+        const newBalance = parseFloat(balance) + parseFloat(amount);
+
+        if (status === 'draft' || status === 'dormant') {
+          return response.status(400).send({ status: 400, error: 'Account account is not active' });
+        }
+
+        const creditDetails = {
+          createdOn: new Date().toLocaleString(),
+          type: 'credit',
+          accountNumber,
+          cashier,
+          amount,
+          oldBalance: balance,
+          balance: newBalance
+        };
+
+        const creditQuery = `INSERT INTO transactions ("createdOn", "type", "accountNumber", "cashier",  "amount", "oldBalance", "newBalance")
+      VALUES('${creditDetails.createdOn}', '${creditDetails.type}', '${creditDetails.accountNumber}', '${creditDetails.cashier}', '${creditDetails.amount}', '${balance}', '${newBalance}') returning *`;
+        const updateCreditedAccount = `UPDATE accounts SET "balance"='${newBalance}' WHERE "accountNumber"='${accountNumber}' returning *`;
+        return connectDB.query(updateCreditedAccount)
+          .then((result) => {
+            console.log(result);
+            return connectDB.query(creditQuery)
+              .then((result) => {
+                if (result.rowCount >= 1) {
+                  console.log(result);
+                  return response.status(200).send({ status: 200, message: 'Acccount successfully credited', data: result.rows[0] });
+                }
+                return response.status(500).send({ staus: 500, message: 'Error crediting the specific account' });
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+            response.status(500).send({ status: 500, error: 'Error crediting the account, Please ensure valid input' });
+          });
+      });
   }
 
   static debitAccount(request, response) {
