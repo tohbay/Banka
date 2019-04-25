@@ -5,17 +5,24 @@ import validate from '../../middleware/validate';
 
 class TransactionController {
   static fetchAll(request, response) {
-    const allTransactions = TransactionService.getAll(transactions);
-    if (allTransactions.length === 0) {
-      return response.status(404).json({
-        status: 404,
-        error: 'There are no transaction records'
+    const user = {
+      email: request.body.email,
+      password: request.body.password
+    };
+
+    const token = helpers.issueToken(user);
+
+    const query = 'SELECT * FROM transactions';
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({ status: 400, error: 'There are no transactions records' });
+        }
+        return response.status(200).send({ message: 'Transactions successfully retrieved', data: result.rows });
+      })
+      .catch((error) => {
+        response.status(500).send({ status: 500, error: 'Error fetching all transactions' });
       });
-    }
-    return response.status(200).json({
-      status: 200,
-      data: allTransactions
-    });
   }
 
   static fetchSpecificTransaction(request, response) {

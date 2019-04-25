@@ -61,7 +61,7 @@ describe('Mocha test for User Controller', () => {
         })
         .end((error, response) => {
           expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(401);
+          expect(response.status).to.equal(400);
           expect(response.body).to.be.an('object');
           expect(response.body).to.have.property('error');
           done();
