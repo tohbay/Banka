@@ -20,17 +20,17 @@ class TransactionController {
 
   static fetchSpecificTransaction(request, response) {
     const { id } = request.params;
-    const specificTransactionRecord = TransactionService.getOne(Number(id));
-    if (!specificTransactionRecord) {
-      return response.status(404).json({
-        status: 404,
-        error: 'Transaction record not found'
+    const query = `SELECT * FROM transactions WHERE "transactionId"=${id}`;
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          return response.status(400).send({ status: 400, error: 'Transaction does not exist' });
+        }
+        return response.status(200).send({ message: 'Transaction successfully retrieved', data: result.rows[0] });
+      })
+      .catch((error) => {
+        response.status(500).send({ status: 500, error: 'Error fetching the specific transaction' });
       });
-    }
-    return response.status(200).json({
-      status: 200,
-      data: specificTransactionRecord
-    });
   }
 
   static creditAccount(request, response) {
