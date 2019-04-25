@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import validate from '../../middleware/validate';
 import connectDB from '../../connectDB';
 
@@ -79,40 +78,32 @@ class accountController {
       });
   }
 
-  static patchOne(request, response) {
-    const { value, error } = validate.patchAccount(request.body);
-    if (error) {
-      return response.status(400).json(error.details[0].message);
-    }
+  static accountStatusUpdate(request, response) {
     const { accountNumber } = request.params;
-    const retrieved = AccountService.getOne(Number(accountNumber));
-    if (!retrieved) {
-      return response.status(404).json({
-        status: 404,
-        error: 'Account number not found!'
-      });
+    const { status } = request.body;
+
+    const { value, error } = validate.patchAccount(request.body, request.params);
+    if (error) {
+      return response.status(400).json({ status: 422, error: error.details[0].message });
     }
 
-
-    retrieved.status = request.body.status;
-
-    if (retrieved.status === 'active') {
-      return response.status(200).json({
-        status: 200,
-        data: {
-          accountNumber: retrieved.accountNumber,
-          status: retrieved.status
+    const findSpecificAccount = `SELECT * FROM accounts WHERE "accountNumber"='${(accountNumber)}'`;
+    return connectDB.query(findSpecificAccount)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({ status: 400, error: 'Account does not exist' });
         }
+        const updateOneAccount = `UPDATE accounts
+          SET "status"='${status}' WHERE "accountNumber"='${accountNumber}' AND (("status"='draft' OR "status"='dormant') OR "status"='active')`;
+        return connectDB.query(updateOneAccount)
+          .then(() => response.status(200).send({ status: 200, message: 'Account successfully updated', data: result.rows[0] }))
+          .catch((error) => {
+            response.status(500).send({ status: 500, error: 'Error updating the specific account' });
+          });
+      })
+      .catch((error) => {
+        response.status(500).send({ status: 500, error: 'Error updating the account, Please ensure valid input' });
       });
-    }
-
-    return response.status(200).json({
-      status: 200,
-      data: {
-        accountNumber: retrieved.accountNumber,
-        status: retrieved.status
-      }
-    });
   }
 
   static deleteAccount(request, response) {
