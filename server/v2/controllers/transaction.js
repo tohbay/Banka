@@ -20,7 +20,7 @@ class TransactionController {
         return response.status(200).send({ status: 200, message: 'Transactions successfully retrieved', data: result.rows });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error fetching all transactions' });
+        response.status(500).send({ status: 500, error: 'Error fetching all transactions, ensure you provide valid credentials' });
       });
   }
 
@@ -35,7 +35,7 @@ class TransactionController {
         return response.status(200).send({ status: 200, message: 'Transaction successfully retrieved', data: result.rows[0] });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error fetching the specific transaction' });
+        response.status(500).send({ status: 500, error: 'Error fetching the specific transaction, ensure you provide valid credentials' });
       });
   }
 
@@ -88,12 +88,12 @@ class TransactionController {
                   console.log(result);
                   return response.status(200).send({ status: 202, message: 'Acccount successfully credited', data: result.rows[0] });
                 }
-                return response.status(500).send({ staus: 500, message: 'Error crediting the specific account' });
+                return response.status(500).send({ staus: 500, message: 'Error crediting the specific account, ensure you provide valid credentials' });
               });
           })
           .catch((error) => {
             console.log(error);
-            response.status(500).send({ status: 500, error: 'Error crediting the account, Please ensure valid input' });
+            response.status(500).send({ status: 500, error: 'Error crediting the account, ensure you provide valid credentials' });
           });
       });
   }
@@ -156,7 +156,7 @@ class TransactionController {
           })
           .catch((error) => {
             console.log(error);
-            response.status(500).send({ status: 500, error: 'Error debiting the account, Please ensure valid input' });
+            response.status(500).send({ status: 500, error: 'Error debiting the account, ensure you provide valid credentials' });
           });
       });
   }

@@ -44,7 +44,7 @@ class accountController {
         if (error.detail === `Key (email)=(${newAccount.email}) already exists.`) {
           return response.status(400).send({ status: 'error', message: 'Account already exist' });
         }
-        return response.status(500).send({ status: 500, message: 'Error creating account' });
+        return response.status(500).send({ status: 500, message: 'Error creating account, ensure you provide valid credentials' });
       });
   }
 
@@ -58,7 +58,7 @@ class accountController {
         return response.status(200).send({ status: 200, message: 'Accounts successfully retrieved', data: result.rows });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error fetching all bank accounts' });
+        response.status(500).send({ status: 500, error: 'Error fetching all bank accounts, ensure you provide valid credentials' });
       });
   }
 
@@ -73,7 +73,7 @@ class accountController {
         return response.status(200).send({ status: 200, message: 'Account successfully retrieved', data: result.rows[0] });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error fetching the specific account' });
+        response.status(500).send({ status: 500, error: 'Error fetching the specific account, ensure you provide valid credentials' });
       });
   }
 
@@ -98,7 +98,7 @@ class accountController {
         return response.status(200).send({ status: 202, message: 'Account successfully updated', data: result.rows[0] });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error updating the account, Please ensure valid input' });
+        response.status(500).send({ status: 500, error: 'Error updating the account, ensure you provide valid credentials' });
       });
   }
 
@@ -118,7 +118,7 @@ class accountController {
           });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error deleting the specific account' });
+        response.status(500).send({ status: 500, error: 'Error deleting the specific account, ensure you provide valid credentials' });
       });
   }
 
@@ -132,7 +132,21 @@ class accountController {
         return response.status(200).send({ status: 200, message: 'Dormant account(s) successfully retrieved', data: result.rows });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error fetching dormant account(s)' });
+        response.status(500).send({ status: 500, error: 'Error fetching dormant account(s), ensure you provide valid credentials' });
+      });
+  }
+
+  static getAllActiveAccounts(request, response) {
+    const query = 'SELECT * FROM accounts WHERE "status"=\'active\' ORDER BY "id"';
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({ status: 400, error: 'Active account(s) does not exist' });
+        }
+        return response.status(200).send({ status: 200, message: 'Active account(s) successfully retrieved', data: result.rows });
+      })
+      .catch((error) => {
+        response.status(500).send({ status: 500, error: 'Error fetching active account(s), ensure you provide valid credentials' });
       });
   }
 }
