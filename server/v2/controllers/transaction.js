@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import validate from '../../middleware/validate';
 import connectDB from '../../connectDB';
 import helpers from '../../middleware/helpers';
@@ -80,19 +81,14 @@ class TransactionController {
 
         const updateCreditedAccount = `UPDATE accounts SET "balance"='${newBalance}' WHERE "accountNumber"='${accountNumber}' returning *`;
         return connectDB.query(updateCreditedAccount)
-          .then((result) => {
-            console.log(result);
-            return connectDB.query(creditQuery)
-              .then((result) => {
-                if (result.rowCount >= 1) {
-                  console.log(result);
-                  return response.status(200).send({ status: 202, message: 'Acccount successfully credited', data: result.rows[0] });
-                }
-                return response.status(500).send({ staus: 500, message: 'Error crediting the specific account, ensure you provide valid credentials' });
-              });
-          })
+          .then(result => connectDB.query(creditQuery)
+            .then((result) => {
+              if (result.rowCount >= 1) {
+                return response.status(200).send({ status: 202, message: 'Acccount successfully credited', data: result.rows[0] });
+              }
+              return response.status(500).send({ staus: 500, message: 'Error crediting the specific account, ensure you provide valid credentials' });
+            }))
           .catch((error) => {
-            console.log(error);
             response.status(500).send({ status: 500, error: 'Error crediting the account, ensure you provide valid credentials' });
           });
       });
@@ -143,21 +139,42 @@ class TransactionController {
 
         const updateDebitedAccount = `UPDATE accounts SET "balance"='${newBalance}' WHERE "accountNumber"='${accountNumber}' returning *`;
         return connectDB.query(updateDebitedAccount)
-          .then((result) => {
-            console.log(result);
-            return connectDB.query(debitQuery)
-              .then((result) => {
-                if (result.rowCount >= 1) {
-                  console.log(result);
-                  return response.status(200).send({ status: 202, message: 'Acccount successfully debited', data: result.rows[0] });
-                }
-                return response.status(500).send({ staus: 500, message: 'Error debiting the specific account' });
-              });
-          })
+          .then(result => connectDB.query(debitQuery)
+            .then((result) => {
+              if (result.rowCount >= 1) {
+                return response.status(200).send({ status: 202, message: 'Acccount successfully debited', data: result.rows[0] });
+              }
+              return response.status(500).send({ staus: 500, message: 'Error debiting the specific account' });
+            }))
           .catch((error) => {
-            console.log(error);
             response.status(500).send({ status: 500, error: 'Error debiting the account, ensure you provide valid credentials' });
           });
+      });
+  }
+
+  static getSpecificAccountTransactions(request, response) {
+    const { accountNumber } = request.params;
+    const query = `SELECT * FROM transactions WHERE "accountNumber"='${(accountNumber)}'`;
+    return connectDB.query(query)
+      .then((result) => {
+        console.log(result);
+        if (result.rowCount === 0) {
+          return response.status(400).send({
+            status: 400,
+            error: 'Account transactions does not exist'
+          });
+        }
+        return response.status(200).send({
+          status: 200,
+          message: 'User transactions successfully retrieved',
+          data: result.rows
+        });
+      })
+      .catch((error) => {
+        response.status(500).send({
+          status: 500,
+          error: 'Error fetching user transactions, ensure you provide valid credentials'
+        });
       });
   }
 }
