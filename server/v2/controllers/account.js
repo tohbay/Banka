@@ -261,7 +261,6 @@ class accountController {
           error:
           'Error fetching user account(s), ensure you provide valid credentials'
         });
-      });
   }
 }
 
