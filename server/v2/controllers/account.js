@@ -241,7 +241,6 @@ class accountController {
 
     return connectDB.query(query)
       .then((result) => {
-        console.log(result);
         if (result.rowCount === 0) {
           response.status(400).send({
             status: 400,
@@ -255,12 +254,12 @@ class accountController {
         });
       })
       .catch((error) => {
-        console.log(error);
         response.status(500).send({
           status: 500,
           error:
           'Error fetching user account(s), ensure you provide valid credentials'
         });
+      });
   }
 }
 
