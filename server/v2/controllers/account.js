@@ -11,7 +11,10 @@ class accountController {
 
     const { value, error } = validate.createAccount(request.body);
     if (error) {
-      return response.status(400).json({ status: 400, error: error.details[0].message });
+      return response.status(400).json({
+        status: 400,
+        error: error.details[0].message
+      });
     }
 
     const generateNumber = parseFloat(Date.now());
@@ -30,21 +33,35 @@ class accountController {
       openingBalance: 0.00
     };
 
-    const query = `INSERT INTO accounts ("accountNumber", "createdOn", "email", "type", "status", "balance")
-    VALUES('${newAccount.accountNumber}','${newAccount.createdOn}', '${newAccount.email}', '${newAccount.type}', 'draft', '0.00') returning * `;
+    const query = `INSERT INTO accounts ("accountNumber", "createdOn", "email",
+    "type", "status", "balance") VALUES('${newAccount.accountNumber}','${newAccount.createdOn}',
+    '${newAccount.email}', '${newAccount.type}', 'draft', '0.00') returning * `;
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount >= 1) {
-          return response.status(200).send({ status: 200, message: 'Acccount successfully created', data: result.rows[0] });
+          return response.status(200).send({
+            status: 200,
+            message: 'Acccount successfully created',
+            data: result.rows[0]
+          });
         }
 
-        return response.status(500).send({ staus: 500, message: 'Account could not be created' });
+        return response.status(500).send({
+          staus: 500,
+          message: 'Account could not be created'
+        });
       })
       .catch((error) => {
         if (error.detail === `Key (email)=(${newAccount.email}) already exists.`) {
-          return response.status(400).send({ status: 'error', message: 'Account already exist' });
+          return response.status(400).send({
+            status: 'error',
+            message: 'Account already exist'
+          });
         }
-        return response.status(500).send({ status: 500, message: 'Error creating account, ensure you provide valid credentials' });
+        return response.status(500).send({
+          status: 500,
+          message: 'Error creating account, ensure you provide valid credentials'
+        });
       });
   }
 
@@ -53,12 +70,23 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({ status: 400, error: 'There are no account records' });
+          response.status(400).send({
+            status:
+            400,
+            error: 'There are no account records'
+          });
         }
-        return response.status(200).send({ status: 200, message: 'Accounts successfully retrieved', data: result.rows });
+        return response.status(200).send({
+          status: 200,
+          message: 'Accounts successfully retrieved',
+          data: result.rows
+        });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error fetching all bank accounts, ensure you provide valid credentials' });
+        response.status(500).send({
+          status: 500,
+          error: 'Error fetching all bank accounts, ensure you provide valid credentials'
+        });
       });
   }
 
@@ -68,12 +96,22 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({ status: 400, error: 'Account does not exist' });
+          response.status(400).send({
+            status: 400,
+            error: 'Account does not exist'
+          });
         }
-        return response.status(200).send({ status: 200, message: 'Account successfully retrieved', data: result.rows[0] });
+        return response.status(200).send({
+          status: 200,
+          message: 'Account successfully retrieved',
+          data: result.rows[0]
+        });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error fetching the specific account, ensure you provide valid credentials' });
+        response.status(500).send({
+          status: 500,
+          error: 'Error fetching the specific account, ensure you provide valid credentials'
+        });
       });
   }
 
@@ -83,7 +121,10 @@ class accountController {
 
     const { value, error } = validate.patchAccount(request.body, request.params);
     if (error) {
-      return response.status(400).json({ status: 422, error: error.details[0].message });
+      return response.status(400).json({
+        status: 422,
+        error: error.details[0].message
+      });
     }
 
 
@@ -93,12 +134,22 @@ class accountController {
     return connectDB.query(updateOneAccountStatus)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({ status: 400, error: 'Account does not exist' });
+          response.status(400).send({
+            status: 400,
+            error: 'Account does not exist'
+          });
         }
-        return response.status(200).send({ status: 202, message: 'Account successfully updated', data: result.rows[0] });
+        return response.status(200).send({
+          status: 202,
+          message: 'Account successfully updated',
+          data: result.rows[0]
+        });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error updating the account, ensure you provide valid credentials' });
+        response.status(500).send({
+          status: 500,
+          error: 'Error updating the account, ensure you provide valid credentials'
+        });
       });
   }
 
@@ -108,17 +159,30 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({ status: 400, error: 'Account does not exist' });
+          response.status(400).send({
+            status: 400,
+            error: 'Account does not exist'
+          });
         }
         const deleteQuery = `DELETE FROM accounts WHERE "accountNumber"=${result.rows[0].accountNumber}`;
         return connectDB.query(deleteQuery)
-          .then(() => response.status(204).send({ status: 204, message: 'Account successfully deleted', data: result.rows[0] }))
+          .then(() => response.status(204).send({
+            status: 204,
+            message: 'Account successfully deleted',
+            data: result.rows[0]
+          }))
           .catch((error) => {
-            response.status(500).send({ status: 500, error: 'Error deleting the specific account' });
+            response.status(500).send({
+              status: 500,
+              error: 'Error deleting the specific account'
+            });
           });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error deleting the specific account, ensure you provide valid credentials' });
+        response.status(500).send({
+          status: 500,
+          error: 'Error deleting the specific account, ensure you provide valid credentials'
+        });
       });
   }
 
@@ -127,12 +191,22 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({ status: 400, error: 'Dormant account(s) does not exist' });
+          response.status(400).send({
+            status: 400,
+            error: 'Dormant account(s) does not exist'
+          });
         }
-        return response.status(200).send({ status: 200, message: 'Dormant account(s) successfully retrieved', data: result.rows });
+        return response.status(200).send({
+          status: 200,
+          message: 'Dormant account(s) successfully retrieved',
+          data: result.rows
+        });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error fetching dormant account(s), ensure you provide valid credentials' });
+        response.status(500).send({
+          status: 500,
+          error: 'Error fetching dormant account(s), ensure you provide valid credentials'
+        });
       });
   }
 
@@ -141,13 +215,52 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({ status: 400, error: 'Active account(s) does not exist' });
+          response.status(400).send({
+            status: 400,
+            error: 'Active account(s) does not exist'
+          });
         }
-        return response.status(200).send({ status: 200, message: 'Active account(s) successfully retrieved', data: result.rows });
+        return response.status(200).send({
+          status: 200,
+          message: 'Active account(s) successfully retrieved',
+          data: result.rows
+        });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error fetching active account(s), ensure you provide valid credentials' });
+        response.status(500).send({
+          status: 500,
+          error: 'Error fetching active account(s), ensure you provide valid credentials'
+        });
       });
+  }
+
+  static getAllAccountsSpecificUser(request, response) {
+    const { email } = request.params;
+    const userEmail = email.toLowerCase();
+    const query = `SELECT * FROM accounts WHERE "email"='${userEmail}' ORDER BY "id"`;
+
+    return connectDB.query(query)
+      .then((result) => {
+        console.log(result);
+        if (result.rowCount === 0) {
+          response.status(400).send({
+            status: 400,
+            error: 'User account(s) does not exist'
+          });
+        }
+        return response.status(200).send({
+          status: 200,
+          message: 'User account(s) successfully retrieved',
+          data: result.rows
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        response.status(500).send({
+          status: 500,
+          error:
+          'Error fetching user account(s), ensure you provide valid credentials'
+        });
   }
 }
 

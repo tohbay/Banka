@@ -11,5 +11,6 @@ router.patch('/accounts/:accountNumber', auth, accountController.accountStatusUp
 router.delete('/accounts/:accountNumber', auth, accountController.deleteAccount);
 router.get('/accounts/status/dormant', auth, accountController.getAllDormantAccounts);
 router.get('/accounts/status/active', auth, accountController.getAllActiveAccounts);
+router.get('/accounts/user/:email', auth, accountController.getAllAccountsSpecificUser);
 
 export default router;
