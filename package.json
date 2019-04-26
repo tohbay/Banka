@@ -6,8 +6,8 @@
   "scripts": {
     "pretest": "npm run create-table",
     "start": "node ./build/index.js",
-    "test": "nyc mocha --require @babel/register --require @babel/polyfill server/test --exit || true",
-    "tw": "nyc mocha ./server/test --require @babel/register -w --exit || true",
+    "test": "nyc mocha --require @babel/register --require @babel/polyfill server/test --exit",
+    "tw": "nyc mocha --require @babel/register --require @babel/polyfill -w server/test --exit",
     "dev": "set DEBUG=app & nodemon --exec babel-node server/index.js",
     "build": "babel server -d build && npm run create-table",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov ./node_modules/.bin/codecov",

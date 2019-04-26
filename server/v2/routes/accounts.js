@@ -4,10 +4,11 @@ import auth from '../../middleware/Auth';
 
 const router = Router();
 
-router.get('/accounts/', auth, accountController.getallAccounts);
-router.get('/accounts/:id', auth, accountController.getOne);
+router.get('/accounts/', auth, accountController.getAllAccounts);
+router.get('/accounts/:accountNumber', auth, accountController.getOne);
 router.post('/accounts/', auth, accountController.create);
 router.patch('/accounts/:accountNumber', auth, accountController.accountStatusUpdate);
 router.delete('/accounts/:accountNumber', auth, accountController.deleteAccount);
+router.get('/accounts/status/dormant', auth, accountController.getAllDormantAccounts);
 
 export default router;

@@ -1,6 +1,3 @@
-import transactions from '../../db/transactions';
-import TransactionService from '../models/transaction';
-import AccountService from '../models/account';
 import validate from '../../middleware/validate';
 import connectDB from '../../connectDB';
 import helpers from '../../middleware/helpers';
@@ -20,7 +17,7 @@ class TransactionController {
         if (result.rowCount === 0) {
           response.status(400).send({ status: 400, error: 'There are no transactions records' });
         }
-        return response.status(200).send({ message: 'Transactions successfully retrieved', data: result.rows });
+        return response.status(200).send({ status: 200, message: 'Transactions successfully retrieved', data: result.rows });
       })
       .catch((error) => {
         response.status(500).send({ status: 500, error: 'Error fetching all transactions' });
@@ -35,7 +32,7 @@ class TransactionController {
         if (result.rowCount === 0) {
           return response.status(400).send({ status: 400, error: 'Transaction does not exist' });
         }
-        return response.status(200).send({ message: 'Transaction successfully retrieved', data: result.rows[0] });
+        return response.status(200).send({ status: 200, message: 'Transaction successfully retrieved', data: result.rows[0] });
       })
       .catch((error) => {
         response.status(500).send({ status: 500, error: 'Error fetching the specific transaction' });
@@ -77,8 +74,10 @@ class TransactionController {
           balance: newBalance
         };
 
-        const creditQuery = `INSERT INTO transactions ("createdOn", "type", "accountNumber", "cashier",  "amount", "oldBalance", "newBalance")
-      VALUES('${creditDetails.createdOn}', '${creditDetails.type}', '${creditDetails.accountNumber}', '${creditDetails.cashier}', '${creditDetails.amount}', '${balance}', '${newBalance}') returning *`;
+        const creditQuery = `INSERT INTO transactions ("createdOn", "type", "accountNumber", "cashier",  "amount",
+          "oldBalance", "newBalance") VALUES('${creditDetails.createdOn}', '${creditDetails.type}', '${creditDetails.accountNumber}',
+          '${creditDetails.cashier}', '${creditDetails.amount}', '${balance}', '${newBalance}') returning *`;
+
         const updateCreditedAccount = `UPDATE accounts SET "balance"='${newBalance}' WHERE "accountNumber"='${accountNumber}' returning *`;
         return connectDB.query(updateCreditedAccount)
           .then((result) => {
@@ -87,7 +86,7 @@ class TransactionController {
               .then((result) => {
                 if (result.rowCount >= 1) {
                   console.log(result);
-                  return response.status(200).send({ status: 200, message: 'Acccount successfully credited', data: result.rows[0] });
+                  return response.status(200).send({ status: 202, message: 'Acccount successfully credited', data: result.rows[0] });
                 }
                 return response.status(500).send({ staus: 500, message: 'Error crediting the specific account' });
               });
@@ -138,8 +137,10 @@ class TransactionController {
           balance: newBalance
         };
 
-        const debitQuery = `INSERT INTO transactions ("createdOn", "type", "accountNumber", "cashier",  "amount", "oldBalance", "newBalance")
-      VALUES('${debitDetails.createdOn}', '${debitDetails.type}', '${debitDetails.accountNumber}', '${debitDetails.cashier}', '${debitDetails.amount}', '${balance}', '${newBalance}') returning *`;
+        const debitQuery = `INSERT INTO transactions ("createdOn", "type", "accountNumber", "cashier", "amount", 
+          "oldBalance", "newBalance") VALUES('${debitDetails.createdOn}', '${debitDetails.type}', '${debitDetails.accountNumber}', 
+          '${debitDetails.cashier}', '${debitDetails.amount}', '${balance}', '${newBalance}') returning *`;
+
         const updateDebitedAccount = `UPDATE accounts SET "balance"='${newBalance}' WHERE "accountNumber"='${accountNumber}' returning *`;
         return connectDB.query(updateDebitedAccount)
           .then((result) => {
@@ -148,7 +149,7 @@ class TransactionController {
               .then((result) => {
                 if (result.rowCount >= 1) {
                   console.log(result);
-                  return response.status(200).send({ status: 200, message: 'Acccount successfully debited', data: result.rows[0] });
+                  return response.status(200).send({ status: 202, message: 'Acccount successfully debited', data: result.rows[0] });
                 }
                 return response.status(500).send({ staus: 500, message: 'Error debiting the specific account' });
               });
