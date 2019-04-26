@@ -53,7 +53,7 @@ class userController {
         if (error.detail === `Key (email)=(${newUser.email}) already exists.`) {
           return response.status(400).send({ status: 409, error: 'User already exist' });
         }
-        return response.status(500).send({ status: 500, message: 'Error creating account' });
+        return response.status(500).send({ status: 500, message: 'Error creating account, ensure you provide valid credentials' });
       });
   }
 
@@ -89,7 +89,7 @@ class userController {
         return response.status(200).send({ status: 200, message: 'You are successfully logged in', token });
       })
       .catch((error) => {
-        response.status(500).send({ status: 500, error: 'Error logging in' });
+        response.status(500).send({ status: 500, error: 'Error logging in, ensure you provide valid credentials' });
       });
   }
 }
