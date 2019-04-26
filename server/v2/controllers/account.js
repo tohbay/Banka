@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import validate from '../../middleware/validate';
 import connectDB from '../../connectDB';
 
@@ -43,12 +44,11 @@ class accountController {
         if (error.detail === `Key (email)=(${newAccount.email}) already exists.`) {
           return response.status(400).send({ status: 'error', message: 'Account already exist' });
         }
-        console.log(error);
         return response.status(500).send({ status: 500, message: 'Error creating account' });
       });
   }
 
-  static getallAccounts(request, response) {
+  static getAllAccounts(request, response) {
     const query = 'SELECT * FROM accounts';
     return connectDB.query(query)
       .then((result) => {
@@ -64,7 +64,7 @@ class accountController {
 
   static getOne(request, response) {
     const { accountNumber } = request.params;
-    const query = `SELECT * FROM accounts WHERE "accountNumber"=${accountNumber}`;
+    const query = `SELECT * FROM accounts WHERE "accountNumber"='${accountNumber}'`;
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
@@ -73,8 +73,7 @@ class accountController {
         return response.status(200).send({ status: 200, message: 'Account successfully retrieved', data: result.rows[0] });
       })
       .catch((error) => {
-        console.log(error);
-        response.status(500).send({ status: 500, error: 'Error fetching the specific accountNumber' });
+        response.status(500).send({ status: 500, error: 'Error fetching the specific account' });
       });
   }
 
@@ -87,19 +86,16 @@ class accountController {
       return response.status(400).json({ status: 422, error: error.details[0].message });
     }
 
-    const findSpecificAccount = `SELECT * FROM accounts WHERE "accountNumber"='${(accountNumber)}'`;
-    return connectDB.query(findSpecificAccount)
+
+    const updateOneAccountStatus = `UPDATE accounts
+      SET "status"='${status}' WHERE "accountNumber"='${accountNumber}'
+      AND (("status"='draft' OR "status"='dormant') OR "status"='active') returning * `;
+    return connectDB.query(updateOneAccountStatus)
       .then((result) => {
         if (result.rowCount === 0) {
           response.status(400).send({ status: 400, error: 'Account does not exist' });
         }
-        const updateOneAccount = `UPDATE accounts
-          SET "status"='${status}' WHERE "accountNumber"='${accountNumber}' AND (("status"='draft' OR "status"='dormant') OR "status"='active')`;
-        return connectDB.query(updateOneAccount)
-          .then(() => response.status(200).send({ status: 200, message: 'Account successfully updated', data: result.rows[0] }))
-          .catch((error) => {
-            response.status(500).send({ status: 500, error: 'Error updating the specific account' });
-          });
+        return response.status(200).send({ status: 202, message: 'Account successfully updated', data: result.rows[0] });
       })
       .catch((error) => {
         response.status(500).send({ status: 500, error: 'Error updating the account, Please ensure valid input' });
@@ -118,13 +114,25 @@ class accountController {
         return connectDB.query(deleteQuery)
           .then(() => response.status(204).send({ status: 204, message: 'Account successfully deleted', data: result.rows[0] }))
           .catch((error) => {
-            console.log(error);
             response.status(500).send({ status: 500, error: 'Error deleting the specific account' });
           });
       })
       .catch((error) => {
-        console.log(error);
         response.status(500).send({ status: 500, error: 'Error deleting the specific account' });
+      });
+  }
+
+  static getAllDormantAccounts(request, response) {
+    const query = 'SELECT * FROM accounts WHERE "status"=\'dormant\' ORDER BY "id"';
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({ status: 400, error: 'Dormant account(s) does not exist' });
+        }
+        return response.status(200).send({ status: 200, message: 'Dormant account(s) successfully retrieved', data: result.rows });
+      })
+      .catch((error) => {
+        response.status(500).send({ status: 500, error: 'Error fetching dormant account(s)' });
       });
   }
 }
