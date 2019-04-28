@@ -1,63 +1,161 @@
-import chai, { expect } from 'chai';
+import chai from 'chai';
+import 'chai/register-should';
 import chaiHttp from 'chai-http';
+
 import app from '../app';
 
-chai.use(chaiHttp);
 
+chai.use(chaiHttp);
 const should = chai.should();
+
+const request = chai.request(app);
 
 
 describe('Testing transactions endpoints', () => {
-  const transaction = {
-    transactionId: 2,
+  beforeEach((done) => {
+    done();
+  });
+  afterEach((done) => {
+    done();
+  });
+
+  const draftAccount = {
+    id: 2,
+    accountNumber: 1556261730217,
     createdOn: new Date().toLocaleString(),
-    type: 'credit',
-    accountNumber: 3,
-    amount: 30.67,
-    cashier: 1,
-    oldBalance: 450.00,
-    newBalance: 480.67
+    email: 'johnsmith@emial.com',
+    type: 'savings',
+    status: 'draft',
+    balance: 500.78
   };
+
+  const dormantAccount = {
+    id: 2,
+    accountNumber: 1556261730217,
+    createdOn: new Date().toLocaleString(),
+    email: 'johnsmith@emial.com',
+    type: 'savings',
+    status: 'dormant',
+    balance: 500.78
+  };
+
+  const activeAccount = {
+    id: 2,
+    accountNumber: 1556261730217,
+    createdOn: new Date().toLocaleString(),
+    email: 'johnsmith@emial.com',
+    type: 'savings',
+    status: 'active',
+    balance: 500.78
+  };
+
+  const noAccountNumber = {
+    id: 2,
+    createdOn: new Date().toLocaleString(),
+    email: 'johnsmith@emial.com',
+    type: 'savings',
+    status: 'dormant',
+    cashier: 4,
+    oldBalance: 5000.43,
+    newBalance: 200.00,
+    balance: 200.00
+  };
+
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5tYXJrQGVtYWlsLmNvbSIsImlhdCI6MTU1NjQ2Mjc1OCwiZXhwIjoxNTU2NTQ5MTU4fQ.TG9Iv5v5fc0rZPOiEeYrS3UToxpnecnIY-4MYi3eIrw';
+
   describe('It should test the GET transactions endpoint', () => {
     it('It should fetch all transaction records', (done) => {
       const transactionUrl = '/api/v2/transactions/';
+      const transactions = [{
+        id: 5,
+        createdOn: new Date().toLocaleString(),
+        type: 'credit',
+        accountNumber: 1556261730217,
+        cashier: 4,
+        amount: 500.00,
+        oldBalance: 5000.43,
+        newBalance: 200.00
+      }
+      ];
       chai.request(app)
         .get(transactionUrl)
+        .set('Authorization', token)
         .end((error, response) => {
-          expect(response.status).to.equal(403);
-          expect(response.body).to.be.an('object');
-          expect(transaction).to.be.an('object');
-          expect(transaction).to.have.property('transactionId');
-          expect(transaction).to.have.property('createdOn');
-          expect(transaction).to.have.property('type');
-          expect(transaction).to.have.property('accountNumber');
-          expect(transaction).to.have.property('cashier');
-          expect(transaction).to.have.property('amount');
-          expect(transaction).to.have.property('oldBalance');
-          expect(transaction).to.have.property('newBalance');
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          transactions.should.be.a('array');
+          transactions[0].should.have.property('accountNumber');
+          transactions[0].should.have.property('createdOn');
+          transactions[0].should.have.property('type');
+          transactions[0].should.have.property('id');
+          transactions[0].should.have.property('cashier');
+          transactions[0].should.have.property('oldBalance');
+          transactions[0].should.have.property('newBalance');
           done();
         });
     });
 
     it('It should fetch a specific transaction record', (done) => {
       const specificTransactionUrl = '/api/v2/transactions/:id/';
+      const transaction = {
+        id: 5,
+        createdOn: new Date().toLocaleString(),
+        type: 'credit',
+        accountNumber: 1556261730217,
+        cashier: 4,
+        amount: 500.00,
+        oldBalance: 5000.43,
+        newBalance: 200.00
+      };
       chai.request(app)
         .get(specificTransactionUrl)
-        .send({
-          transactionId: 1
-        })
+        .set('Authorization', token)
+        .send(transaction)
         .end((error, response) => {
-          expect(response.status).to.equal(403);
-          expect(response.body.status).to.equal(403);
-          expect(response.body).to.be.an('object');
-          expect(transaction).to.have.property('transactionId');
-          expect(transaction).to.have.property('createdOn');
-          expect(transaction).to.have.property('type');
-          expect(transaction).to.have.property('accountNumber');
-          expect(transaction).to.have.property('cashier');
-          expect(transaction).to.have.property('amount');
-          expect(transaction).to.have.property('oldBalance');
-          expect(transaction).to.have.property('newBalance');
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          transaction.should.be.a('object');
+          transaction.should.have.property('createdOn');
+          transaction.should.have.property('type');
+          transaction.should.have.property('id');
+          transaction.should.have.property('accountNumber');
+          transaction.should.have.property('cashier');
+          transaction.should.have.property('oldBalance');
+          transaction.should.have.property('newBalance');
+          done();
+        });
+    });
+
+    it('it should throw an error when transaction id is not found', (done) => {
+      const transaction = {
+        createdOn: new Date().toLocaleString(),
+        type: 'credit',
+        accountNumber: 1556261730217,
+        cashier: 4,
+        amount: 500.00,
+        oldBalance: 5000.43,
+        newBalance: 200.00
+      };
+
+      chai
+        .request(app)
+        .get('/api/v2/transactions/:id')
+        .set('Authorization', token)
+        .send(transaction)
+        .end((err, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          transaction.should.be.a('object');
+          transaction.should.have.property('createdOn');
+          transaction.should.have.property('type');
+          transaction.should.not.have.property('id');
+          transaction.should.have.property('accountNumber');
+          transaction.should.have.property('cashier');
+          transaction.should.have.property('oldBalance');
+          transaction.should.have.property('newBalance');
           done();
         });
     });
@@ -66,27 +164,20 @@ describe('Testing transactions endpoints', () => {
       const creditUrl = '/api/v2/transactions/accountNumber/credit/';
       chai.request(app)
         .post(creditUrl)
-        .send({
-          status: 'active',
-          transactionId: 20,
-          createdOn: new Date().toLocaleString(),
-          type: 'credit',
-          amount: 500.00,
-          cashier: 1,
-          oldBalance: 500.00,
-          newBalance: 1000.00
-        })
+        .set('Authorization', token)
+        .send(noAccountNumber)
         .end((error, response) => {
-          expect(response.status).to.equal(403);
-          expect(response.body).to.be.an('object');
-          expect(transaction).to.have.property('transactionId');
-          expect(transaction).to.have.property('createdOn');
-          expect(transaction).to.have.property('type');
-          expect(transaction).to.have.property('accountNumber');
-          expect(transaction).to.have.property('cashier');
-          expect(transaction).to.have.property('amount');
-          expect(transaction).to.have.property('oldBalance');
-          expect(transaction).to.have.property('newBalance');
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          noAccountNumber.should.be.a('object');
+          noAccountNumber.should.have.property('createdOn');
+          noAccountNumber.should.have.property('type');
+          noAccountNumber.should.have.property('id');
+          noAccountNumber.should.not.have.property('accountNumber');
+          noAccountNumber.should.have.property('cashier');
+          noAccountNumber.should.have.property('oldBalance');
+          noAccountNumber.should.have.property('newBalance');
           done();
         });
     });
@@ -95,28 +186,20 @@ describe('Testing transactions endpoints', () => {
       const creditUrl = '/api/v2/transactions/accountNumber/credit/';
       chai.request(app)
         .post(creditUrl)
-        .send({
-          status: 'dormant',
-          transactionId: 2,
-          createdOn: new Date().toLocaleString(),
-          type: 'credit',
-          accountNumber: 1,
-          amount: 500.00,
-          cashier: 1,
-          oldBalance: 500.00,
-          newBalance: 1000.00
-        })
+        .set('Authorization', token)
+        .send(dormantAccount)
         .end((error, response) => {
-          expect(response.status).to.equal(403);
-          expect(response.body).to.be.an('object');
-          expect(transaction).to.have.property('transactionId');
-          expect(transaction).to.have.property('createdOn');
-          expect(transaction).to.have.property('type');
-          expect(transaction).to.have.property('accountNumber');
-          expect(transaction).to.have.property('cashier');
-          expect(transaction).to.have.property('amount');
-          expect(transaction).to.have.property('oldBalance');
-          expect(transaction).to.have.property('newBalance');
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          dormantAccount.should.be.a('object');
+          dormantAccount.should.have.property('accountNumber');
+          dormantAccount.should.have.property('createdOn');
+          dormantAccount.should.have.property('email');
+          dormantAccount.should.have.property('type');
+          dormantAccount.should.have.property('id');
+          dormantAccount.should.have.property('status').eql('dormant');
+          dormantAccount.should.have.property('balance');
           done();
         });
     });
@@ -125,21 +208,20 @@ describe('Testing transactions endpoints', () => {
       const creditUrl = '/api/v2/transactions/accountNumber/credit/';
       chai.request(app)
         .post(creditUrl)
-        .send({
-          amount: 500.00,
-          cashier: 1,
-        })
+        .set('Authorization', token)
+        .send(draftAccount)
         .end((error, response) => {
-          expect(response.status).to.equal(403);
-          expect(response.body).to.be.an('object');
-          expect(transaction).to.have.property('transactionId');
-          expect(transaction).to.have.property('createdOn');
-          expect(transaction).to.have.property('type');
-          expect(transaction).to.have.property('accountNumber');
-          expect(transaction).to.have.property('cashier');
-          expect(transaction).to.have.property('amount');
-          expect(transaction).to.have.property('oldBalance');
-          expect(transaction).to.have.property('newBalance');
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          draftAccount.should.be.a('object');
+          draftAccount.should.have.property('accountNumber');
+          draftAccount.should.have.property('createdOn');
+          draftAccount.should.have.property('email');
+          draftAccount.should.have.property('type');
+          draftAccount.should.have.property('id');
+          draftAccount.should.have.property('status').eql('draft');
+          draftAccount.should.have.property('balance');
           done();
         });
     });
@@ -148,111 +230,310 @@ describe('Testing transactions endpoints', () => {
       const debitUrl = '/api/v2/transactions/accountNumber/debit/';
       chai.request(app)
         .post(debitUrl)
-        .send({
-          amount: 500.00,
-          cashier: 1
-        })
+        .set('Authorization', token)
+        .send(noAccountNumber)
         .end((error, response) => {
-          expect(response.status).to.equal(403);
-          expect(response.body).to.be.an('object');
-          expect(transaction).to.have.property('transactionId');
-          expect(transaction).to.have.property('createdOn');
-          expect(transaction).to.have.property('type');
-          expect(transaction).to.have.property('accountNumber');
-          expect(transaction).to.have.property('cashier');
-          expect(transaction).to.have.property('amount');
-          expect(transaction).to.have.property('oldBalance');
-          expect(transaction).to.have.property('newBalance');
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          noAccountNumber.should.be.a('object');
+          noAccountNumber.should.not.have.property('accountNumber');
+          noAccountNumber.should.have.property('createdOn');
+          noAccountNumber.should.have.property('email');
+          noAccountNumber.should.have.property('type');
+          noAccountNumber.should.have.property('id');
+          noAccountNumber.should.have.property('status').eql('dormant');
+          noAccountNumber.should.have.property('balance');
           done();
         });
     });
 
     it('It should not post a debit transaction when status is dormant', (done) => {
-      const creditUrl = '/api/v2/transactions/accountNumber/debit/';
+      const debitUrl = '/api/v2/transactions/accountNumber/debit/';
       chai.request(app)
-        .post(creditUrl)
-        .send({
-          status: 'dormant',
-          transactionId: 2,
-          createdOn: new Date().toLocaleString(),
-          type: 'debit',
-          accountNumber: 1,
-          amount: 500.00,
-          cashier: 1,
-          oldBalance: 500.00,
-          newBalance: 0.00
-        })
+        .post(debitUrl)
+        .set('Authorization', token)
+        .send(dormantAccount)
         .end((error, response) => {
-          expect(response.status).to.equal(403);
-          expect(response.body).to.be.an('object');
-          expect(transaction).to.have.property('transactionId');
-          expect(transaction).to.have.property('createdOn');
-          expect(transaction).to.have.property('type');
-          expect(transaction).to.have.property('accountNumber');
-          expect(transaction).to.have.property('cashier');
-          expect(transaction).to.have.property('amount');
-          expect(transaction).to.have.property('oldBalance');
-          expect(transaction).to.have.property('newBalance');
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          dormantAccount.should.be.a('object');
+          dormantAccount.should.have.property('accountNumber');
+          dormantAccount.should.have.property('createdOn');
+          dormantAccount.should.have.property('email');
+          dormantAccount.should.have.property('type');
+          dormantAccount.should.have.property('id');
+          dormantAccount.should.have.property('status').eql('dormant');
+          dormantAccount.should.have.property('balance');
           done();
         });
     });
 
     it('It should not post a debit transaction when status is draft', (done) => {
-      const creditUrl = '/api/v2/transactions/accountNumber/debit/';
+      const debitUrl = '/api/v2/transactions/accountNumber/debit/';
       chai.request(app)
-        .post(creditUrl)
-        .send({
-          status: 'draft',
-          transactionId: 2,
-          createdOn: new Date().toLocaleString(),
-          type: 'debit',
-          accountNumber: 1,
-          amount: 500.00,
-          cashier: 1,
-          oldBalance: 500.00,
-          newBalance: 0.00
-        })
+        .post(debitUrl)
+        .set('Authorization', token)
+        .send(draftAccount)
         .end((error, response) => {
-          expect(response.status).to.equal(403);
-          expect(response.body).to.be.an('object');
-          expect(transaction).to.have.property('transactionId');
-          expect(transaction).to.have.property('createdOn');
-          expect(transaction).to.have.property('type');
-          expect(transaction).to.have.property('accountNumber');
-          expect(transaction).to.have.property('cashier');
-          expect(transaction).to.have.property('amount');
-          expect(transaction).to.have.property('oldBalance');
-          expect(transaction).to.have.property('newBalance');
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          draftAccount.should.be.a('object');
+          draftAccount.should.have.property('accountNumber');
+          draftAccount.should.have.property('createdOn');
+          draftAccount.should.have.property('email');
+          draftAccount.should.have.property('type');
+          draftAccount.should.have.property('id');
+          draftAccount.should.have.property('status').eql('draft');
+          draftAccount.should.have.property('balance');
           done();
         });
     });
 
     it('It should not post a debit transaction when balance is less than amount', (done) => {
-      const creditUrl = '/api/v2/transactions/accountNumber/debit/';
+      const debitUrl = '/api/v2/transactions/accountNumber/debit/';
+      const account = {
+        id: 2,
+        accountNumber: 1556261730217,
+        createdOn: new Date().toLocaleString(),
+        email: 'johnsmith@emial.com',
+        type: 'savings',
+        status: 'active',
+        amount: 1000.00,
+        balance: 500.78
+      };
       chai.request(app)
-        .post(creditUrl)
-        .send({
-          status: 'draft',
-          transactionId: 2,
-          createdOn: new Date().toLocaleString(),
-          type: 'debit',
-          accountNumber: 2,
-          amount: 500.00,
-          cashier: 1,
-          oldBalance: 500.00,
-          newBalance: 0.00
-        })
+        .post(debitUrl)
+        .set('Authorization', token)
+        .send(account)
         .end((error, response) => {
-          expect(response.status).to.equal(403);
-          expect(response.body).to.be.an('object');
-          expect(transaction).to.have.property('transactionId');
-          expect(transaction).to.have.property('createdOn');
-          expect(transaction).to.have.property('type');
-          expect(transaction).to.have.property('accountNumber');
-          expect(transaction).to.have.property('cashier');
-          expect(transaction).to.have.property('amount');
-          expect(transaction).to.have.property('oldBalance');
-          expect(transaction).to.have.property('newBalance');
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          account.should.be.a('object');
+          account.should.have.property('accountNumber');
+          account.should.have.property('createdOn');
+          account.should.have.property('email');
+          account.should.have.property('type');
+          account.should.have.property('id');
+          account.should.have.property('status');
+          account.should.have.property('balance');
+          done();
+        });
+    });
+
+    it('it should throw an insufficient balance error', (done) => {
+      const account = {
+        id: 2,
+        accountNumber: 1556261730217,
+        createdOn: new Date().toLocaleString(),
+        email: 'johnsmith@emial.com',
+        type: 'savings',
+        status: 'active',
+        amount: 1000.00,
+        balance: 500.78
+      };
+      chai.request(app)
+        .post('/api/v2/transactions/accountNumber/debit/')
+        .set('Authorization', token)
+        .send(account)
+        .end((err, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          account.should.be.a('object');
+          account.should.have.property('accountNumber');
+          account.should.have.property('createdOn');
+          account.should.have.property('email');
+          account.should.have.property('type');
+          account.should.have.property('id');
+          account.should.have.property('status');
+          account.should.have.property('balance');
+          done();
+        });
+    });
+
+    it('it should throw an error when account number is not found', (done) => {
+      chai.request(app)
+        .post('/api/v2/transactions/accountNumber/debit/')
+        .set('Authorization', token)
+        .send(noAccountNumber)
+        .end((err, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          noAccountNumber.should.be.a('object');
+          noAccountNumber.should.not.have.property('accountNumber');
+          noAccountNumber.should.have.property('createdOn');
+          noAccountNumber.should.have.property('email');
+          noAccountNumber.should.have.property('type');
+          noAccountNumber.should.have.property('id');
+          noAccountNumber.should.have.property('status');
+          noAccountNumber.should.have.property('balance');
+          done();
+        });
+    });
+
+    it('it should throw an error when "amount" in request body is not provided ', (done) => {
+      const account = {
+        id: 2,
+        accountNumber: 1556261730217,
+        createdOn: new Date().toLocaleString(),
+        email: 'johnsmith@emial.com',
+        type: 'savings',
+        status: 'active',
+        balance: 500.78
+      };
+      chai.request(app)
+        .post('/api/v2/transactions/accountNumber/debit/')
+        .set('Authorization', token)
+        .send(account)
+        .end((err, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          account.should.be.a('object');
+          account.should.have.property('accountNumber');
+          account.should.have.property('createdOn');
+          account.should.have.property('email');
+          account.should.have.property('type');
+          account.should.have.property('id');
+          account.should.have.property('status');
+          account.should.have.property('balance');
+          done();
+        });
+    });
+
+    it('it should throw an error when amount is not a number', (done) => {
+      const transaction = {
+        id: 5,
+        accountNumber: 1556261730217,
+        createdOn: new Date().toLocaleString(),
+        type: 'credit',
+        cashier: 4,
+        amount: 'eft500.00abd',
+        oldBalance: 5000.43,
+        newBalance: 200.00
+      };
+      chai.request(app)
+        .post('/api/v2/transactions/accountNumber/debit/')
+        .set('Authorization', token)
+        .send(transaction)
+        .end((err, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          transaction.should.be.a('object');
+          transaction.should.have.property('createdOn');
+          transaction.should.have.property('type');
+          transaction.should.have.property('id');
+          transaction.should.have.property('accountNumber');
+          transaction.should.have.property('cashier');
+          transaction.should.have.property('oldBalance');
+          transaction.should.have.property('newBalance');
+          done();
+        });
+    });
+
+    it('it throws an error if account number is invalid', (done) => {
+      const account = {
+        id: 2,
+        accountNumber: 'edft155626dfsd1730217',
+        createdOn: new Date().toLocaleString(),
+        email: 'johnsmith@emial.com',
+        type: 'savings',
+        status: 'active',
+        balance: 500.78
+      };
+      chai.request(app)
+        .post('/api/v2/transactions/accountNumber/debit/')
+        .set('Authorization', token)
+        .send(account)
+        .end((err, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          account.should.be.a('object');
+          account.should.have.property('accountNumber');
+          account.should.have.property('createdOn');
+          account.should.have.property('email');
+          account.should.have.property('type');
+          account.should.have.property('id');
+          account.should.have.property('status');
+          account.should.have.property('balance');
+          done();
+        });
+    });
+
+    it('it should throw an error when account number is not found', (done) => {
+      const noAccountNumber = {
+        id: 2,
+        createdOn: new Date().toLocaleString(),
+        email: 'johnsmith@emial.com',
+        type: 'savings',
+        status: 'dormant',
+        cashier: 4,
+        oldBalance: 5000.43,
+        newBalance: 200.00,
+        balance: 200.00
+      };
+      chai
+        .request(app)
+        .get('/api/v2/transactions/:accountNumber/transactions')
+        .set('Authorization', token)
+        .end((err, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          noAccountNumber.should.be.a('object');
+          noAccountNumber.should.not.have.property('accountNumber');
+          noAccountNumber.should.have.property('createdOn');
+          noAccountNumber.should.have.property('email');
+          noAccountNumber.should.have.property('type');
+          noAccountNumber.should.have.property('id');
+          noAccountNumber.should.have.property('status').eql('dormant');
+          noAccountNumber.should.have.property('balance');
+          done();
+        });
+    });
+
+    it('it should get an account transactions', (done) => {
+      const account = [{
+        id: 2,
+        accountNumber: 'edft155626dfsd1730217',
+        createdOn: new Date().toLocaleString(),
+        email: 'johnsmith@emial.com',
+        type: 'savings',
+        status: 'active',
+        balance: 500.78
+      },
+      {
+        id: 3,
+        accountNumber: 'edft155626dfsd1730217',
+        createdOn: new Date().toLocaleString(),
+        email: 'johnsmith@emial.com',
+        type: 'savings',
+        status: 'active',
+        balance: 500.78
+      }];
+      chai
+        .request(app)
+        .get('/api/v2/transactions/:accountNumber/transactions')
+        .set('Authorization', token)
+        .end((err, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Access denied, provide token');
+          account.should.be.a('array');
+          account[0].should.have.property('accountNumber');
+          account[0].should.have.property('createdOn');
+          account[0].should.have.property('email');
+          account[0].should.have.property('type');
+          account[0].should.have.property('id');
+          account[0].should.have.property('status');
+          account[0].should.have.property('balance');
           done();
         });
     });

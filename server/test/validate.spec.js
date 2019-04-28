@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 
-import validate from '../middleware/validate';
+// import validate from '../middleware/validate';
 
 
 chai.use(chaiHttp);
