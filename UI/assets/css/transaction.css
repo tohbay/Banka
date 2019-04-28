@@ -131,10 +131,6 @@ align-items: center;
 
 @media screen and (min-width: 768px) {
 
-  /* #account-transactions {
-    margin: 0 30%;
-  } */
-
   .card {
     display: flex;
     flex-direction: row;
