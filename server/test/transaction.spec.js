@@ -20,7 +20,7 @@ describe('Testing transactions endpoints', () => {
   };
   describe('It should test the GET transactions endpoint', () => {
     it('It should fetch all transaction records', (done) => {
-      const transactionUrl = '/api/v1/transactions/';
+      const transactionUrl = '/api/v2/transactions/';
       chai.request(app)
         .get(transactionUrl)
         .end((error, response) => {
@@ -40,7 +40,7 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should fetch a specific transaction record', (done) => {
-      const specificTransactionUrl = '/api/v1/transactions/:id/';
+      const specificTransactionUrl = '/api/v2/transactions/:id/';
       chai.request(app)
         .get(specificTransactionUrl)
         .send({
@@ -63,7 +63,7 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should not post a credit transaction when account number is not found', (done) => {
-      const creditUrl = '/api/v1/transactions/accountNumber/credit/';
+      const creditUrl = '/api/v2/transactions/accountNumber/credit/';
       chai.request(app)
         .post(creditUrl)
         .send({
@@ -92,7 +92,7 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should not post a credit transaction when status is dormant', (done) => {
-      const creditUrl = '/api/v1/transactions/accountNumber/credit/';
+      const creditUrl = '/api/v2/transactions/accountNumber/credit/';
       chai.request(app)
         .post(creditUrl)
         .send({
@@ -122,7 +122,7 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should not post a credit transaction when status is draft', (done) => {
-      const creditUrl = '/api/v1/transactions/accountNumber/credit/';
+      const creditUrl = '/api/v2/transactions/accountNumber/credit/';
       chai.request(app)
         .post(creditUrl)
         .send({
@@ -145,7 +145,7 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should not post a debit transaction when account number is not found', (done) => {
-      const debitUrl = '/api/v1/transactions/accountNumber/debit/';
+      const debitUrl = '/api/v2/transactions/accountNumber/debit/';
       chai.request(app)
         .post(debitUrl)
         .send({
@@ -168,7 +168,7 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should not post a debit transaction when status is dormant', (done) => {
-      const creditUrl = '/api/v1/transactions/accountNumber/debit/';
+      const creditUrl = '/api/v2/transactions/accountNumber/debit/';
       chai.request(app)
         .post(creditUrl)
         .send({
@@ -198,7 +198,7 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should not post a debit transaction when status is draft', (done) => {
-      const creditUrl = '/api/v1/transactions/accountNumber/debit/';
+      const creditUrl = '/api/v2/transactions/accountNumber/debit/';
       chai.request(app)
         .post(creditUrl)
         .send({
@@ -228,7 +228,7 @@ describe('Testing transactions endpoints', () => {
     });
 
     it('It should not post a debit transaction when balance is less than amount', (done) => {
-      const creditUrl = '/api/v1/transactions/accountNumber/debit/';
+      const creditUrl = '/api/v2/transactions/accountNumber/debit/';
       chai.request(app)
         .post(creditUrl)
         .send({

@@ -9,5 +9,6 @@ router.get('/transactions/', auth, transctionController.fetchAll);
 router.get('/transactions/:id', auth, transctionController.fetchSpecificTransaction);
 router.post('/transactions/:accountNumber/credit', auth, transctionController.creditAccount);
 router.post('/transactions/:accountNumber/debit', auth, transctionController.debitAccount);
+router.get('/transactions/:accountNumber/transactions', auth, transctionController.getSpecificAccountTransactions);
 
 export default router;
