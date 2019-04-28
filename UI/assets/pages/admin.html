@@ -37,7 +37,35 @@
                   <button id="transact-account" class=" client-btn">Credit/Debit Account</button>
                   <button id="show-accounts" class="client-btn">View Accounts</button>
                   <button id="view-transactions" class="client-btn">Transactions History</button>
+                  <!-- <button id="view-transactions" class="client-btn">Update User Status</button> -->
               </div>
+              <div class="client-items account-summary">
+                <p>User Profile:</p>
+                <ul>
+                  <li id="no-accounts" class="no-accounts">No User Account Yet</li>
+                  <li id="account-created" class="account-created">Account successfully created</li>
+                </ul>
+              </div>
+            <div id="create-user-account" class="client-items create-user-account create-user">
+                <form action="" class="account-create ">
+                  <fieldset>
+                    <legend>Update User Type:</legend>
+                    <span class="update-user">
+                      <div class="select-type">
+                        <p>Select Type</p>
+                        <select class="account-type" value="account-type">
+                            <option name="savings" id="savings">Admin</option>
+                            <option name="current" id="current">Cashier</option>
+                            <input type="text" placeholder="Enter User Email" name="userEmail" required>
+                        </select>
+                      </div>
+                      <div class="user-update-info">
+                        <button id="create" class="client-btn create">Update User Status</button>
+                      </div>
+                    </span>
+                  </fieldset>
+                </form>
+            </div>
               <div id="transact-form"  class="client-items account-summary">
                   <p>Account Profile:</p>
                   <div class="search-one">

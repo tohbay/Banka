@@ -12,7 +12,8 @@
     "build": "babel server -d build && npm run create-table",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov ./node_modules/.bin/codecov",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "create-table": "babel-node ./server/db/db.js --exit"
+    "create-table": "babel-node ./server/db/db.js --exit",
+    "cover": "nyc --require @babel/register --require @babel/polyfill mocha server/test -w --exit"
   },
   "repository": {
     "type": "git",
@@ -56,11 +57,13 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
+    "faker": "^4.1.0",
     "mocha": "^6.1.4",
     "mocha-lcov-reporter": "^1.3.0",
     "nodemon": "^1.18.11",
     "nyc": "^14.0.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "should": "^13.2.3"
   },
   "nodemonConfig": {
     "restartable": "rs",

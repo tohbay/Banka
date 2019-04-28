@@ -60,7 +60,7 @@ class accountController {
         }
         return response.status(500).send({
           status: 500,
-          message: 'Error creating account, ensure you provide valid credentials'
+          error: 'Error creating account, ensure you provide valid credentials'
         });
       });
   }

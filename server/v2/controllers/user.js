@@ -30,12 +30,11 @@ class userController {
     const hashedPassword = helpers.encryptPassword(value.password);
 
     value.password = hashedPassword;
-    const userEmail = value.email.toLowerCase();
 
     const newUser = {
-      email: userEmail,
-      firstName: value.firstName,
-      lastName: value.lastName,
+      email: value.email.toLowerCase(),
+      firstName: value.firstName.toLowerCase(),
+      lastName: value.lastName.toLowerCase(),
       password: hashedPassword
     };
 
@@ -51,14 +50,15 @@ class userController {
       })
       .catch((error) => {
         if (error.detail === `Key (email)=(${newUser.email}) already exists.`) {
-          return response.status(400).send({ status: 409, error: 'User already exist' });
+          return response.status(409).send({ status: 409, error: 'User already exist' });
         }
         return response.status(500).send({ status: 500, message: 'Error creating account, ensure you provide valid credentials' });
       });
   }
 
   static signin(request, response) {
-    if (!request.body.email || !request.body.password) {
+    const { email, password } = request.body;
+    if (!email || !password) {
       return response.status(400).json({
         status: 400,
         error: 'Email or Password is not provided',
@@ -74,8 +74,8 @@ class userController {
     }
 
     const user = {
-      email: request.body.email,
-      password: request.body.password
+      email: value.email.toLowerCase(),
+      password: value.password
     };
 
     const token = helpers.issueToken(user);

@@ -1,99 +1,195 @@
-import chai, { expect } from 'chai';
+import chai from 'chai';
+import 'chai/register-should';
 import chaiHttp from 'chai-http';
 
 import app from '../app';
 
-const should = chai.should();
+
 chai.use(chaiHttp);
+const should = chai.should();
+
 const request = chai.request(app);
 
-describe('Mocha test for User Controller', () => {
-  const newUser = {
-    id: 1,
-    email: 'frank@email.com',
-    firstName: 'Frank',
-    lastName: 'Obi',
-    password: '12345',
-    confirmPassword: '12345',
-    type: 'client',
-    isAdmin: false
-  };
-  describe('Mocha test for user signup route', () => {
-    const signupUrl = '/api/v2/auth/signup/';
-    it('should create a new user when all parameters are given', (done) => {
+
+describe('Test user login and signup', () => {
+  beforeEach((done) => {
+    done();
+  });
+  afterEach((done) => {
+    done();
+  });
+  describe('POST /auth/signup', () => {
+    it('it should create a new user', (done) => {
+      const newUser = {
+        email: 'johndoelo@gmail.com',
+        firstName: 'John',
+        lastName: 'Doe',
+        password: 'password',
+        confirmPassword: 'password',
+      };
       chai.request(app)
-        .post(signupUrl)
-        .send({ newUser })
-        .end((error, response) => {
-          expect(response.status).to.equal(400);
-          expect(response.body).to.have.property('status');
-          expect(response.body).to.have.property('error');
-          expect(newUser).to.be.an('object');
-          expect(newUser).to.have.property('id');
-          expect(newUser).to.have.property('email');
-          expect(newUser).to.have.property('firstName');
-          expect(newUser).to.have.property('lastName');
-          expect(newUser).to.have.property('password');
-          expect(newUser).to.have.property('type');
-          expect(newUser).to.have.property('isAdmin');
+        .post('/api/v2/auth/signup')
+        .send(newUser)
+        .end((err, response) => {
+          response.should.have.status(409);
+          response.body.should.be.a('object');
           done();
         });
     });
 
-    it('should not register a user when the email already exist', (done) => {
-      chai.request(app)
-        .post(signupUrl)
-        .send({
-          id: 1,
-          email: 'frank@email.com',
-          firstName: 'Frank',
-          lastName: 'Obi',
-          password: '12345',
-          type: 'client',
-          isAdmin: false
-        })
-        .end((error, response) => {
-          expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(400);
-          expect(newUser).to.have.property('id');
-          expect(newUser).to.have.property('email');
-          expect(newUser).to.have.property('firstName');
-          expect(newUser).to.have.property('lastName');
-          expect(newUser).to.have.property('password');
-          expect(newUser).to.have.property('type');
-          expect(newUser).to.have.property('isAdmin');
+    it('it should throw an error if the email address is already taken', (done) => {
+      const newUser = {
+        email: 'johndoelo@gmail.com',
+        firstName: 'John',
+        lastName: 'Doe',
+        password: 'password',
+        confirmPassword: 'password',
+      };
+
+      chai
+        .request(app)
+        .post('/api/v2/auth/signup')
+        .send(newUser)
+        .end((err, response) => {
+          response.should.have.status(409);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('User already exist');
+          done();
+        });
+    });
+
+    it('it should throw an error if firstName is missing in the request body', (done) => {
+      const invalidPayload = {
+        lastName: 'John',
+        email: 'johndoe@gmail.com',
+        password: 'password',
+        confirmPassword: 'password',
+      };
+
+      chai
+        .request(app)
+        .post('/api/v2/auth/signup')
+        .send(invalidPayload)
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Ensure all fields are provided');
+          done();
+        });
+    });
+
+    it('it should throw an error if lastName is missing in the request body', (done) => {
+      const invalidPayload = {
+        firstName: 'John',
+        email: 'johndoe@gmail.com',
+        password: 'password',
+        confirmPassword: 'password',
+      };
+
+      chai
+        .request(app)
+        .post('/api/v2/auth/signup')
+        .send(invalidPayload)
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Ensure all fields are provided');
+          done();
+        });
+    });
+
+    it('it should throw an error if email is missing in the request body', (done) => {
+      const invalidPayload = {
+        firstName: 'John',
+        lastName: 'Doe',
+        password: 'password',
+        confirmPassword: 'password',
+      };
+
+      chai
+        .request(app)
+        .post('/api/v2/auth/signup')
+        .send(invalidPayload)
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Ensure all fields are provided');
+          done();
+        });
+    });
+
+    it('it should throw an error if password does not match confirm password', (done) => {
+      const invalidPayload = {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'johndoe@gmail.com',
+        password: 'password',
+        confirmPassword: 'passw',
+      };
+
+      chai
+        .request(app)
+        .post('/api/v2/auth/signup')
+        .send(invalidPayload)
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Passwords do not match');
           done();
         });
     });
   });
 
-  describe('Mocha test for user signin route', () => {
-    const signinUrl = '/api/v2/auth/signin/';
-    it('should signin an existing user when all the parameters are incorrect', (done) => {
-      const existingUser = {
-        id: 1,
-        email: 'frank@email.com',
-        firstName: 'Frank',
-        lastName: 'Obi',
-        password: '12345',
-        type: 'client',
-        isAdmin: false
+
+  describe('POST /auth/signin', () => {
+    it('it should sign in a user', (done) => {
+      const loginCredential = {
+        email: 'johndoe@gmail.com',
+        password: 'password',
       };
-      chai.request(app)
-        .post(signinUrl)
-        .send({ existingUser })
-        .end((error, response) => {
-          expect(response.body).to.be.an('object');
-          expect(response.status).to.equal(400);
-          expect(response.body).to.be.an('object');
-          expect(response.body).to.have.property('error');
-          expect(existingUser).to.have.property('id');
-          expect(existingUser).to.have.property('email');
-          expect(existingUser).to.have.property('firstName');
-          expect(existingUser).to.have.property('lastName');
-          expect(existingUser).to.have.property('password');
-          expect(existingUser).to.have.property('type');
-          expect(existingUser).to.have.property('isAdmin');
+      chai
+        .request(app)
+        .post('/api/v2/auth/signin')
+        .send(loginCredential)
+        .end((err, response) => {
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Account does not exist');
+          response.should.have.status(400);
+          done();
+        });
+    });
+
+    it('it should throw an error if email is missing in the rquest body', (done) => {
+      const loginCredential = {
+        password: 'password',
+      };
+
+      chai
+        .request(app)
+        .post('/api/v2/auth/signin')
+        .send(loginCredential)
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Email or Password is not provided');
+          done();
+        });
+    });
+
+
+    it('it should throw an error if password is missing in the rquest body', (done) => {
+      const loginCredential = {
+        email: 'johndoe@gmail.com',
+      };
+
+      chai
+        .request(app)
+        .post('/api/v2/auth/signin')
+        .send(loginCredential)
+        .end((err, response) => {
+          response.should.have.status(400);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error').eql('Email or Password is not provided');
           done();
         });
     });

@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// class Auth {
 function verifyToken(req, res, next) {
   const bearerHeader = req.headers.authorization;
 
@@ -14,14 +13,14 @@ function verifyToken(req, res, next) {
 
     jwt.verify(req.token, process.env.jwt_secret, (err, data) => {
       if (err) {
-        res.status(403).json({ status: 403, error: 'Access denied, Provide authorization' });
+        res.status(403).json({ status: 403, error: 'Access denied, provide token' });
       } else {
         req.user = data;
         next();
       }
     });
   } else {
-    res.status(403).json({ status: 403, error: 'Access denied, Provide authorization' });
+    res.status(403).json({ status: 403, error: 'Access denied, provide token' });
   }
 }
 
