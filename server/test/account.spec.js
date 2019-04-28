@@ -26,8 +26,7 @@ describe('Mocha test for Account Controller', () => {
         type: 'savings'
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/accounts')
         .set('Authorization', token)
         .send(accountType)
@@ -44,8 +43,7 @@ describe('Mocha test for Account Controller', () => {
         type: ''
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/accounts')
         .send(accountType)
         .set('Authorization', token)
@@ -62,8 +60,7 @@ describe('Mocha test for Account Controller', () => {
         type: 'somethingdifferent',
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/accounts')
         .set('Authorization', token)
         .send(accountType)
@@ -138,8 +135,7 @@ describe('Mocha test for Account Controller', () => {
     });
 
     it('it should throw an error when account number is not found', (done) => {
-      chai
-        .request(app)
+      chai.request(app)
         .get('/api/v2/accounts/:accountNumber')
         .set('Authorization', token)
         .end((err, response) => {
@@ -218,8 +214,7 @@ describe('Mocha test for Account Controller', () => {
     });
 
     it('it should throw an error when account number is not found', (done) => {
-      chai
-        .request(app)
+      chai.request(app)
         .get('/api/v2/accounts/:accountNumber')
         .set('Authorization', token)
         .end((err, response) => {

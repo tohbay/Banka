@@ -46,8 +46,7 @@ describe('Test user login and signup', () => {
         confirmPassword: 'password',
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/auth/signup')
         .send(newUser)
         .end((err, response) => {
@@ -59,17 +58,16 @@ describe('Test user login and signup', () => {
     });
 
     it('it should throw an error if firstName is missing in the request body', (done) => {
-      const invalidPayload = {
+      const invalidInput = {
         lastName: 'John',
         email: 'johndoe@gmail.com',
         password: 'password',
         confirmPassword: 'password',
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/auth/signup')
-        .send(invalidPayload)
+        .send(invalidInput)
         .end((err, response) => {
           response.should.have.status(400);
           response.body.should.be.a('object');
@@ -79,17 +77,16 @@ describe('Test user login and signup', () => {
     });
 
     it('it should throw an error if lastName is missing in the request body', (done) => {
-      const invalidPayload = {
+      const invalidInput = {
         firstName: 'John',
         email: 'johndoe@gmail.com',
         password: 'password',
         confirmPassword: 'password',
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/auth/signup')
-        .send(invalidPayload)
+        .send(invalidInput)
         .end((err, response) => {
           response.should.have.status(400);
           response.body.should.be.a('object');
@@ -99,17 +96,16 @@ describe('Test user login and signup', () => {
     });
 
     it('it should throw an error if email is missing in the request body', (done) => {
-      const invalidPayload = {
+      const invalidInput = {
         firstName: 'John',
         lastName: 'Doe',
         password: 'password',
         confirmPassword: 'password',
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/auth/signup')
-        .send(invalidPayload)
+        .send(invalidInput)
         .end((err, response) => {
           response.should.have.status(400);
           response.body.should.be.a('object');
@@ -119,7 +115,7 @@ describe('Test user login and signup', () => {
     });
 
     it('it should throw an error if password does not match confirm password', (done) => {
-      const invalidPayload = {
+      const invalidInput = {
         firstName: 'John',
         lastName: 'Doe',
         email: 'johndoe@gmail.com',
@@ -127,10 +123,9 @@ describe('Test user login and signup', () => {
         confirmPassword: 'passw',
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/auth/signup')
-        .send(invalidPayload)
+        .send(invalidInput)
         .end((err, response) => {
           response.should.have.status(400);
           response.body.should.be.a('object');
@@ -143,14 +138,13 @@ describe('Test user login and signup', () => {
 
   describe('POST /auth/signin', () => {
     it('it should sign in a user', (done) => {
-      const loginCredential = {
+      const loginInput = {
         email: 'johndoe@gmail.com',
         password: 'password',
       };
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/auth/signin')
-        .send(loginCredential)
+        .send(loginInput)
         .end((err, response) => {
           response.body.should.be.a('object');
           response.body.should.have.property('error').eql('Account does not exist');
@@ -160,14 +154,13 @@ describe('Test user login and signup', () => {
     });
 
     it('it should throw an error if email is missing in the rquest body', (done) => {
-      const loginCredential = {
+      const loginInput = {
         password: 'password',
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/auth/signin')
-        .send(loginCredential)
+        .send(loginInput)
         .end((err, response) => {
           response.should.have.status(400);
           response.body.should.be.a('object');
@@ -177,15 +170,14 @@ describe('Test user login and signup', () => {
     });
 
 
-    it('it should throw an error if password is missing in the rquest body', (done) => {
-      const loginCredential = {
+    it('it should throw an error if password is missing in the request body', (done) => {
+      const loginInput = {
         email: 'johndoe@gmail.com',
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .post('/api/v2/auth/signin')
-        .send(loginCredential)
+        .send(loginInput)
         .end((err, response) => {
           response.should.have.status(400);
           response.body.should.be.a('object');

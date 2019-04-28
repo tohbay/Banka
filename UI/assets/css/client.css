@@ -125,6 +125,16 @@ body {
   text-decoration: none;
 }
 
+.client-btn:focus {
+  color: #282;
+  background: #fff;
+}
+
+.client-items a:active {
+  color: #282;
+  background: #fff;
+} */
+
 .client-items a {
   display: block;
   text-decoration: none;
