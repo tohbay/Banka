@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .list {
+      width: max-content;
+      display: table;
+      flex-direction: row;
+      justify-content: space-between;
+      float: left;
+      list-style-type: none;
+      border: 2px solid darkslategrey;
+    }
+
+    .list li {
+      width: fit-content;
+      margin: 0 0.5em;
+    }
+
+
+
+    @media screen and (min-width: 768px){
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+    }
+  </style>
+</head>
+<body>
+  <tr class="list">
+    <td><input type="checkbox"></td>
+    <td>id</td>
+    <td>email</td>
+    <td>Firstname</td>
+    <td>Lastname</td>
+    <td>Account Number</td>
+    <td>Type</td>
+    <td>Status</td>
+    <td>Created On</td>
+    <td>Balance</td
+    ></tr>
+  <tr class="list">
+    <td><input type="checkbox"></td>
+    <td>id</td>
+    <td>email</td>
+    <td>Firstname</td>
+    <td>Lastname</td>
+    <td>Account Number</td>
+    <td>Type</td>
+    <td>Status</td>
+    <td>Created On</td>
+    <td>Balance</td
+    ></tr>
+    <table id="customers">
+        <tr>
+          <th>Company</th>
+          <th>Contact</th>
+          <th>Country</th>
+              <th>Company</th>
+          <th>Contact</th>
+          <th>Country</th>
+              <th>Company</th>
+          <th>Contact</th>
+          <th>Country</th>
+        </tr>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td>Maria Anders</td>
+          <td>Germany</td>
+              <td>Alfreds Futterkiste</td>
+          <td>Maria Anders</td>
+          <td>Germany</td>
+              <td>Alfreds Futterkiste</td>
+          <td>Maria Anders</td>
+          <td>Germany</td>
+        </tr>
+      
+      </table>
+</body>
+</html>

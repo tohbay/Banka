@@ -139,8 +139,7 @@ describe('Testing transactions endpoints', () => {
         newBalance: 200.00
       };
 
-      chai
-        .request(app)
+      chai.request(app)
         .get('/api/v2/transactions/:id')
         .set('Authorization', token)
         .send(transaction)
@@ -479,8 +478,7 @@ describe('Testing transactions endpoints', () => {
         newBalance: 200.00,
         balance: 200.00
       };
-      chai
-        .request(app)
+      chai.request(app)
         .get('/api/v2/transactions/:accountNumber/transactions')
         .set('Authorization', token)
         .end((err, response) => {
@@ -518,8 +516,7 @@ describe('Testing transactions endpoints', () => {
         status: 'active',
         balance: 500.78
       }];
-      chai
-        .request(app)
+      chai.request(app)
         .get('/api/v2/transactions/:accountNumber/transactions')
         .set('Authorization', token)
         .end((err, response) => {
