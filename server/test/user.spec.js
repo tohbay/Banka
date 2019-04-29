@@ -1,4 +1,4 @@
-import chai from 'chai';
+import chai, { expect } from 'chai';
 import 'chai/register-should';
 import chaiHttp from 'chai-http';
 
@@ -31,7 +31,10 @@ describe('Test user login and signup', () => {
         .post('/api/v2/auth/signup')
         .send(newUser)
         .end((err, response) => {
-          response.should.have.status(409);
+          expect(response.statusCode).to.be.equal(201);
+          expect(response.body).to.have.property('status').to.eql(201);
+          expect(response.body).to.have.property('message');
+          expect(response.body).to.have.property('error');
           response.body.should.be.a('object');
           done();
         });

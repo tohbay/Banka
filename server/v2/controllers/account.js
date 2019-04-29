@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import validate from '../../middleware/validate';
+import validateBody from '../../middleware/validate';
 import connectDB from '../../connectDB';
 
 class accountController {
@@ -9,7 +9,7 @@ class accountController {
       id, firstName, lastName, email
     } = data;
 
-    const { value, error } = validate.createAccount(request.body);
+    const { value, error } = validateBody.createAccount(request.body);
     if (error) {
       return response.status(400).json({
         status: 400,
@@ -119,7 +119,7 @@ class accountController {
     const { accountNumber } = request.params;
     const { status } = request.body;
 
-    const { value, error } = validate.patchAccount(request.body, request.params);
+    const { value, error } = validateBody.patchAccount(request.body, request.params);
     if (error) {
       return response.status(400).json({
         status: 422,
