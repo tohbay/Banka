@@ -102,7 +102,7 @@ const validate = {
 
   creditAccount(body) {
     const schema = Joi.object().keys({
-      amount: Joi.number().float().positive().precision(2)
+      amount: Joi.number().integer().positive().precision(2)
         .required(),
       cashier: Joi.number().integer().positive().required(),
     });
