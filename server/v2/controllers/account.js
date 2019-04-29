@@ -13,7 +13,7 @@ class accountController {
     if (error) {
       return response.status(400).json({
         status: 400,
-        error: error.details[0].message
+        error: 'Error updating the user, ensure you provide valid credentials'
       });
     }
 
@@ -122,8 +122,8 @@ class accountController {
     const { value, error } = validateBody.patchAccount(request.body, request.params);
     if (error) {
       return response.status(400).json({
-        status: 422,
-        error: error.details[0].message
+        status: 400,
+        error: 'Error updating the user, ensure you provide valid credentials'
       });
     }
 
@@ -139,7 +139,7 @@ class accountController {
             error: 'Account does not exist'
           });
         }
-        return response.status(200).send({
+        return response.status(202).send({
           status: 202,
           message: 'Account successfully updated',
           data: result.rows[0]

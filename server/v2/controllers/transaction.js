@@ -47,14 +47,12 @@ class TransactionController {
     const data = jwt.verify(request.token, process.env.jwt_secret);
     const { id } = data;
 
-    const { valueAccountNumber, errorAccountNumber } = validate.accountNumberParams(request.params);
-    if (errorAccountNumber) {
-      return response.status(400).json({ status: 400, error: 'Invalid input' });
-    }
-
     const { value, error } = validate.creditAccount(request.body);
     if (error) {
-      return response.status(400).json({ status: 400, error: error.details[0].message });
+      return response.status(400).json({
+        status: 400,
+        error: 'Error updating the user, ensure you provide valid credentials'
+      });
     }
 
 
