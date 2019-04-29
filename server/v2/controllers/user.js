@@ -219,6 +219,39 @@ class userController {
         });
       });
   }
+
+  static deleteUserAccount(request, response) {
+    const { email } = request.params;
+    const query = `SELECT * FROM users WHERE "email"='${email}'`;
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(404).send({
+            status: 404,
+            error: 'User account does not exist'
+          });
+        }
+        const deleteQuery = `DELETE FROM users WHERE "email"='${result.rows[0].email}'`;
+        return connectDB.query(deleteQuery)
+          .then(() => response.status(200).send({
+            status: 200,
+            message: 'User account successfully deleted',
+            data: result.rows[0]
+          }))
+          .catch((error) => {
+            response.status(500).send({
+              status: 500,
+              error: 'Error deleting the specific user account'
+            });
+          });
+      })
+      .catch((error) => {
+        response.status(500).send({
+          status: 500,
+          error: 'Error deleting the specific user account, ensure you provide valid credentials'
+        });
+      });
+  }
 }
 
 export default userController;

@@ -154,7 +154,7 @@ class accountController {
 
   static deleteAccount(request, response) {
     const { accountNumber } = request.params;
-    const query = `SELECT * FROM accounts WHERE "accountNumber"=${accountNumber}`;
+    const query = `SELECT * FROM accounts WHERE "accountNumber"='${accountNumber}'`;
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
@@ -163,7 +163,7 @@ class accountController {
             error: 'Account does not exist'
           });
         }
-        const deleteQuery = `DELETE FROM accounts WHERE "accountNumber"=${result.rows[0].accountNumber}`;
+        const deleteQuery = `DELETE FROM accounts WHERE "accountNumber"='${result.rows[0].accountNumber}'`;
         return connectDB.query(deleteQuery)
           .then(() => response.status(200).send({
             status: 200,

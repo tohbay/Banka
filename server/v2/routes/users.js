@@ -11,9 +11,10 @@ const validateParams = ParamsSchemaValidator();
 
 router.post('/auth/signup', userController.signup);
 router.post('/auth/signin', userController.signin);
-router.patch('/users/:email/cashier', validateParams, userController.makeCashier);
-router.patch('/users/:email/admin', validateParams, userController.makeAdmin);
-router.get('/users/user/:email', validateParams, userController.getOneUser);
-router.get('/users', validateParams, userController.getAllUsers);
+router.patch('/users/:email/cashier', auth, validateParams, userController.makeCashier);
+router.patch('/users/:email/admin', auth, validateParams, userController.makeAdmin);
+router.get('/users/user/:email', auth, validateParams, userController.getOneUser);
+router.get('/users', validateParams, auth, userController.getAllUsers);
+router.delete('/users/user/:email', auth, validateParams, userController.deleteUserAccount);
 
 export default router;
