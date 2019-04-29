@@ -9,7 +9,7 @@ const validate = {
       password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
       confirmPassword: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required()
     });
-    const { value, error } = Joi.validate(body, params, schema);
+    const { value, error } = Joi.validate(body, schema);
     if (error && error.details) {
       return { error };
     }
