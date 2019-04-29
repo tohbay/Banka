@@ -98,9 +98,8 @@ class userController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status:
-            400,
+          response.status(404).send({
+            status: 404,
             error: 'There are no user records'
           });
         }
@@ -124,15 +123,15 @@ class userController {
     if (error) {
       return response.status(400).json({
         status: 400,
-        error: 'Invalid input, ensure input values are/is correct'
+        error: 'Invalid input, ensure input value(s) are/is correct'
       });
     }
     const query = `SELECT * FROM users WHERE "email"='${email}'`;
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status: 400,
+          response.status(404).send({
+            status: 404,
             error: 'User does not exist'
           });
         }
@@ -168,8 +167,8 @@ class userController {
     return connectDB.query(makeCashierQuery)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status: 400,
+          response.status(404).send({
+            status: 404,
             error: 'Email does not exist'
           });
         }
@@ -203,13 +202,13 @@ class userController {
     return connectDB.query(makeAdminQuery)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status: 400,
+          response.status(404).send({
+            status: 404,
             error: 'Email does not exist'
           });
         }
         return response.status(200).send({
-          status: 202,
+          status: 200,
           message: 'User successfully updated'
         });
       })

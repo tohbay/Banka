@@ -53,8 +53,8 @@ class accountController {
       })
       .catch((error) => {
         if (error.detail === `Key (email)=(${newAccount.email}) already exists.`) {
-          return response.status(400).send({
-            status: 'error',
+          return response.status(409).send({
+            status: 409,
             message: 'Account already exist'
           });
         }
@@ -70,9 +70,8 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status:
-            400,
+          response.status(404).send({
+            status: 404,
             error: 'There are no account records'
           });
         }
@@ -96,8 +95,8 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status: 400,
+          response.status(404).send({
+            status: 404,
             error: 'Account does not exist'
           });
         }
@@ -134,8 +133,8 @@ class accountController {
     return connectDB.query(updateOneAccountStatus)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status: 400,
+          response.status(404).send({
+            status: 404,
             error: 'Account does not exist'
           });
         }
@@ -159,15 +158,15 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status: 400,
+          response.status(404).send({
+            status: 404,
             error: 'Account does not exist'
           });
         }
         const deleteQuery = `DELETE FROM accounts WHERE "accountNumber"=${result.rows[0].accountNumber}`;
         return connectDB.query(deleteQuery)
-          .then(() => response.status(204).send({
-            status: 204,
+          .then(() => response.status(200).send({
+            status: 200,
             message: 'Account successfully deleted',
             data: result.rows[0]
           }))
@@ -191,8 +190,8 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status: 400,
+          response.status(404).send({
+            status: 404,
             error: 'Dormant account(s) does not exist'
           });
         }
@@ -215,8 +214,8 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status: 400,
+          response.status(404).send({
+            status: 404,
             error: 'Active account(s) does not exist'
           });
         }
@@ -242,8 +241,8 @@ class accountController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({
-            status: 400,
+          response.status(404).send({
+            status: 404,
             error: 'User account(s) does not exist'
           });
         }
