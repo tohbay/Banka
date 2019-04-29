@@ -49,8 +49,12 @@ class TransactionController {
 
     const { value, error } = validate.creditAccount(request.body);
     if (error) {
-      return response.status(400).json({ status: 400, error: error.details[0].message });
+      return response.status(400).json({
+        status: 400,
+        error: 'Error updating the user, ensure you provide valid credentials'
+      });
     }
+
 
     const findSpecificAccount = `SELECT * FROM accounts WHERE "accountNumber"='${(accountNumber)}'`;
     return connectDB.query(findSpecificAccount)

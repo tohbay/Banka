@@ -16,7 +16,7 @@ class userController {
     if (error) {
       return response.status(400).json({
         status: 400,
-        error: error.details[0].message
+        error: 'Invalid input, ensure input values are/is correct'
       });
     }
 
@@ -69,7 +69,7 @@ class userController {
     if (error) {
       return response.status(400).json({
         status: 400,
-        error: error.details[0].message
+        error: 'Invalid input, ensure input values are/is correct'
       });
     }
 
@@ -90,6 +90,134 @@ class userController {
       })
       .catch((error) => {
         response.status(500).send({ status: 500, error: 'Error logging in, ensure you provide valid credentials' });
+      });
+  }
+
+  static getAllUsers(request, response) {
+    const query = 'SELECT * FROM users';
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({
+            status:
+            400,
+            error: 'There are no user records'
+          });
+        }
+        return response.status(200).send({
+          status: 200,
+          message: 'Users successfully retrieved',
+          data: result.rows
+        });
+      })
+      .catch((error) => {
+        response.status(500).send({
+          status: 500,
+          error: 'Error fetching all users, ensure you provide valid credentials'
+        });
+      });
+  }
+
+  static getOneUser(request, response) {
+    const { email } = request.params;
+    const { value, error } = validate.emailParams(request.params);
+    if (error) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Invalid input, ensure input values are/is correct'
+      });
+    }
+    const query = `SELECT * FROM users WHERE "email"='${email}'`;
+    return connectDB.query(query)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({
+            status: 400,
+            error: 'User does not exist'
+          });
+        }
+        return response.status(200).send({
+          status: 200,
+          message: 'Account successfully retrieved',
+          data: result.rows[0]
+        });
+      })
+      .catch((error) => {
+        response.status(500).send({
+          status: 500,
+          error: 'Error fetching the specific user, ensure you provide valid credentials'
+        });
+      });
+  }
+
+  static makeCashier(request, response) {
+    const { email } = request.params;
+    const { type } = request.body;
+
+    const { value, error } = validate.emailParams(request.params);
+    if (error) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Invalid input, ensure input values are/is correct'
+      });
+    }
+
+
+    const makeCashierQuery = `UPDATE users
+      SET "type"='${type}' WHERE "email"='${email}' returning * `;
+    return connectDB.query(makeCashierQuery)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({
+            status: 400,
+            error: 'Email does not exist'
+          });
+        }
+        return response.status(200).send({
+          status: 202,
+          message: 'User successfully updated'
+        });
+      })
+      .catch((error) => {
+        response.status(500).send({
+          status: 500,
+          error: 'Error updating the user, ensure you provide valid credentials'
+        });
+      });
+  }
+
+  static makeAdmin(request, response) {
+    const { email } = request.params;
+
+    const { value, error } = validate.emailParams(request.params);
+    if (error) {
+      return response.status(400).json({
+        status: 400,
+        error: 'Invalid input, ensure input values are/is correct'
+      });
+    }
+
+
+    const makeAdminQuery = `UPDATE users
+      SET "isAdmin"='true' WHERE "email"='${email}' returning * `;
+    return connectDB.query(makeAdminQuery)
+      .then((result) => {
+        if (result.rowCount === 0) {
+          response.status(400).send({
+            status: 400,
+            error: 'Email does not exist'
+          });
+        }
+        return response.status(200).send({
+          status: 202,
+          message: 'User successfully updated'
+        });
+      })
+      .catch((error) => {
+        response.status(500).send({
+          status: 500,
+          error: 'Error updating the user, ensure you provide valid credentials'
+        });
       });
   }
 }

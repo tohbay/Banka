@@ -40,7 +40,8 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
     "morgan": "^1.9.1",
-    "pg": "^7.10.0"
+    "pg": "^7.10.0",
+    "valid_me_js": "^1.0.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
