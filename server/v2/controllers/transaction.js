@@ -16,7 +16,7 @@ class TransactionController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(400).send({ status: 400, error: 'There are no transactions records' });
+          response.status(404).send({ status: 404, error: 'There are no transactions records' });
         }
         return response.status(200).send({ status: 200, message: 'Transactions successfully retrieved', data: result.rows });
       })
@@ -31,7 +31,7 @@ class TransactionController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          return response.status(400).send({ status: 400, error: 'Transaction does not exist' });
+          return response.status(404).send({ status: 404, error: 'Transaction does not exist' });
         }
         return response.status(200).send({ status: 200, message: 'Transaction successfully retrieved', data: result.rows[0] });
       })
@@ -60,7 +60,7 @@ class TransactionController {
     return connectDB.query(findSpecificAccount)
       .then((result) => {
         if (result.rowCount === 0) {
-          return response.status(400).send({ status: 400, error: 'Account does not exist' });
+          return response.status(404).send({ status: 404, error: 'Account does not exist' });
         }
         const { accountNumber, balance, status } = result.rows[0];
         const newBalance = parseFloat(balance) + parseFloat(amount);
@@ -114,7 +114,7 @@ class TransactionController {
     return connectDB.query(findSpecificAccount)
       .then((result) => {
         if (result.rowCount === 0) {
-          return response.status(400).send({ status: 400, error: 'Account does not exist' });
+          return response.status(404).send({ status: 404, error: 'Account does not exist' });
         }
         const { accountNumber, balance, status } = result.rows[0];
         const newBalance = parseFloat(balance) - parseFloat(amount);
@@ -163,8 +163,8 @@ class TransactionController {
       .then((result) => {
         console.log(result);
         if (result.rowCount === 0) {
-          return response.status(400).send({
-            status: 400,
+          return response.status(404).send({
+            status: 404,
             error: 'Account transactions does not exist'
           });
         }

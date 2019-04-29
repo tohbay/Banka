@@ -102,7 +102,8 @@ const validate = {
 
   creditAccount(body) {
     const schema = Joi.object().keys({
-      amount: Joi.number().precision(2).required(),
+      amount: Joi.number().float().positive().precision(2)
+        .required(),
       cashier: Joi.number().integer().positive().required(),
     });
     const { value, error } = Joi.validate(body, schema);
@@ -114,7 +115,8 @@ const validate = {
 
   creditAccountParams(params) {
     const schema = Joi.object().keys({
-      amount: Joi.number().precision(2).required(),
+      amount: Joi.number().integer().positive().precision(2)
+        .required(),
       cashier: Joi.number().integer().positive().required(),
     });
     const { value, error } = Joi.validate(params, schema);
@@ -126,7 +128,8 @@ const validate = {
 
   debitAccount(body) {
     const schema = Joi.object().keys({
-      amount: Joi.number().precision(2).required(),
+      amount: Joi.number().integer().positive().precision(2)
+        .required(),
       cashier: Joi.number().integer().positive().required(),
     });
     const { value, error } = Joi.validate(body, schema);
