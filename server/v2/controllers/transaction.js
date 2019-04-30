@@ -88,7 +88,7 @@ class TransactionController {
           .then(result => connectDB.query(creditQuery)
             .then((result) => {
               if (result.rowCount >= 1) {
-                return response.status(200).send({ status: 202, message: 'Acccount successfully credited', data: result.rows[0] });
+                return response.status(200).send({ status: 200, message: 'Acccount successfully credited', data: result.rows[0] });
               }
               return response.status(500).send({ staus: 500, message: 'Error crediting the specific account, ensure you provide valid credentials' });
             }))
@@ -146,7 +146,7 @@ class TransactionController {
           .then(result => connectDB.query(debitQuery)
             .then((result) => {
               if (result.rowCount >= 1) {
-                return response.status(200).send({ status: 202, message: 'Acccount successfully debited', data: result.rows[0] });
+                return response.status(200).send({ status: 200, message: 'Acccount successfully debited', data: result.rows[0] });
               }
               return response.status(500).send({ staus: 500, message: 'Error debiting the specific account' });
             }))

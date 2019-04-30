@@ -752,14 +752,14 @@
     
   },
   "securityDefinitions": {
-      "Authorization": {
-        "type": "JSON Web Token",
-        "scheme": "Bearer",
-        "description": "JWT token is received upon user successful login, input format: \"Bearer \\<token\\>\"",
-        "name": "Authorization",
-        "in": "header",
-        "bearerFormat": "Bearer token"
-    }
+    "Authorization": {
+      "type": "JSON Web Token",
+      "scheme": "Bearer",
+      "description": "JWT token is received upon user successful login, input format: \"Bearer \\<token\\>\"",
+      "name": "bearerAuth",
+      "in": "header",
+      "bearerFormat": "Bearer token"
+  }
   },
   "definitions": {
 
