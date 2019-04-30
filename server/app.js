@@ -8,11 +8,12 @@ import indexRoutes2 from './v2/routes/index';
 
 const app = express();
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { explorer: true }));
 
 app.get('/', (request, response) => {
   response.status(200).send({
