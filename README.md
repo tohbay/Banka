@@ -10,6 +10,12 @@ Banka is a light-weight core banking application that powers banking operations 
 ## Link to github pages
 https://tobechukwuobitube.github.io/Banka/
 
+## Heroku Link
+https://banka-tobe.herokuapp.com
+
+## API Documentation
+https://banka-tobe.herokuapp.com/api-docs/
+
 
 ## Current Features and gitHub-pages link:
 
@@ -44,6 +50,8 @@ https://tobechukwuobitube.github.io/Banka/
 * Express: open source server-side framework for starting out Javascript server quickly on the fly.
 * Pivotal Tracker: an open source projement management tool for managing different stages of teh development process.
 
+## Author
+tobechukwuobitube@gmail.com
 
 ### Footnote
 This project is still ongoing.
