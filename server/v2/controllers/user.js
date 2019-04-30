@@ -43,7 +43,7 @@ class userController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount >= 1) {
-          return response.status(200).send({ status: 201, message: 'Sign up was successful' });
+          return response.status(201).send({ status: 201, message: 'Sign up was successful' });
         }
 
         return response.status(500).send({ staus: 500, message: 'Unable to signup user' });
