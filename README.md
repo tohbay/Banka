@@ -3,8 +3,28 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f3d6ff4120779fd6daf1/test_coverage)](https://codeclimate.com/github/tobechukwuobitube/Banka/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f3d6ff4120779fd6daf1/maintainability)](https://codeclimate.com/github/tobechukwuobitube/Banka/maintainability)
 
+
 # Banka
 Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals.
+
+
+## Project Features:
+
+| User            | FEATURE                                       |
+| ---------       | ----------------------------------------------|
+| Client          | User can sign up                              |
+| Client          | User can sign in                              |
+| Client          | User Create bank account                      |
+| Client          | User can view account transaction history     |
+| Client          | User can view a specific account transaction  |
+| Staff (cashier) | User credit an account                        |
+| Staff (cashier) | User debit an account                         |
+| Admin/Staff     | User can can view all user accounts           |
+| Admin/Staff     | User can can view a specific user accounts    |
+| Admin/Staff     | User can deactivate an account                |
+| Admin/Staff     | User can activate an account                  |
+| Admin/Staff     | User can delete an account                    |
+| Admin/Staff     | User create a cashier or admin user accounts  |
 
 
 ## Link to github pages
@@ -17,30 +37,34 @@ https://banka-tobe.herokuapp.com
 https://banka-tobe.herokuapp.com/api-docs/
 
 
-## Current Features and gitHub-pages link:
-
-| User            | FEATURE                | LINK TO PAGES/VIEWS                                                             |
-| ---------       | -----------------------| --------------------------------------------------------------------------------|
-| Client          | User can sign up       | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/signup.html           |
-| Client          | User can sign in       | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/login.html            |
-| Client          | Create bank account    | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/client.html           |
-| Admin/Staff     | Activate an account    | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/admin-dashboard.html  |
-| Admin/Staff     | Deactivate an account  | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/admin-dashboard.html  |
-| Admin/Staff     | Delete an account      | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/accounts.html         |
-| Staff (cashier) | Credit an account      | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/transaction.html      |
-| Staff (cashier) | Credit an account      | https://tobechukwuobitube.github.io/Banka/UI/assets/pages/transaction.html      |
 
 
 ## API endpoints
 
-| HTTP VERB | ENDPOINT                                | FUNCTIONALITY                           |
-| --------- | ------------------------------          | ----------------------------------------|
-| POST      | api/v1/auth/signup                      | Create a user account                   |
-| POST      | api/v1/auth/signup                      | Login a user                            |
-| POST      | api/v1/accounts                         | Create a bank account                   |
-| PATCH     | api/v1/accounts/:accountNumber          | Activate or Deactivate a bank account   |
-| GET       | api/v1/accounts                         | Fetch all bank accounts                 |
-| GET       | api/v1/accounts/:id                     | Fetch all specific bank accounts        |
+| HTTP VERB | ENDPOINT                                        | FUNCTIONALITY                                      |
+| --------- | ------------------------------------------------| -------------------------------------------------- |
+| POST      | api/v2/auth/signup                              | Create a user account                              |
+| POST      | api/v2/auth/signup                              | Login a user                                       |
+| GET       | api/v2/users                                    | Fetch all user accounts                            |
+| GET       | api/v2/users/user/:email                        | Fetch a specific user accounts                     |
+| PATCH     | api/v2/users/:email/cashier                     | Update client type from client to cashier          |
+| PATCH     | api/v2/users/:email/admin                       | Update client type from cashier to admin           |
+| DELETE    | api/v2/users/user/:email                        | Delete a particular user account                   |
+| POST      | api/v2/accounts                                 | Create a bank account                              |
+| PATCH     | api/v2/accounts/:accountNumber                  | Activate or Deactivate a bank account              |
+| GET       | api/v2/accounts                                 | Fetch all bank accounts                            |
+| GET       | api/v2/accounts/:accountNumber                  | Fetch a specific bank accounts                     |
+| DELETE    | api/v2/accounts/:accountNumber                  | Delete a specific bank accounts                    |
+| GET       | api/v2/accounts/status/dormant                  | Fetch all dormant bank accounts                    |
+| GET       | api/v2/accounts/status/active                   | Fetch all active bank accounts                     |
+| GET       | api/v2/accounts/user/:email                     | Fetch all bank accounts owned by a specific user   |
+| GET       | api/v2/transactions/                            | Fetch all transactions                             |
+| GET       | api/v2/transactions/:id                         | Fetch a specific transaction                       |
+| POST      | api/v2/transactions/:accountNumber/credit       | Credit a specific account number                   |
+| POST      | api/v2/transactions/:accountNumber/debit        | Debit a specific account number                    |
+| GET       | api/v2/transactions/:accountNumber/transactions | Get all transactions on a specific account number  |
+
+
 
 ## Technologies Used
 * HTML5 for page structure and contents
