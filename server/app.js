@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './config/swagger.json';
+import swaggerDocument from './swagger.json';
 
 import indexRoutes2 from './v2/routes/index';
 
