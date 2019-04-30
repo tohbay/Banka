@@ -12,6 +12,8 @@ app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { explorer: true }));
+
 app.get('/', (request, response) => {
   response.status(200).send({
     message: 'Welcome to Banka API, your services at its best'
@@ -19,6 +21,5 @@ app.get('/', (request, response) => {
 });
 
 app.use(indexRoutes2);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { explorer: true }));
 
 export default app;
