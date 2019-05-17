@@ -1,5 +1,3 @@
-// import jwt from 'jsonwebtoken';
-
 const basePath = '../../resources/pages';
 const accountCreated = document.getElementById('account-created');
 const createAccountForm = document.getElementById('create-account-form');
@@ -18,20 +16,12 @@ const {
   email, firstName, lastName, type, isAdmin
 } = userToken;
 
-// const data = jwt.verify(userToken, process.env.jwt_secret);
-// const {
-//   id, firstName, lastName, email
-// } = data;
-
-console.log(getUserToken());
-console.log(email, firstName, lastName, type, isAdmin);
-
 async function createNewAccount(e) {
   e.preventDefault();
 
   const sel = document.getElementById('account-type');
 
-  await fetch('http://localhost:3001/api/v2/accounts', {
+  await fetch('https://banka-tobe.herokuapp.com/api/v2/accounts', {
     method: 'POST',
     credentials: 'same-origin',
     body: JSON.stringify({ type: sel.value }),
@@ -45,7 +35,6 @@ async function createNewAccount(e) {
       if (response.status === 201) {
         createAccountForm.style.display = 'none';
         accountCreated.style.display = 'block';
-        // window.location.href = `${basePath}/client.html`;
       }
     })
     .catch((error) => {

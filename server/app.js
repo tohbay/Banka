@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-// import cors from 'cors';
 import swaggerDocument from '../swagger.json';
 
 import indexRoutes2 from './v2/routes/index';
@@ -14,22 +13,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// app.use(
-//   cors({
-//     origin: '*',
-//     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
-//     preflightContinue: false,
-//     optionsSuccessStatus: 204
-//   })
-// );
-
-// app.all('/*', (req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Credentials', true);
-//   res.header('Access-Control-Allow-Headers', 'X-Requested-With, Origin, Content-Type, Accept, Authorization');
-//   next();
-// });
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

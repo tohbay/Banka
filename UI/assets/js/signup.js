@@ -10,7 +10,7 @@ async function submitRegistrationForm(e) {
     password: document.getElementById('password').value,
     confirmPassword: document.getElementById('confirm-password').value,
   };
-  await fetch('http://localhost:3001/api/v2/auth/signup', {
+  await fetch('https://banka-tobe.herokuapp.com/api/v2/auth/signup', {
     method: 'POST',
     body: JSON.stringify(registrationInfo),
     headers: { 'Content-Type': 'application/json' }

@@ -6,7 +6,7 @@ async function submitLoginForm(e) {
     email: document.getElementById('email').value,
     password: document.getElementById('password').value,
   };
-  await fetch('http://localhost:3001/api/v2/auth/signin', {
+  await fetch('https://banka-tobe.herokuapp.com/api/v2/auth/signin', {
     method: 'POST',
     body: JSON.stringify(loginData),
     headers: { 'Content-Type': 'application/json' }
