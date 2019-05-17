@@ -50,14 +50,18 @@
               <legend>Select Account Type:</legend>
               <span>
                 <p>Type of Account:</p>
-                <select class="account-type" value="account-type">
-                    <option name="savings" id="savings">Savings</option>
-                    <option name="current" id="current">Current</option>
+                <select id="account-type" class="account-type" name="account-type">
+                    <option name="savings" value="savings">Savings</option>
+                    <option name="current" value="current">Current</option>
                 </select>
                 <button id="create" class="client-btn create">Create Account</button>
               </span>
             </fieldset>
+            <input type="text" id="user-email">
+            <a id=btn-link><button id="my-accounts" class="client-btn">My Account</button></a>
           </form>
+          <script src="../../assets/js/createAccount.js"></script>
+          <script src="../../assets/js/viewAllAccounts.js"></script>
         </div>
         <div id="account-profile" class="client-items user-account">
             <div class="client-item account-summary">

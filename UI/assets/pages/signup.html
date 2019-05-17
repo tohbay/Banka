@@ -26,22 +26,22 @@
   <main id="signup">
       <section>
           <div id="form-container" class="user-form">
-            <form action="client.html">
+            <form>
                 <div class="bg-img">
                   <!-- The lines of code for the form is credited to https://www.w3schools.com/css/css_form.asp -->
                     <form class="container">
-                      <h1>Sign up Here</h1>
+                      <h1 id="signup-user">Sign up Here</h1>
                       <label for="email"><b>Email</b></label>
-                      <input type="text" placeholder="Enter Email" name="email" required>
+                      <input type="text" placeholder="Enter Email" name="email" id="email" required>
                       <label for="firstName"><b>First name</b></label>
-                      <input type="text" placeholder="Enter First name" name="firstName" required>
+                      <input type="text" placeholder="Enter First name" name="firstName" id="firstname" required>
                       <label for="lastName"><b>Last name</b></label>
-                      <input type="text" placeholder="Enter Last name" name="lastName" required>
+                      <input type="text" placeholder="Enter Last name" name="lastName" id="lastname" required>
                       <label for="password"><b>Password</b></label>
-                      <input type="password" placeholder="Enter Password" name="password" required>
+                      <input type="password" placeholder="Enter Password" name="password" id="password" required>
                       <label for="confirmPassword"><b>Confirm Password</b></label>
-                      <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
-                      <button type="submit" class="btn">Sign up</button>
+                      <input type="password" placeholder="Confirm Password" name="confirmPassword" id="confirm-password" required>
+                      <button type="submit" id="signupBtn" class="btn">Sign up</button>
                     </form>
                     <div class="have-account">
                       <p>Already have account? <span><b><a class="btn" href="login.html">Login</a></b></span></p>
@@ -49,6 +49,7 @@
                   </div>
             </form>
           </div>
+          <script src="../../assets/js/signup.js"></script>
         </section>
   </main>
   <footer id="footer">

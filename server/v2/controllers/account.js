@@ -4,11 +4,6 @@ import connectDB from '../../connectDB';
 
 class accountController {
   static create(request, response) {
-    const data = jwt.verify(request.token, process.env.jwt_secret);
-    const {
-      id, firstName, lastName, email
-    } = data;
-
     const { value, error } = validateBody.createAccount(request.body);
     if (error) {
       return response.status(400).json({
@@ -16,6 +11,12 @@ class accountController {
         error: 'Error updating the user, ensure you provide valid credentials'
       });
     }
+
+    const data = jwt.verify(request.token, process.env.jwt_secret);
+    const {
+      id, firstName, lastName, email
+    } = data;
+
 
     const generateNumber = parseFloat(Date.now());
     const numberPrefix = parseFloat('045');

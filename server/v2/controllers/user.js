@@ -84,7 +84,7 @@ class userController {
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
-          response.status(404).send({ status: 404, error: 'Account does not exist' });
+          response.status(404).send({ status: 404, error: 'Invalid Email or Password' });
         }
         return response.status(200).send({ status: 200, message: 'You are successfully logged in', token });
       })

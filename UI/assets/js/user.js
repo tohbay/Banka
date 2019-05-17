@@ -1,6 +1,6 @@
-const accountCreated = document.getElementById('account-created');
+// const accountCreated = document.getElementById('account-created');
 const createAccount = document.getElementById('create-account');
-const createAccountForm = document.getElementById('create-account-form');
+// const createAccountForm = document.getElementById('create-account-form');
 const noAccount = document.getElementById('no-accounts');
 const create = document.getElementById('create');
 
@@ -12,12 +12,11 @@ const transactionHistory = document.getElementById('transaction-history');
 const viewTransactions = document.getElementById('view-transactions');
 const mainView = document.getElementById('client');
 const accountTransactions = document.getElementById('account-transactions');
-const viewDetails = document.querySelectorAll('.view');
 
 
 // noAccount.style.display = 'block';
 transactionHistory.style.display = 'none';
-createAccountForm.style.display = 'none';
+// createAccountForm.style.display = 'none';
 accountProfile.style.display = 'none';
 viewProfile.style.display = 'block';
 accountTransactions.style.display = 'none';
@@ -63,10 +62,11 @@ const viewTransactionDetails = (e) => {
 viewProfile.disabled = false;
 
 createAccount.addEventListener('click', userCreateAccount);
-create.addEventListener('click', createAccountBtn);
+// create.addEventListener('click', createAccountBtn);
 viewProfile.addEventListener('click', showAccountProfile);
 viewTransactions.addEventListener('click', showTransctionHistory);
 
-for (let i = 0; i <= viewDetails.length; i++) {
-  viewDetails[i].addEventListener('click', viewTransactionDetails);
-}
+// const viewDetails = document.querySelectorAll('.view');
+// for (let i = 0; i <= viewDetails.length; i++) {
+//   viewDetails[i].addEventListener('click', viewTransactionDetails);
+// }
