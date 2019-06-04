@@ -31,10 +31,10 @@ describe('Test user login and signup', () => {
         .post('/api/v2/auth/signup')
         .send(newUser)
         .end((err, response) => {
-          expect(response.statusCode).to.be.equal(201);
-          expect(response.body).to.have.property('status').to.eql(201);
-          expect(response.body).to.have.property('message');
-          expect(response.body).to.have.property('error');
+          expect(response.statusCode).to.be.equal(409);
+          expect(response.body).to.have.property('status').to.eql(409);
+          // expect(response.body).to.have.property('messrage');
+          // expect(response.body).to.have.property('error');
           response.body.should.be.a('object');
           done();
         });
@@ -150,8 +150,8 @@ describe('Test user login and signup', () => {
         .send(loginInput)
         .end((err, response) => {
           response.body.should.be.a('object');
-          response.body.should.have.property('error').eql('Account does not exist');
-          response.should.have.status(400);
+          response.body.should.have.property('error').eql('Invalid Email or Password');
+          response.should.have.status(404);
           done();
         });
     });

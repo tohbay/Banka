@@ -13,7 +13,6 @@ const viewTransactions = document.getElementById('view-transactions');
 const mainView = document.getElementById('client');
 const accountTransactions = document.getElementById('account-transactions');
 
-
 // noAccount.style.display = 'block';
 transactionHistory.style.display = 'none';
 // createAccountForm.style.display = 'none';
@@ -41,7 +40,7 @@ const showAccountProfile = () => {
   accountCreated.style.display = 'none';
   transactionHistory.style.display = 'none';
   createAccountForm.style.display = 'none';
-  noAccount.style.display = 'none';
+  // noAccount.style.display = 'none';
 };
 
 const showTransctionHistory = (e) => {
@@ -65,6 +64,7 @@ createAccount.addEventListener('click', userCreateAccount);
 // create.addEventListener('click', createAccountBtn);
 viewProfile.addEventListener('click', showAccountProfile);
 viewTransactions.addEventListener('click', showTransctionHistory);
+
 
 // const viewDetails = document.querySelectorAll('.view');
 // for (let i = 0; i <= viewDetails.length; i++) {

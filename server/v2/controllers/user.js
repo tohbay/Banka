@@ -31,11 +31,13 @@ class userController {
 
     value.password = hashedPassword;
 
+    const { firstName, lastName } = value;
+
     const newUser = {
       email: value.email.toLowerCase(),
-      firstName: value.firstName.toLowerCase(),
-      lastName: value.lastName.toLowerCase(),
-      password: hashedPassword
+      firstName: firstName.charAt(0).toUpperCase() + firstName.slice(1),
+      lastName: lastName.charAt(0).toUpperCase() + lastName.slice(1),
+      password: hashedPassword,
     };
 
     const query = `INSERT INTO users ("email", "firstName", "lastName", "password", "type", "isAdmin")
@@ -78,14 +80,15 @@ class userController {
       password: value.password
     };
 
-    const token = helpers.issueToken(user);
-
     const query = `SELECT * FROM users WHERE email='${user.email}' AND password= crypt('${user.password}', password)`;
     return connectDB.query(query)
       .then((result) => {
         if (result.rowCount === 0) {
           response.status(404).send({ status: 404, error: 'Invalid Email or Password' });
         }
+
+        const token = helpers.issueToken({ ...result.rows[0] });
+
         return response.status(200).send({ status: 200, message: 'You are successfully logged in', token });
       })
       .catch((error) => {

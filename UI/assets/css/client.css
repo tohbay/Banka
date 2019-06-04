@@ -53,7 +53,7 @@ body {
 
 .user-detail p {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   font-weight: bold;
 }
@@ -152,6 +152,17 @@ body {
   background: #fff;
   color: #282;
   border: 1px solid #282
+}
+
+#message-info {
+  color: #282;
+  font-size: 1rem;
+  font-weight: bold;
+  /* text-align: center; */
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  margin: 0 auto;
+  padding: 5px 20px;
 }
 
 /* Account Summary */
@@ -263,7 +274,20 @@ padding: 0.2em;
   margin: 0 auto;
 }
 
+.view-account-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 5px 20px;
+}
 
+.view-account-details input {
+  width: 60%;
+} 
+
+.view-account-details input {
+  padding-left: 10px;
+} 
 
 /* Footer */
 #footer {

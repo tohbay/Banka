@@ -3,24 +3,24 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-function verifyToken(req, res, next) {
-  const bearerHeader = req.headers.authorization;
+function verifyToken(request, response, next) {
+  const bearerHeader = request.headers.authorization;
 
   if (typeof bearerHeader !== 'undefined') {
     const bearer = bearerHeader.split(' ');
     const bearerToken = bearer[1];
-    req.token = bearerToken;
+    request.token = bearerToken;
 
-    jwt.verify(req.token, process.env.jwt_secret, (err, data) => {
+    jwt.verify(request.token, process.env.jwt_secret, (err, decoded) => {
       if (err) {
-        res.status(403).json({ status: 403, error: 'Access denied, provide token' });
+        response.status(403).json({ status: 403, error: 'Access denied, provide token' });
       } else {
-        req.user = data;
+        request.decoded = decoded;
         next();
       }
     });
   } else {
-    res.status(403).json({ status: 403, error: 'Access denied, provide token' });
+    response.status(403).json({ status: 403, error: 'Access denied, provide token' });
   }
 }
 

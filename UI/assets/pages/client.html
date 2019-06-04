@@ -17,8 +17,8 @@
         <p class="logo">Banka</p>
         <nav id="nav">
           <ul>
-            <li><a class="btn" href="../../index.html">Home</a></li>
-            <li><a class="btn" href="../../index.html">Logout</a></li>
+            <!-- <li><a class="btn" href="../../index.html">Home</a></li> -->
+            <li><a class="btn" id="logout" href="../../index.html">Logout</a></li>
             <li><img class="user-image" src="../images/myDp.png" alt="Profile Picture"></li>
           </ul>
         </nav>
@@ -31,7 +31,7 @@
       <div id="client-container">
         <div class="client-actions">
           <div class="client-items user-detail">
-            <p>Welcome, Client</p>
+            <p>Welcome, &nbsp; <span id="user-name"></span></p>
           </div>
           <div class="client-items account-actions">
               <a id=btn-link><button id="create-account" class="client-btn">Create Account</button></a>
@@ -51,22 +51,24 @@
               <span>
                 <p>Type of Account:</p>
                 <select id="account-type" class="account-type" name="account-type">
-                    <option name="savings" value="savings">Savings</option>
-                    <option name="current" value="current">Current</option>
+                  <option name="savings" value="savings">Savings</option>
+                  <option name="current" value="current">Current</option>
                 </select>
                 <button id="create" class="client-btn create">Create Account</button>
               </span>
             </fieldset>
-            <input type="text" id="user-email">
-            <a id=btn-link><button id="my-accounts" class="client-btn">My Account</button></a>
+            <p id="message-info"></p>
           </form>
           <script src="../../assets/js/createAccount.js"></script>
-          <script src="../../assets/js/viewAllAccounts.js"></script>
         </div>
         <div id="account-profile" class="client-items user-account">
-            <div class="client-item account-summary">
-              <p>Account Profile:</p>
-            </div>
+          <div class="client-item account-summary">
+            <p>Account Profile:</p>
+          </div>
+          <div class="view-account-details">
+            <input type="text" id="user-email"> 
+            <a id=btn-link><button id="my-accounts" class="client-btn">View Account Details</button></a>
+          </div>
           <div class="account-profile-details">
             <div class="account-info">
               <p>Account Type:</p>
@@ -85,6 +87,7 @@
               <p>Draft</p>
             </div>
           </div>
+          <script src="../../assets/js/viewAllAccounts.js"></script>
         </div>
          <div id="transaction-history" class="client-items transaction">
             <div class="client-items account-summary user-detail">
